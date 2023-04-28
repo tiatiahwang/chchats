@@ -1,0 +1,50 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import Button from '@/components/button';
+import Input from '@/components/input';
+
+export default function Login() {
+  const router = useRouter();
+  const [show, setShow] = useState(false);
+
+  const togglePassword = (e) => {
+    e.preventDefault();
+    setShow((prev) => !prev);
+  };
+  const onClick = () => {
+    router.push('/signup');
+  };
+  return (
+    <div className='w-full h-[100vh] flex flex-col justify-center items-center'>
+      <div className='w-1/3 border p-20'>
+        <h3 className='text-center text-3xl font-bold mb-10 text-indigo-500'>
+          로그인
+        </h3>
+        <form className='mt-8 flex flex-col space-y-6'>
+          <Input name='이메일' label='이메일' type='email' required />
+          <Input
+            name='비밀번호'
+            label='비밀번호'
+            kind='password'
+            type={show ? 'text' : 'password'}
+            onClick={togglePassword}
+          />
+          <div className='pt-5'>
+            <Button text={'로그인하기'} />
+          </div>
+        </form>
+        <div className='mt-10'>
+          <div className='relative'>
+            <div className='absolute w-full border-t border-gray-300' />
+            <div className='relative -top-3 text-center '>
+              <span className='bg-white px-2 text-sm text-gray-500'>
+                아직 계정이 없으시다면
+              </span>
+            </div>
+            <Button transparantBg={true} text={'가입하기'} onClick={onClick} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
