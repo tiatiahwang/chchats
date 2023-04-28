@@ -1,4 +1,4 @@
-export default function Input({ label, name, kind, type, onClick, ...rest }) {
+export default function Input({ label, name, kind, type, register, onClick }) {
   return (
     <div>
       <label
@@ -7,12 +7,12 @@ export default function Input({ label, name, kind, type, onClick, ...rest }) {
       >
         {label}
       </label>
-      {type === 'email' ? (
+      {kind === 'email' ? (
         <div className='flex items-center rounded-md'>
           <input
             type={type}
             id={name}
-            {...rest}
+            {...register}
             className='w-full appearance-none rounded-md border border-gray-300 px-3 py-2 
             placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'
           />
@@ -22,7 +22,8 @@ export default function Input({ label, name, kind, type, onClick, ...rest }) {
         <div className='relative'>
           <input
             type={type}
-            id='email'
+            id={name}
+            {...register}
             className='w-full appearance-none rounded-md border border-gray-300 px-3 py-2 
             placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'
           />

@@ -2,8 +2,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Button from '@/components/button';
 import Input from '@/components/input';
+import useMutation from '@/libs/client/useMutation';
+import { useForm } from 'react-hook-form';
 
 export default function Login() {
+  const [login, { loading, data, error }] = useMutation('/api/users/login');
+  const { register, watch, reset, handleSubmit } = useForm();
   const router = useRouter();
   const [show, setShow] = useState(false);
 
@@ -11,7 +15,13 @@ export default function Login() {
     e.preventDefault();
     setShow((prev) => !prev);
   };
-  const onClick = () => {
+
+  const onValid = (validForm) => {
+    if (loading) return;
+    login(validForm);
+  };
+
+  const onSignUpClick = () => {
     router.push('/signup');
   };
   return (
@@ -20,9 +30,24 @@ export default function Login() {
         <h3 className='text-center text-3xl font-bold mb-10 text-indigo-500'>
           로그인
         </h3>
-        <form className='mt-8 flex flex-col space-y-6'>
-          <Input name='이메일' label='이메일' type='email' required />
+        <form
+          className='mt-8 flex flex-col space-y-6'
+          onSubmit={handleSubmit(onValid)}
+        >
           <Input
+            register={register('email', {
+              required: true,
+            })}
+            name='이메일'
+            label='이메일'
+            kind='email'
+            type='email'
+            required
+          />
+          <Input
+            register={register('password', {
+              required: true,
+            })}
             name='비밀번호'
             label='비밀번호'
             kind='password'
@@ -41,7 +66,11 @@ export default function Login() {
                 아직 계정이 없으시다면
               </span>
             </div>
-            <Button transparantBg={true} text={'가입하기'} onClick={onClick} />
+            <Button
+              transparantBg={true}
+              text={'가입하기'}
+              onClick={onSignUpClick}
+            />
           </div>
         </div>
       </div>
