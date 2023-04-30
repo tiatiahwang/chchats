@@ -1,1 +1,5 @@
-# 심플한 게시판 사이트
+# simple community website
+
+TODOS
+
+- [ ] login/signup page error messge CSS
