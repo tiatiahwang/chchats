@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export default function useMutation(url) {
   const [state, setState] = useState({
-    laoading: false,
+    loading: false,
     data: undefined,
     error: undefined,
   });
