@@ -1,7 +1,8 @@
 import Button from '@/components/button';
+import useMutation from '@/libs/client/useMutation';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -9,14 +10,15 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 });
 
 export default function Upload() {
+  const router = useRouter();
   const quillRef = useRef();
   const inputRef = useRef();
   const [contents, setContents] = useState('');
+  const [uploadPost, { loading, data }] = useMutation('/api/posts');
 
   const imageHandler = useCallback(() => {
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
     const input = document.createElement('input');
-    console.log('실행');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*'); // 이미지 파일만 선택가능하도록 제한
     input.setAttribute('name', 'image');
@@ -67,7 +69,7 @@ export default function Upload() {
             { indent: '+1' },
             { align: [] },
           ],
-          ['image', 'video'],
+          ['image'],
         ],
         handlers: {
           // 위에서 만든 이미지 핸들러 사용하도록 설정
@@ -90,7 +92,15 @@ export default function Upload() {
     };
 
     console.log(post);
+    if (loading) return;
+    uploadPost(post);
   };
+
+  useEffect(() => {
+    if (data?.ok) {
+      router.push(`/posts/${data.post.id}`);
+    }
+  }, [data]);
 
   return (
     <div>

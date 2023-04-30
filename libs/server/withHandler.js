@@ -1,14 +1,9 @@
-const METHOD = 'GET' || 'POST' || 'DELETE';
-
-export default function withHandler({ method, handler, isPrivate = true }) {
+export default function withHandler({ methods, handler, isPrivate = true }) {
   return async function (req, res) {
-    if (
-      req.method !== 'GET' &&
-      req.method !== 'POST' &&
-      req.method !== 'DELETE'
-    ) {
+    if (req.methods && !methods.includes(req.methods)) {
       return res.status(405).end();
     }
+
     if (isPrivate && !req.session.user) {
       return res
         .status(401)
