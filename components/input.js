@@ -28,6 +28,7 @@ export default function Input({ label, name, kind, type, register, onClick }) {
             placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'
           />
           <button
+            type='button'
             className='absolute inset-y-0 right-0 flex items-center px-4 text-gray-600'
             onClick={onClick}
           >
