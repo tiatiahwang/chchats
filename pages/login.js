@@ -23,7 +23,7 @@ export default function Login() {
   };
 
   const onRegisterClick = () => {
-    router.push('/register');
+    router.push('/signup');
   };
 
   useEffect(() => {

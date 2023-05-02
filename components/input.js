@@ -18,6 +18,17 @@ export default function Input({ label, name, kind, type, register, onClick }) {
           />
         </div>
       ) : null}
+      {kind === 'username' ? (
+        <div className='flex items-center rounded-md'>
+          <input
+            type={type}
+            id={name}
+            {...register}
+            className='w-full appearance-none rounded-md border border-gray-300 px-3 py-2 
+            placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'
+          />
+        </div>
+      ) : null}
       {kind === 'password' ? (
         <div className='relative'>
           <input
@@ -32,8 +43,9 @@ export default function Input({ label, name, kind, type, register, onClick }) {
             className='absolute inset-y-0 right-0 flex items-center px-4 text-gray-600'
             onClick={onClick}
           >
-            {type === 'password' ? (
+            {type === 'text' ? (
               <svg
+                color='#a0aec0'
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
                 viewBox='0 0 24 24'
@@ -54,6 +66,7 @@ export default function Input({ label, name, kind, type, register, onClick }) {
               </svg>
             ) : (
               <svg
+                color='#a0aec0'
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
                 viewBox='0 0 24 24'

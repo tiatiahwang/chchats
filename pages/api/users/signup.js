@@ -4,18 +4,26 @@ import client from '@/libs/server/client';
 import withHandler from '@/libs/server/withHandler';
 
 async function handler(req, res) {
-  const { email, password } = req.body;
+  const { email, username, password } = req.body;
 
-  const checkEmail = await client.user.findUnique({
+  const checkUsername = await client.user.findUnique({
     where: {
-      email,
+      name: username,
     },
   });
 
-  if (checkEmail) {
+  if (checkEmail && checkUsername) {
     return res
       .status(409)
-      .json({ ok: false, message: '이미 가입된 이메일 입니다.' });
+      .json({ ok: false, message: '다른 이메일과 이름을 입력해 주세요.' });
+  } else if (checkEmail && !checkUsername) {
+    return res
+      .status(409)
+      .json({ ok: false, message: '다른 이메일을 입력해 주세요.' });
+  } else if (!checkEmail && checkUsername) {
+    return res
+      .status(409)
+      .json({ ok: false, message: '다른 이름을 입력해 주세요.' });
   }
 
   const salt = await bcrypt.genSalt(10); // generate a salt with 10 rounds
@@ -25,7 +33,7 @@ async function handler(req, res) {
     data: {
       email,
       password: hashedPassword,
-      name: 'anonymous',
+      name: username,
     },
   });
 

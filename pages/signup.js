@@ -44,17 +44,26 @@ export default function Signup() {
               required: true,
             })}
             name='이메일'
-            label='이메일'
+            label='(필수) 이메일'
             type='email'
             kind='email'
             required
+          />
+          <Input
+            register={register('username', {
+              required: true,
+            })}
+            kind='username'
+            name='이름'
+            label='(필수) 이름'
+            type='text'
           />
           <Input
             register={register('password', {
               required: true,
             })}
             name='비밀번호'
-            label='비밀번호'
+            label='(필수) 비밀번호'
             kind='password'
             type={show ? 'text' : 'password'}
             onClick={togglePassword}
@@ -63,7 +72,9 @@ export default function Signup() {
             <Button text={'가입하기'} />
           </div>
         </form>
-        <p>{errorMessage}</p>
+        <p className='text-center mt-2 text-red-400 text-sm font-bold'>
+          {errorMessage}
+        </p>
       </div>
     </div>
   );
