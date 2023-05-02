@@ -2,7 +2,7 @@ export default function Input({ label, name, kind, type, register, onClick }) {
   return (
     <div>
       <label
-        className='mb-2 block text-sm font-medium text-gray-500'
+        className='mb-2 block text-sm font-medium text-gray-500 dark:text-gray-300'
         htmlFor={name}
       >
         {label}

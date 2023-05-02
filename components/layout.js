@@ -1,17 +1,19 @@
+import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import { cls } from '../libs/client/utils';
 import { useState } from 'react';
 
 export default function Layout({ title, children }) {
   const [navbar, setNavbar] = useState(false);
+  const { systemTheme, theme, setTheme } = useTheme();
+  const currentTheme = theme === 'system' ? systemTheme : theme;
   return (
     <div>
-      <nav className='w-full text-gray-800 shadow'>
+      <nav className='w-full text-gray-800 dark:text-white'>
         <div className='justify-between px-4 mx-auto md:items-center md:flex md:px-8'>
           <div className='flex items-center justify-between py-3 md:px-5 md:w-full'>
             <div className='md:hidden'>
               <button
-                className='p-2 rounded-md outline-none focus:bg-gray-100'
+                className='p-2 rounded-md outline-none focus:bg-gray-100 dark:focus:bg-gray-400'
                 onClick={() => setNavbar(!navbar)}
               >
                 {navbar ? (
@@ -69,14 +71,22 @@ export default function Layout({ title, children }) {
                 </li>
               </ul>
             </div>
-            <div>
+            <div className='flex items-center space-x-5'>
+              <button
+                onClick={() =>
+                  theme == 'dark' ? setTheme('light') : setTheme('dark')
+                }
+                className='text-xs'
+              >
+                {theme === 'dark' ? '라이트모드' : '다크모드'}
+              </button>
               <Link href='/profile' legacyBehavior>
                 <div className='h-8 w-8 rounded-full bg-pink-100' />
               </Link>
             </div>
           </div>
           {/* 모바일뷰에서 토글되는 창 */}
-          <div>
+          <div className='md:hidden'>
             <div
               className={`flex-1 justify-self-center pb-3 mt-2 ${
                 navbar ? '' : 'hidden'

@@ -36,7 +36,7 @@ export default function Login() {
 
   return (
     <div className='w-full h-[100vh] flex flex-col justify-center items-center'>
-      <div className='w-3/4 border p-20'>
+      <div className='w-3/4 border p-16'>
         <h3 className='text-center text-3xl font-bold mb-10 text-indigo-500'>
           로그인
         </h3>
@@ -73,7 +73,7 @@ export default function Login() {
           <div className='relative'>
             <div className='absolute w-full border-t border-gray-300' />
             <div className='relative -top-3 text-center '>
-              <span className='bg-white px-2 text-sm text-gray-500'>
+              <span className='bg-white dark:bg-[#374151] px-2 text-sm text-gray-500 dark:text-gray-300'>
                 아직 계정이 없으시다면
               </span>
             </div>

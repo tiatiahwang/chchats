@@ -31,7 +31,7 @@ export default function Signup() {
 
   return (
     <div className='w-full h-[100vh] flex flex-col justify-center items-center'>
-      <div className='w-3/4 border p-20'>
+      <div className='w-3/4 border p-16'>
         <h3 className='text-center text-3xl font-bold mb-10 text-indigo-500'>
           가입하기
         </h3>

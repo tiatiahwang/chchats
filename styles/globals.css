@@ -2,3 +2,9 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import 'tailwindcss/screens';
+
+@layer base {
+  body {
+    @apply dark:bg-[#374151] dark:text-[#fdfdff] bg-[#fdfdff] text-gray-900;
+  }
+}

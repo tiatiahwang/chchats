@@ -9,8 +9,10 @@ const Profile = () => {
         <div className='h-16 w-16 rounded-full bg-pink-100' />
         <Link legacyBehavior href=''>
           <a className='flex flex-col'>
-            <span className='font-medium text-gray-900'>{user?.name}</span>
-            <span className='text-xs text-gray-700'>
+            <span className='font-medium text-gray-900 dark:text-white'>
+              {user?.name}
+            </span>
+            <span className='text-xs text-gray-700 dark:text-white'>
               프로필 수정하기 &rarr;
             </span>
           </a>
@@ -35,7 +37,9 @@ const Profile = () => {
                 ></path>
               </svg>
             </div>
-            <span className='mt-2 text-sm font-medium text-gray-700'>글</span>
+            <span className='mt-2 text-sm font-medium text-gray-700 dark:text-white'>
+              글
+            </span>
           </a>
         </Link>
         <Link legacyBehavior href='/'>
@@ -56,7 +60,9 @@ const Profile = () => {
                 ></path>
               </svg>
             </div>
-            <span className='mt-2 text-sm font-medium text-gray-700'>댓글</span>
+            <span className='mt-2 text-sm font-medium text-gray-700 dark:text-white'>
+              댓글
+            </span>
           </a>
         </Link>
         <Link legacyBehavior href='/'>
@@ -77,7 +83,7 @@ const Profile = () => {
                 ></path>
               </svg>
             </div>
-            <span className='mt-2 text-sm font-medium text-gray-700'>
+            <span className='mt-2 text-sm font-medium text-gray-700 dark:text-white'>
               스크랩
             </span>
           </a>
