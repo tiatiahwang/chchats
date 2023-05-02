@@ -1,7 +1,10 @@
+import Layout from '@/components/layout';
 import useUser from '@/libs/client/useUser';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Home() {
   const { user, isLoading } = useUser();
-  console.log(user, isLoading);
-  return <div>홈</div>;
+  const [navbar, setNavbar] = useState(false);
+  return <Layout title='홈'></Layout>;
 }
