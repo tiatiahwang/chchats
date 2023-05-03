@@ -1,11 +1,9 @@
-import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useState } from 'react';
+import TogggleDarkMode from './toggleDarkMode';
 
 export default function Layout({ title, children }) {
   const [navbar, setNavbar] = useState(false);
-  const { systemTheme, theme, setTheme } = useTheme();
-  const currentTheme = theme === 'system' ? systemTheme : theme;
   return (
     <div>
       <nav className='w-full text-gray-800 dark:text-white'>
@@ -72,14 +70,7 @@ export default function Layout({ title, children }) {
               </ul>
             </div>
             <div className='flex items-center space-x-5'>
-              <button
-                onClick={() =>
-                  theme == 'dark' ? setTheme('light') : setTheme('dark')
-                }
-                className='text-xs'
-              >
-                {theme === 'dark' ? '라이트모드' : '다크모드'}
-              </button>
+              <TogggleDarkMode />
               <Link href='/profile' legacyBehavior>
                 <div className='h-8 w-8 rounded-full bg-pink-100' />
               </Link>

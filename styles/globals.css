@@ -1,10 +1,9 @@
-@import 'tailwindcss/base';
+/* @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import 'tailwindcss/screens';
+@import 'tailwindcss/screens'; */
 
-@layer base {
-  body {
-    @apply dark:bg-[#374151] dark:text-[#fdfdff] bg-[#fdfdff] text-gray-900;
-  }
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;

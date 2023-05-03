@@ -4,6 +4,7 @@ import Button from '@/components/button';
 import Input from '@/components/input';
 import useMutation from '@/libs/client/useMutation';
 import { useForm } from 'react-hook-form';
+import Layout from '@/components/layout';
 
 export default function Login() {
   const router = useRouter();
@@ -35,56 +36,58 @@ export default function Login() {
   }, [data]);
 
   return (
-    <div className='w-full h-[100vh] flex flex-col justify-center items-center'>
-      <div className='w-3/4 border p-16'>
-        <h3 className='text-center text-3xl font-bold mb-10 text-indigo-500'>
-          로그인
-        </h3>
-        <form
-          className='mt-8 flex flex-col space-y-6'
-          onSubmit={handleSubmit(onValid)}
-        >
-          <Input
-            register={register('email', {
-              required: true,
-            })}
-            name='이메일'
-            label='이메일'
-            kind='email'
-            type='email'
-            required
-          />
-          <Input
-            register={register('password', {
-              required: true,
-            })}
-            name='비밀번호'
-            label='비밀번호'
-            kind='password'
-            type={show ? 'text' : 'password'}
-            onClick={togglePassword}
-          />
-          <div className='pt-5'>
-            <Button text={'로그인하기'} />
-          </div>
-        </form>
-        <p>{errorMessage}</p>
-        <div className='mt-10'>
-          <div className='relative'>
-            <div className='absolute w-full border-t border-gray-300' />
-            <div className='relative -top-3 text-center '>
-              <span className='bg-white dark:bg-[#374151] px-2 text-sm text-gray-500 dark:text-gray-300'>
-                아직 계정이 없으시다면
-              </span>
-            </div>
-            <Button
-              transparantBg={true}
-              text={'가입하기'}
-              onClick={onRegisterClick}
+    <Layout>
+      <div className='w-full h-[calc(100vh-5rem)] flex flex-col justify-center items-center'>
+        <div className='w-3/4 border p-16'>
+          <h3 className='text-center text-3xl font-bold mb-10 text-indigo-500'>
+            로그인
+          </h3>
+          <form
+            className='mt-8 flex flex-col space-y-6'
+            onSubmit={handleSubmit(onValid)}
+          >
+            <Input
+              register={register('email', {
+                required: true,
+              })}
+              name='이메일'
+              label='이메일'
+              kind='email'
+              type='email'
+              required
             />
+            <Input
+              register={register('password', {
+                required: true,
+              })}
+              name='비밀번호'
+              label='비밀번호'
+              kind='password'
+              type={show ? 'text' : 'password'}
+              onClick={togglePassword}
+            />
+            <div className='pt-5'>
+              <Button text={'로그인하기'} />
+            </div>
+          </form>
+          <p>{errorMessage}</p>
+          <div className='mt-10'>
+            <div className='relative'>
+              <div className='absolute w-full border-t border-gray-300' />
+              <div className='relative -top-3 text-center '>
+                <span className='bg-white dark:bg-[#374151] px-2 text-sm text-gray-500 dark:text-gray-300'>
+                  아직 계정이 없으시다면
+                </span>
+              </div>
+              <Button
+                transparantBg={true}
+                text={'가입하기'}
+                onClick={onRegisterClick}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
