@@ -69,7 +69,7 @@ export default function Signup() {
             onClick={togglePassword}
           />
           <div className='pt-5'>
-            <Button text={'가입하기'} />
+            <Button text={'가입하기'} large={true} />
           </div>
         </form>
         <p className='text-center mt-2 text-red-400 text-sm font-bold'>

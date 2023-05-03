@@ -67,7 +67,7 @@ export default function Login() {
               onClick={togglePassword}
             />
             <div className='pt-5'>
-              <Button text={'로그인하기'} />
+              <Button text={'로그인하기'} large={true} />
             </div>
           </form>
           <p>{errorMessage}</p>
@@ -83,6 +83,7 @@ export default function Login() {
                 transparantBg={true}
                 text={'가입하기'}
                 onClick={onRegisterClick}
+                large={true}
               />
             </div>
           </div>

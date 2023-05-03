@@ -53,17 +53,17 @@ export default function Layout({ title, children }) {
               </Link>
               <ul className='hidden md:flex md:space-x-8 md:ml-10'>
                 <li>
-                  <Link href='/' legacyBehavior>
+                  <Link href='/questions' legacyBehavior>
                     <a>Q&A</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href='/' legacyBehavior>
+                  <Link href='/information' legacyBehavior>
                     <a>정보</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href='/' legacyBehavior>
+                  <Link href='/community' legacyBehavior>
                     <a>커뮤니티</a>
                   </Link>
                 </li>
@@ -85,17 +85,17 @@ export default function Layout({ title, children }) {
             >
               <ul className='items-center justify-center space-y-8'>
                 <li>
-                  <Link href='/' legacyBehavior>
+                  <Link href='/questions' legacyBehavior>
                     <a>Q&A</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href='/' legacyBehavior>
+                  <Link href='/information' legacyBehavior>
                     <a>정보</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href='/' legacyBehavior>
+                  <Link href='/community' legacyBehavior>
                     <a>커뮤니티</a>
                   </Link>
                 </li>

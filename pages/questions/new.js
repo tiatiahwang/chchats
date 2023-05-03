@@ -1,4 +1,5 @@
 import Button from '@/components/button';
+import Layout from '@/components/layout';
 import useMutation from '@/libs/client/useMutation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -103,28 +104,37 @@ export default function Upload() {
   }, [data]);
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className='flex items-center justify-start'>
-          <span>제목</span>
-          <input
-            ref={inputRef}
-            type='text'
-            placeholder='제목을 입력해주세요'
-            className='w-appearance-none px-3 py-2 placeholder-gray-400 focus:outline-none'
+    <Layout>
+      <div className='h-screen px-4'>
+        <form onSubmit={handleSubmit}>
+          <div className='flex items-center justify-start'>
+            <span>제목</span>
+            <input
+              ref={inputRef}
+              type='text'
+              placeholder='제목을 입력해주세요'
+              className='w-appearance-none px-3 py-2 placeholder-gray-400 focus:outline-none'
+            />
+          </div>
+          <QuillNoSSRWrapper
+            ref={quillRef}
+            value={contents}
+            onChange={setContents}
+            modules={modules}
+            theme='snow'
           />
-        </div>
-        <QuillNoSSRWrapper
-          ref={quillRef}
-          value={contents}
-          onChange={setContents}
-          modules={modules}
-          theme='snow'
-        />
-        <div className='pt-5'>
-          <Button text={'글 작성하기'} />
-        </div>
-      </form>
-    </div>
+          <div className='pt-5'>
+            <Button text={'등록'} />
+          </div>
+        </form>
+        <style jsx>{`
+          .ql-formats > button > svg {
+            fill: none; !important
+            stroke: #fff;  !important
+          }
+
+        `}</style>
+      </div>
+    </Layout>
   );
 }
