@@ -8,15 +8,24 @@ import useSWR from 'swr';
 const Profile = () => {
   const router = useRouter();
   const { user } = useUser();
-  const { data } = useSWR(user?.id ? `/api/users/${user.id}/posts` : null);
+  const { data } = useSWR('/api/users/me/posts');
   return (
     <Layout>
       <div className='px-4'>
         <div className='flex items-center space-x-3'>
-          <div className='h-16 w-16 rounded-full bg-indigo-200' />
-          <Link legacyBehavior href=''>
+          {user?.avatar ? (
+            <img
+              src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
+              className='h-16 w-16 rounded-full'
+            />
+          ) : (
+            <div className='h-16 w-16 rounded-full bg-indigo-100' />
+          )}
+          <Link legacyBehavior href='/profile/edit'>
             <a className='flex flex-col'>
-              <span className='font-medium dark:text-white'>{user?.name}</span>
+              <span className='font-medium dark:text-white'>
+                {user?.name}
+              </span>
               <span className='text-xs text-gray-700 dark:text-white'>
                 프로필 수정하기 &rarr;
               </span>
@@ -24,7 +33,7 @@ const Profile = () => {
           </Link>
         </div>
         <div className='flex items-center justify-start gap-x-6 border-b border-gray-300 text-sm mt-6 font-medium'>
-          <Link href={`/profile/${user?.id}/mypost`} className='pb-4'>
+          <Link href={'/profile/mypost'} className='pb-4'>
             <span
               className={cls(
                 'pb-4 px-2',

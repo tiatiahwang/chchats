@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import TogggleDarkMode from './toggleDarkMode';
+import useUser from '@/libs/client/useUser';
 
 export default function Layout({ title, children }) {
+  const { user } = useUser();
   const [navbar, setNavbar] = useState(false);
   return (
     <div>
@@ -71,8 +73,15 @@ export default function Layout({ title, children }) {
             </div>
             <div className='flex items-center space-x-5'>
               <TogggleDarkMode />
-              <Link href='/profile' legacyBehavior>
-                <div className='h-8 w-8 rounded-full bg-indigo-100' />
+              <Link href='/profile'>
+                {user?.avatar ? (
+                  <img
+                    src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
+                    className='h-8 w-8 rounded-full'
+                  />
+                ) : (
+                  <div className='h-8 w-8 rounded-full bg-indigo-100' />
+                )}
               </Link>
             </div>
           </div>
