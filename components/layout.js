@@ -9,8 +9,8 @@ export default function Layout({ title, children }) {
   return (
     <div>
       <nav className='w-full'>
-        <div className='justify-between px-4 mx-auto md:items-center md:flex md:px-8'>
-          <div className='flex items-center justify-between py-3 md:px-5 md:w-full'>
+        <div className='justify-between mx-auto md:items-center md:flex md:px-8 relative'>
+          <div className='flex items-center justify-between py-3 px-4 md:px-5 md:w-full'>
             <div className='md:hidden'>
               <button
                 className='p-2 rounded-md outline-none focus:bg-gray-100 dark:focus:bg-gray-400'
@@ -86,31 +86,36 @@ export default function Layout({ title, children }) {
             </div>
           </div>
           {/* 모바일뷰에서 토글되는 창 */}
-          <div className='md:hidden'>
-            <div
-              className={`flex-1 justify-self-center pb-3 mt-2 ${
-                navbar ? '' : 'hidden'
-              }`}
-            >
-              <ul className='items-center justify-center space-y-8'>
-                <li>
-                  <Link href='/questions' legacyBehavior>
-                    <a>Q&A</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href='/information' legacyBehavior>
-                    <a>정보</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href='/community' legacyBehavior>
-                    <a>커뮤니티</a>
-                  </Link>
-                </li>
-              </ul>
+          {navbar ? (
+            <div className='md:hidden top-20 absolute z-10 dark:bg-darkbg w-full pb-4 shadow-md bg-white'>
+              <div
+                className={`px-4 flex-1 justify-self-center pb-3 mt-2 ${
+                  navbar ? '' : 'hidden'
+                }`}
+              >
+                <ul className='items-center justify-center space-y-8'>
+                  <li>
+                    <Link href='/questions' legacyBehavior>
+                      <a>Q&A</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href='/information'
+                      legacyBehavior
+                    >
+                      <a>정보</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href='/community' legacyBehavior>
+                      <a>커뮤니티</a>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </nav>
       <div className='pt-12'>{children}</div>
