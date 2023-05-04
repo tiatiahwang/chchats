@@ -72,7 +72,7 @@ export default function Layout({ title, children }) {
             <div className='flex items-center space-x-5'>
               <TogggleDarkMode />
               <Link href='/profile' legacyBehavior>
-                <div className='h-8 w-8 rounded-full bg-pink-100' />
+                <div className='h-8 w-8 rounded-full bg-indigo-100' />
               </Link>
             </div>
           </div>

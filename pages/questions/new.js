@@ -17,6 +17,7 @@ export default function Upload() {
   const [contents, setContents] = useState('');
   const [uploadPost, { loading, data }] = useMutation('/api/posts');
 
+  console.log(router);
   const imageHandler = useCallback(() => {
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
     const input = document.createElement('input');

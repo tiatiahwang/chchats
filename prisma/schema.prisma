@@ -17,7 +17,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   posts     Post[]
-  bookmarks Bookmark[]
+  // bookmarks Bookmark[]
 }
 
 model Post {
@@ -27,33 +27,23 @@ model Post {
   updatedAt   DateTime @updatedAt
   userId      Int
   category    String
-  image       String
+  image       String?
   title       String
   contents    String   @db.LongText
-  categories  Category[]
-  bookmarks   Bookmark[]
+  // bookmarks   Bookmark[]
 
   @@index([userId])
 }
 
-model Category {
-  id      Int      @id @default(autoincrement())
-  name    String
-  post    Post     @relation(fields: [postId], references: [id], onDelete: Cascade) 
-  postId  Int
-  
-  @@index([postId])
-}
+// model Bookmark {
+//   id          Int      @id @default(autoincrement())
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
+//   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+//   userId      Int
+//   postId      Int
 
-model Bookmark {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  userId      Int
-  postId      Int
-
-  @@index([userId])
-  @@index([postId])
-}
+//   @@index([userId])
+//   @@index([postId])
+// }

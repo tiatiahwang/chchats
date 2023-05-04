@@ -3,13 +3,29 @@ import withHandler from '@/libs/server/withHandler';
 import { withApiSession } from '@/libs/server/withSession';
 
 async function handler(req, res) {
-  //   if (req.method === 'GET') {
-  //     const products = await client.product.findMany({});
-  //     res.json({
-  //       ok: true,
-  //       products,
-  //     });
-  //   }
+  if (req.method === 'GET') {
+    const {
+      query: { category },
+    } = req;
+    const posts = await client.post.findMany({
+      where: {
+        category,
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            avatar: true,
+          },
+        },
+      },
+    });
+    res.json({
+      ok: true,
+      posts,
+    });
+  }
   if (req.method === 'POST') {
     const {
       body: { title, contents, category },
