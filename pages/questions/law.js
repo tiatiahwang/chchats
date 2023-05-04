@@ -4,7 +4,7 @@ import Layout from '@/components/layout';
 import { questionsCategories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
 
-export default function Questions() {
+export default function Law() {
   const router = useRouter();
   const onClick = () => router.push('/questions/new');
   return (

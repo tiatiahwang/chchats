@@ -6,4 +6,5 @@ export const lightTheme = {
 export const darkTheme = {
   BgColor: '#374151',
   TextColor: '#fdfdff',
+  HoverColor: '#272e3a',
 };
