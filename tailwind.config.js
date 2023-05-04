@@ -14,6 +14,7 @@ module.exports = {
       darkhover: '#272e3a',
       darkselected: '#4c596f',
       indigo: colors.indigo,
+      gray: colors.gray,
     },
   },
   darkMode: 'class',

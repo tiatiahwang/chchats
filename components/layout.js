@@ -6,7 +6,7 @@ export default function Layout({ title, children }) {
   const [navbar, setNavbar] = useState(false);
   return (
     <div>
-      <nav className='w-full text-gray-800 dark:text-white'>
+      <nav className='w-full'>
         <div className='justify-between px-4 mx-auto md:items-center md:flex md:px-8'>
           <div className='flex items-center justify-between py-3 md:px-5 md:w-full'>
             <div className='md:hidden'>

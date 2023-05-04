@@ -3,12 +3,11 @@ import useUser from '@/libs/client/useUser';
 import { cls } from '@/libs/client/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 
-const Profile = () => {
+export default function MyPost() {
   const router = useRouter();
   const { user } = useUser();
-  const { data } = useSWR(user?.id ? `/api/users/${user.id}/posts` : null);
+  console.log(router.pathname.includes('mypost'));
   return (
     <Layout>
       <div className='px-4'>
@@ -23,13 +22,12 @@ const Profile = () => {
             </a>
           </Link>
         </div>
-        <div className='flex items-center justify-start gap-x-6 border-b border-gray-300 text-sm mt-6 font-medium'>
+        <div className='flex items-center justify-center gap-x-6 border-b border-gray-300 text-sm mt-6 font-medium'>
           <Link href={`/profile/${user?.id}/mypost`} className='pb-4'>
             <span
               className={cls(
                 'pb-4 px-2',
-                router.pathname.includes('mypost') ||
-                  router.pathname.split('/').length === 2
+                router.pathname.includes('mypost')
                   ? 'border-b-[3px] border-indigo-500 text-indigo-500'
                   : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300',
               )}
@@ -62,12 +60,7 @@ const Profile = () => {
             </span>
           </Link>
         </div>
-        {data?.posts?.map((post) => (
-          <div key={post.id}>{post.title}</div>
-        ))}
       </div>
     </Layout>
   );
-};
-
-export default Profile;
+}
