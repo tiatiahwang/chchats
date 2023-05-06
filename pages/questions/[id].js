@@ -1,22 +1,29 @@
 import Button from '@/components/button';
 import Category from '@/components/category';
 import Layout from '@/components/layout';
+import useTimeFormat from '@/libs/client/useTimeFormat';
 import { questionsCategories } from '@/libs/client/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 export default function Questions() {
   const router = useRouter();
+  const [createdAt, setCreatedAt] = useState('');
   const { data } = useSWR(
     router.query.id
       ? `/api/posts/${router.query.id}`
       : null,
   );
+
   useEffect(() => {
-    if (data) console.log(router.query);
+    if (data && data.ok) {
+      const createdAt = new Date(data.post.createdAt);
+      setCreatedAt(useTimeFormat(createdAt));
+    }
   }, [data]);
+
   return (
     <Layout>
       <div className='p-4 space-y-6'>
@@ -46,9 +53,7 @@ export default function Questions() {
               <span className='text-sm'>
                 {data?.post?.user?.name}
               </span>
-              <span className='text-xs'>
-                {data?.post?.createdAt}
-              </span>
+              <span className='text-xs'>{createdAt}</span>
             </div>
           </div>
           <h1 className='text-2xl font-semibold'>
