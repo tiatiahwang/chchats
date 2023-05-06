@@ -5,7 +5,6 @@ import withHandler from '@/libs/server/withHandler';
 
 async function handler(req, res) {
   const { email, username, password } = req.body;
-  console.log(email, username, password);
 
   const checkEmail = await client.user.findUnique({
     where: {

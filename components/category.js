@@ -2,9 +2,16 @@ import { cls } from '@/libs/client/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-export default function Category({ categories }) {
+export default function Category({
+  categories,
+  selected = '',
+}) {
+  console.log(selected);
   const router = useRouter();
-  const currentCategory = router.pathname.split('/')[2];
+  const currentCategory =
+    selected === ''
+      ? router.pathname.split('/')[2]
+      : selected;
   return (
     <ul className='dark:text-white flex space-x-2 text-sm'>
       {categories?.map((category) => (
@@ -12,7 +19,8 @@ export default function Category({ categories }) {
           <li
             className={cls(
               'p-2 rounded-md cursor-pointer',
-              router.pathname.split('/').length === 2 && category.id === 0
+              router.pathname.split('/').length === 2 &&
+                category.id === 0
                 ? 'dark:bg-darkselected'
                 : '',
               currentCategory === category.ref

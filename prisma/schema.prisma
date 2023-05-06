@@ -27,6 +27,7 @@ model Post {
   updatedAt   DateTime @updatedAt
   userId      Int
   category    String
+  subCategory String
   image       String?
   title       String
   contents    String   @db.LongText
