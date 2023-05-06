@@ -8,8 +8,16 @@ import Layout from '@/components/layout';
 
 export default function Login() {
   const router = useRouter();
-  const [login, { loading, data, error }] = useMutation('/api/users/login');
-  const { register, watch, reset, handleSubmit } = useForm();
+  const [login, { loading, data, error }] = useMutation(
+    '/api/users/login',
+  );
+  const {
+    register,
+    watch,
+    reset,
+    handleSubmit,
+    clearErrors,
+  } = useForm();
   const [show, setShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
 

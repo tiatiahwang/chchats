@@ -9,7 +9,7 @@ export default function Layout({ title, children }) {
   return (
     <div>
       <nav className='w-full'>
-        <div className='justify-between mx-auto md:items-center md:flex md:px-8 relative'>
+        <div className='justify-between mx-auto md:items-center md:flex md:px-8 relative dark:bg-darkbg'>
           <div className='flex items-center justify-between py-3 px-4 md:px-5 md:w-full'>
             <div className='md:hidden'>
               <button

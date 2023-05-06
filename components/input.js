@@ -1,4 +1,11 @@
-export default function Input({ label, name, kind, type, register, onClick }) {
+export default function Input({
+  label,
+  name,
+  kind,
+  type,
+  register,
+  onClick,
+}) {
   return (
     <div>
       <label
@@ -35,7 +42,7 @@ export default function Input({ label, name, kind, type, register, onClick }) {
             type={type}
             id={name}
             {...register}
-            className='w-full appearance-none rounded-md border border-gray-300 px-3 py-2 dark:bg-gray-200
+            className='w-full appearance-none rounded-md border border-gray-300 px-3 py-2 dark:text-black dark:bg-gray-200
             placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'
           />
           <button

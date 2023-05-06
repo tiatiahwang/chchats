@@ -8,8 +8,11 @@ import { useForm } from 'react-hook-form';
 export default function Signup() {
   const router = useRouter();
   const [show, setShow] = useState(false);
-  const { register, watch, reset, handleSubmit } = useForm();
-  const [signup, { loading, data, error }] = useMutation('/api/users/signup');
+  const { register, watch, reset, handleSubmit } =
+    useForm();
+  const [signup, { loading, data, error }] = useMutation(
+    '/api/users/signup',
+  );
   const [errorMessage, setErrorMessage] = useState();
 
   const togglePassword = (e) => {
@@ -18,6 +21,8 @@ export default function Signup() {
   };
 
   const onValid = (validForm) => {
+    if (loading) return;
+    console.log(validForm);
     signup(validForm);
   };
 
@@ -69,7 +74,10 @@ export default function Signup() {
             onClick={togglePassword}
           />
           <div className='pt-5'>
-            <Button text={'가입하기'} large={true} />
+            <Button
+              text={loading ? '로딩중' : '가입하기'}
+              large={true}
+            />
           </div>
         </form>
         <p className='text-center mt-2 text-red-400 text-sm font-bold'>
