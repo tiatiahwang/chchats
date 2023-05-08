@@ -1,5 +1,6 @@
 import Layout from '@/components/layout';
-import PostList from '@/components/post-card';
+import PostList from '@/components/postList';
+import { questionsCategories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
@@ -16,6 +17,7 @@ export default function Questions() {
         description='다양한 주제에 대해서 묻고 대답해보세요.'
         onClick={onClick}
         data={data}
+        categoryList={questionsCategories}
       />
     </Layout>
   );

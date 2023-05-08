@@ -50,7 +50,7 @@ export default function Layout({ title, children }) {
               </button>
             </div>
             <div className='md:flex md:items-center'>
-              <Link href='#' legacyBehavior>
+              <Link href='/' className='cursor-pointer'>
                 <h2 className='text-xl'>LOGO</h2>
               </Link>
               <ul className='hidden md:flex md:space-x-8 md:ml-10'>
@@ -65,8 +65,8 @@ export default function Layout({ title, children }) {
                   </Link>
                 </li>
                 <li>
-                  <Link href='/community' legacyBehavior>
-                    <a>커뮤니티</a>
+                  <Link href='/market' legacyBehavior>
+                    <a>마켓</a>
                   </Link>
                 </li>
               </ul>
@@ -108,8 +108,8 @@ export default function Layout({ title, children }) {
                     </Link>
                   </li>
                   <li>
-                    <Link href='/community' legacyBehavior>
-                      <a>커뮤니티</a>
+                    <Link href='/market' legacyBehavior>
+                      <a>마켓</a>
                     </Link>
                   </li>
                 </ul>

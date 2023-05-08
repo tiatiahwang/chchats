@@ -1,15 +1,12 @@
 import Category from '@/components/category';
 import Layout from '@/components/layout';
 import PostDetail from '@/components/postDetail';
-import useTimeFormat from '@/libs/client/useTimeFormat';
-import { questionsCategories } from '@/libs/client/utils';
+import { marketCategories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 export default function Questions() {
   const router = useRouter();
-  const [createdAt, setCreatedAt] = useState('');
   const { data } = useSWR(
     router.query.id
       ? `/api/posts/${router.query.id}`
@@ -26,7 +23,7 @@ export default function Questions() {
           </p>
         </div>
         <Category
-          categories={questionsCategories}
+          categories={marketCategories}
           selected={data?.post?.subCategory}
         />
         <PostDetail post={data?.post} />

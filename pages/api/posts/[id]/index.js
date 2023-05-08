@@ -7,6 +7,7 @@ async function handler(req, res) {
     query: { id },
     session: { user },
   } = req;
+  console.log(id);
 
   const post = await client.post.findUnique({
     where: { id: +id },
@@ -23,4 +24,6 @@ async function handler(req, res) {
   res.json({ ok: true, post });
 }
 
-export default withApiSession(withHandler({ methods: ['GET'], handler }));
+export default withApiSession(
+  withHandler({ methods: ['GET'], handler }),
+);
