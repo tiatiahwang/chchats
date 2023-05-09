@@ -19,7 +19,7 @@ export default function Questions() {
   return (
     <Layout>
       <div className='p-4 space-y-6'>
-        <div className='dark:text-white dark:bg-darkselected py-4 px-8 rounded-md'>
+        <div className='dark:text-white bg-gray-200 dark:bg-darkselected py-4 px-8 rounded-md'>
           <p className='font-semibold text-md'>Q&A</p>
           <p className='text-xs'>
             다양한 주제에 대해서 묻고 대답해보세요.

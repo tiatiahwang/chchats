@@ -1,8 +1,5 @@
-import { questionsCategories } from '@/libs/client/utils';
 import Button from './button';
 import Category from './category';
-import useTimeFormat from '@/libs/client/useTimeFormat';
-import Link from 'next/link';
 import PostCard from './postCard';
 
 export default function PostList({
@@ -13,10 +10,9 @@ export default function PostList({
   isHome = false,
   categoryList,
 }) {
-  console.log(data);
   return (
-    <div className='p-4 space-y-6'>
-      <div className='dark:text-white dark:bg-darkselected py-4 px-8 rounded-md'>
+    <div className='p-4 space-y-6 text-black'>
+      <div className='dark:text-white bg-gray-100 dark:bg-darkselected py-4 px-8 rounded-md'>
         <p className='font-semibold text-md'>
           {categoryName}
         </p>
@@ -35,7 +31,7 @@ export default function PostList({
           selected={data?.post?.subCategory}
         />
       ) : null}
-      <div className='border-t-[1px] border-white'>
+      <div className='border-t-[1px] border-gray-200 dark:border-white'>
         {data?.posts?.map((post) => {
           return <PostCard key={post.id} post={post} />;
         })}

@@ -6,7 +6,6 @@ export default function Category({
   categories,
   selected = '',
 }) {
-  console.log(selected);
   const router = useRouter();
   const currentCategory =
     selected === ''
@@ -21,10 +20,10 @@ export default function Category({
               'p-2 rounded-md cursor-pointer',
               router.pathname.split('/').length === 2 &&
                 category.id === 0
-                ? 'dark:bg-darkselected'
+                ? 'bg-gray-200 dark:bg-darkselected'
                 : '',
               currentCategory === category.ref
-                ? 'dark:bg-darkselected'
+                ? 'bg-gray-200 dark:bg-darkselected'
                 : 'hover:text-indigo-500',
             )}
           >

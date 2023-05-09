@@ -52,5 +52,9 @@ async function handler(req, res) {
 }
 
 export default withApiSession(
-  withHandler({ methods: ['GET', 'POST'], handler }),
+  withHandler({
+    methods: ['GET', 'POST'],
+    handler,
+    isPrivate: false,
+  }),
 );

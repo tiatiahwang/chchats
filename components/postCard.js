@@ -5,7 +5,7 @@ export default function PostCard({ post }) {
   return (
     <div
       key={post.id}
-      className='text-white border-b-[1px] border-white py-4 space-y-2'
+      className='dark:text-white border-b-[1px] dark:border-white py-4 space-y-2'
     >
       <div className='flex items-center space-x-2 text-xs pb-2'>
         <div className='w-5 h-5 rounded-full bg-indigo-100' />
