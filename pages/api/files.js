@@ -20,5 +20,8 @@ async function handler(req, res) {
 }
 
 export default withApiSession(
-  withHandler({ methods: ['GET'], handler }),
+  withHandler({
+    methods: ['GET'],
+    handler,
+  }),
 );

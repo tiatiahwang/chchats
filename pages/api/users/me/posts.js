@@ -11,7 +11,6 @@ async function handler(req, res) {
       userId: user.id,
     },
   });
-  console.log(posts);
   res.json({
     ok: true,
     posts,

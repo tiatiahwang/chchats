@@ -1,10 +1,18 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TogggleDarkMode from './toggleDarkMode';
 import useUser from '@/libs/client/useUser';
+import useSWR from 'swr';
 
 export default function Layout({ title, children }) {
-  const { user } = useUser();
+  const { user } = useSWR('/api/users/me');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    if (user && user.ok) {
+      setIsLoggedIn(true);
+    }
+  }, [user]);
+
   const [navbar, setNavbar] = useState(false);
   return (
     <div>
@@ -74,12 +82,13 @@ export default function Layout({ title, children }) {
             <div className='flex items-center space-x-5'>
               <TogggleDarkMode />
               <Link href='/profile'>
-                {user?.avatar ? (
+                {isLoggedIn && user?.avatar && (
                   <img
                     src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
                     className='h-8 w-8 rounded-full'
                   />
-                ) : (
+                )}
+                {!isLoggedIn && (
                   <div className='h-8 w-8 rounded-full bg-indigo-100' />
                 )}
               </Link>

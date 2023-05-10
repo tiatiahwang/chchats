@@ -19,7 +19,10 @@ async function handler(req, res) {
     });
   }
 
-  const isMatch = await bcrypt.compare(password, found.password);
+  const isMatch = await bcrypt.compare(
+    password,
+    found.password,
+  );
 
   if (!isMatch) {
     return res.status(404).json({
@@ -40,6 +43,5 @@ export default withApiSession(
   withHandler({
     method: 'POST',
     handler,
-    isPrivate: false,
   }),
 );
