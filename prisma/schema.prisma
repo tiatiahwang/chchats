@@ -17,6 +17,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   posts     Post[]
+  comments  Comment[]
   // bookmarks Bookmark[]
 }
 
@@ -31,9 +32,24 @@ model Post {
   image       String?
   title       String
   contents    String   @db.LongText
+  comments    Comment[]
   // bookmarks   Bookmark[]
 
   @@index([userId])
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      Int
+  postId      Int
+  contents    String   @db.MediumText
+
+  @@index([userId])
+  @@index([postId])
 }
 
 // model Bookmark {
