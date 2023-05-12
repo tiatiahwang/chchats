@@ -1,4 +1,5 @@
 import Category from '@/components/category';
+import CommentList from '@/components/commentList';
 import Layout from '@/components/layout';
 import PostDetail from '@/components/postDetail';
 import useMutation from '@/libs/client/useMutation';
@@ -75,24 +76,7 @@ export default function Questions() {
               댓글 작성
             </button>
           </form>
-          {data?.post?.comments?.map((comment) => (
-            <div
-              key={comment.id}
-              className='dark:text-white border-t-[1px] dark:border-white py-6'
-            >
-              <div className='flex items-center space-x-2 text-xs pb-2'>
-                <div className='w-5 h-5 rounded-full bg-indigo-100' />
-                <span>{comment.user.name}</span>
-                <span>·</span>
-                <span>
-                  {useTimeFormat(
-                    new Date(comment.createdAt),
-                  )}
-                </span>
-              </div>
-              <p>{comment.contents}</p>
-            </div>
-          ))}
+          <CommentList comments={data?.post?.comments} />
         </div>
       </div>
     </Layout>
