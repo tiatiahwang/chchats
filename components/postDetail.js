@@ -2,7 +2,6 @@ import useTimeFormat from '@/libs/client/useTimeFormat';
 import Link from 'next/link';
 
 export default function PostDetail({ post }) {
-  console.log(post);
   // 데이터 로딩되는 동안 뭔가 화면에 표시해주어야함
   return (
     post && (

@@ -1,13 +1,14 @@
 import Category from '@/components/category';
 import CommentList from '@/components/commentList';
 import Layout from '@/components/layout';
+import Modal from '@/components/modal';
 import PostDetail from '@/components/postDetail';
 import useMutation from '@/libs/client/useMutation';
 import useTimeFormat from '@/libs/client/useTimeFormat';
 import useUser from '@/libs/client/useUser';
 import { marketCategories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 
@@ -15,23 +16,33 @@ export default function Questions() {
   const { register, handleSubmit, reset } = useForm();
   const { user } = useUser();
   const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+
   const { data, mutate } = useSWR(
     router.query.id
       ? `/api/posts/${router.query.id}`
       : null,
   );
+
   const [addComment, { loading, data: newCommentData }] =
     useMutation(`/api/posts/${router.query.id}/comment`);
+
   const onValid = (validForm) => {
+    if (!user) {
+      setShowModal(true);
+      return;
+    }
     if (loading) return;
     addComment(validForm);
   };
+
   useEffect(() => {
     if (newCommentData && newCommentData.ok) {
       reset();
       mutate();
     }
   }, [newCommentData, reset, mutate]);
+
   return (
     <Layout>
       <div className='p-4 space-y-6'>
@@ -68,17 +79,23 @@ export default function Questions() {
               placeholder={
                 !user ? '로그인을 해주세요' : null
               }
+              disabled={!user ? true : false}
             />
-            <button
-              disabled={!user}
-              className='text-sm cursor-pointer hover:text-indigo-500'
-            >
+            <button className='text-sm cursor-pointer hover:text-indigo-500'>
               댓글 작성
             </button>
           </form>
           <CommentList comments={data?.post?.comments} />
         </div>
       </div>
+      {showModal ? (
+        <Modal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          onConfirm={() => router.push('/login')}
+          onCancle={() => setShowModal(false)}
+        />
+      ) : null}
     </Layout>
   );
 }
