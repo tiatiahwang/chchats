@@ -4,7 +4,6 @@ import Layout from '@/components/layout';
 import Modal from '@/components/modal';
 import PostDetail from '@/components/postDetail';
 import useMutation from '@/libs/client/useMutation';
-import useTimeFormat from '@/libs/client/useTimeFormat';
 import useUser from '@/libs/client/useUser';
 import { marketCategories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
@@ -17,6 +16,8 @@ export default function Questions() {
   const { user } = useUser();
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
+  const [showCommentForm, setShowCommentForm] =
+    useState(false);
 
   const { data, mutate } = useSWR(
     router.query.id
@@ -28,10 +29,6 @@ export default function Questions() {
     useMutation(`/api/posts/${router.query.id}/comment`);
 
   const onValid = (validForm) => {
-    if (!user) {
-      setShowModal(true);
-      return;
-    }
     if (loading) return;
     addComment(validForm);
   };
@@ -42,6 +39,14 @@ export default function Questions() {
       mutate();
     }
   }, [newCommentData, reset, mutate]);
+
+  const onClickAddComment = () => {
+    if (!user) {
+      setShowModal(true);
+      return;
+    }
+    setShowCommentForm(!showCommentForm);
+  };
 
   return (
     <Layout>
@@ -59,32 +64,40 @@ export default function Questions() {
         <PostDetail post={data?.post} />
         {/* COMMENT SECTION */}
         <div className='mt-0'>
-          <form
-            className='flex mb-4 gap-4'
-            onSubmit={handleSubmit(onValid)}
+          <button
+            onClick={onClickAddComment}
+            className='hover:text-indigo-500 text-sm pb-6'
           >
-            <div className='shrink-0'>
-              {user?.avater ? (
-                <img
-                  src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
-                  className='h-8 w-8 rounded-full'
-                />
-              ) : (
-                <div className='h-8 w-8 rounded-full bg-indigo-100' />
-              )}
-            </div>
-            <textarea
-              {...register('contents')}
-              className='resize-none rounded-md flex-1 focus:outline-none dark:bg-darkbg border-[1px] dark:border-white p-2'
-              placeholder={
-                !user ? '로그인을 해주세요' : null
-              }
-              disabled={!user ? true : false}
-            />
-            <button className='text-sm cursor-pointer hover:text-indigo-500'>
-              댓글 작성
-            </button>
-          </form>
+            {showCommentForm ? '댓글창 닫기' : '댓글 쓰기'}
+          </button>
+          {showCommentForm ? (
+            <form
+              className='flex mb-4 gap-4'
+              onSubmit={handleSubmit(onValid)}
+            >
+              <div className='shrink-0'>
+                {user?.avater ? (
+                  <img
+                    src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
+                    className='h-8 w-8 rounded-full'
+                  />
+                ) : (
+                  <div className='h-8 w-8 rounded-full bg-indigo-100' />
+                )}
+              </div>
+              <textarea
+                {...register('contents')}
+                className='resize-none rounded-md flex-1 focus:outline-none dark:bg-darkbg border-[1px] dark:border-white p-2'
+                placeholder={
+                  !user ? '로그인을 해주세요' : null
+                }
+                disabled={!user ? true : false}
+              />
+              <button className='text-sm cursor-pointer hover:text-indigo-500'>
+                댓글 작성
+              </button>
+            </form>
+          ) : null}
           <CommentList comments={data?.post?.comments} />
         </div>
       </div>
