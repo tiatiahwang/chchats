@@ -5,11 +5,12 @@ import { withApiSession } from '@/libs/server/withSession';
 async function handler(req, res) {
   if (req.method === 'GET') {
     const {
-      query: { category },
+      query: { category, subCategory },
     } = req;
     const posts = await client.post.findMany({
       where: {
         category,
+        subCategory,
       },
       include: {
         user: {
