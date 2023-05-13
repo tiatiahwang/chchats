@@ -4,7 +4,7 @@ import { questionsCategories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
-export default function Health() {
+export default function Etc() {
   const router = useRouter();
   const { data } = useSWR(
     router.pathname

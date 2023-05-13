@@ -4,7 +4,7 @@ import { questionsCategories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
-export default function Visa() {
+export default function Education() {
   const router = useRouter();
   const { data } = useSWR(
     router.pathname
