@@ -1,36 +1,55 @@
+import Button from '@/components/button';
 import Layout from '@/components/layout';
+import useMutation from '@/libs/client/useMutation';
 import useUser from '@/libs/client/useUser';
 import { cls } from '@/libs/client/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import useSWR from 'swr';
 
 const Profile = () => {
   const router = useRouter();
   const { user } = useUser();
   const { data } = useSWR('/api/users/me/posts');
+  const [logout, { loading, data: logoutStatus }] =
+    useMutation('/api/users/logout');
+
+  const onClickLogout = () => {
+    if (loading) return;
+    logout();
+  };
+
+  useEffect(() => {
+    if (logoutStatus && logoutStatus.ok) {
+      router.push('/');
+    }
+  }, [logoutStatus]);
   return (
     <Layout>
       <div className='px-4'>
-        <div className='flex items-center space-x-3'>
-          {user?.avatar ? (
-            <img
-              src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
-              className='h-16 w-16 rounded-full'
-            />
-          ) : (
-            <div className='h-16 w-16 rounded-full bg-indigo-100' />
-          )}
-          <Link legacyBehavior href='/profile/edit'>
-            <a className='flex flex-col'>
-              <span className='font-medium dark:text-white'>
-                {user?.name}
-              </span>
-              <span className='text-xs text-gray-700 dark:text-white'>
-                프로필 수정하기 &rarr;
-              </span>
-            </a>
-          </Link>
+        <div className='flex justify-between'>
+          <div className='flex items-center space-x-3'>
+            {user?.avatar ? (
+              <img
+                src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
+                className='h-16 w-16 rounded-full'
+              />
+            ) : (
+              <div className='h-16 w-16 rounded-full bg-indigo-100' />
+            )}
+            <Link legacyBehavior href='/profile/edit'>
+              <a className='flex flex-col'>
+                <span className='font-medium dark:text-white'>
+                  {user?.name}
+                </span>
+                <span className='text-xs text-gray-700 dark:text-white'>
+                  프로필 수정하기 &rarr;
+                </span>
+              </a>
+            </Link>
+          </div>
+          <Button onClick={onClickLogout} text='로그아웃' />
         </div>
         <div className='flex items-center justify-start gap-x-6 border-b border-gray-300 text-sm mt-6 font-medium'>
           <Link href={'/profile/mypost'} className='pb-4'>
