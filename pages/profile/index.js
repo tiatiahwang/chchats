@@ -27,73 +27,78 @@ const Profile = () => {
   }, [logoutStatus]);
   return (
     <Layout>
-      <div className='px-4'>
-        <div className='flex justify-between'>
-          <div className='flex items-center space-x-3'>
-            {user?.avatar ? (
-              <img
-                src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
-                className='h-16 w-16 rounded-full'
-              />
-            ) : (
-              <div className='h-16 w-16 rounded-full bg-indigo-100' />
-            )}
-            <Link legacyBehavior href='/profile/edit'>
-              <a className='flex flex-col'>
-                <span className='font-medium dark:text-white'>
-                  {user?.name}
-                </span>
-                <span className='text-xs text-gray-700 dark:text-white'>
-                  프로필 수정하기 &rarr;
-                </span>
-              </a>
+      {user ? (
+        <div className='px-4'>
+          <div className='flex justify-between'>
+            <div className='flex items-center space-x-3'>
+              {user?.avatar ? (
+                <img
+                  src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
+                  className='h-16 w-16 rounded-full'
+                />
+              ) : (
+                <div className='h-16 w-16 rounded-full bg-indigo-100' />
+              )}
+              <Link legacyBehavior href='/profile/edit'>
+                <a className='flex flex-col'>
+                  <span className='font-medium dark:text-white'>
+                    {user?.name}
+                  </span>
+                  <span className='text-xs text-gray-700 dark:text-white'>
+                    프로필 수정하기 &rarr;
+                  </span>
+                </a>
+              </Link>
+            </div>
+            <Button
+              onClick={onClickLogout}
+              text='로그아웃'
+            />
+          </div>
+          <div className='flex items-center justify-start gap-x-6 border-b border-gray-300 text-sm mt-6 font-medium'>
+            <Link href={'/profile/mypost'} className='pb-4'>
+              <span
+                className={cls(
+                  'pb-4 px-2',
+                  router.pathname.includes('mypost') ||
+                    router.pathname.split('/').length === 2
+                    ? 'border-b-[3px] border-indigo-500 text-indigo-500'
+                    : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300',
+                )}
+              >
+                내가 쓴 글
+              </span>
+            </Link>
+            <Link href='/' className='pb-4'>
+              <span
+                className={cls(
+                  'pb-4 px-2',
+                  router.pathname.includes('mycomment')
+                    ? 'border-b-[3px] border-indigo-500 text-indigo-500'
+                    : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300',
+                )}
+              >
+                나의 댓글
+              </span>
+            </Link>
+            <Link href='/' className='pb-4'>
+              <span
+                className={cls(
+                  'pb-4 px-2',
+                  router.pathname.includes('marked')
+                    ? 'border-b-[3px] border-indigo-500 text-indigo-500'
+                    : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300',
+                )}
+              >
+                스크랩
+              </span>
             </Link>
           </div>
-          <Button onClick={onClickLogout} text='로그아웃' />
+          {data?.posts?.map((post) => (
+            <div key={post.id}>{post.title}</div>
+          ))}
         </div>
-        <div className='flex items-center justify-start gap-x-6 border-b border-gray-300 text-sm mt-6 font-medium'>
-          <Link href={'/profile/mypost'} className='pb-4'>
-            <span
-              className={cls(
-                'pb-4 px-2',
-                router.pathname.includes('mypost') ||
-                  router.pathname.split('/').length === 2
-                  ? 'border-b-[3px] border-indigo-500 text-indigo-500'
-                  : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300',
-              )}
-            >
-              내가 쓴 글
-            </span>
-          </Link>
-          <Link href='/' className='pb-4'>
-            <span
-              className={cls(
-                'pb-4 px-2',
-                router.pathname.includes('mycomment')
-                  ? 'border-b-[3px] border-indigo-500 text-indigo-500'
-                  : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300',
-              )}
-            >
-              나의 댓글
-            </span>
-          </Link>
-          <Link href='/' className='pb-4'>
-            <span
-              className={cls(
-                'pb-4 px-2',
-                router.pathname.includes('marked')
-                  ? 'border-b-[3px] border-indigo-500 text-indigo-500'
-                  : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300',
-              )}
-            >
-              스크랩
-            </span>
-          </Link>
-        </div>
-        {data?.posts?.map((post) => (
-          <div key={post.id}>{post.title}</div>
-        ))}
-      </div>
+      ) : null}
     </Layout>
   );
 };
