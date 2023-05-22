@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import TogggleDarkMode from './toggleDarkMode';
-import useUser from '@/libs/client/useUser';
 import useSWR from 'swr';
+import { cls } from '@/libs/client/utils';
 
-export default function Layout({ title, children }) {
+export default function Layout({ children, noPaddingTop }) {
   const { user } = useSWR('/api/users/me');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
@@ -127,7 +127,9 @@ export default function Layout({ title, children }) {
           ) : null}
         </div>
       </nav>
-      <div className='pt-12'>{children}</div>
+      <div className={cls('', noPaddingTop ? '' : 'pt-12')}>
+        {children}
+      </div>
     </div>
   );
 }
