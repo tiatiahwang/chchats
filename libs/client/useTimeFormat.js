@@ -1,29 +1,25 @@
 export default function useTimeFormat(date) {
-  const seconds = 1;
-  const minute = seconds * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
+  const start = new Date(date);
+  const end = new Date();
 
-  const now = new Date();
-  const elapsedTime = Math.trunc(
-    (now.getTime() - date.getTime()) / 1000,
-  );
+  const diff = (+end - +start) / 1000;
 
-  let formatted = '';
+  const times = [
+    { name: '년', milliSeconds: 60 * 60 * 24 * 365 },
+    { name: '개월', milliSeconds: 60 * 60 * 24 * 30 },
+    { name: '일', milliSeconds: 60 * 60 * 24 },
+    { name: '시간', milliSeconds: 60 * 60 },
+    { name: '분', milliSeconds: 60 },
+  ];
 
-  if (elapsedTime < seconds) {
-    formatted = '방금 전';
-  } else if (elapsedTime < minute) {
-    formatted = elapsedTime + '초 전';
-  } else if (elapsedTime < hour) {
-    formatted = Math.trunc(elapsedTime / minute) + '분 전';
-  } else if (elapsedTime < day) {
-    formatted = Math.trunc(elapsedTime / hour) + '시간 전';
-  } else if (elapsedTime < day * 15) {
-    formatted = Math.trunc(elapsedTime / day) + '일 전';
-  } else {
-    formatted = SimpleDateTimeFormat(date, 'yyyy.M.d');
+  for (const value of times) {
+    const betweenTime = Math.floor(
+      diff / value.milliSeconds,
+    );
+
+    if (betweenTime > 0) {
+      return `${betweenTime}${value.name} 전`;
+    }
   }
-
-  return formatted;
+  return '방금 전';
 }
