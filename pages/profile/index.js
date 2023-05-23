@@ -50,10 +50,13 @@ const Profile = () => {
                 </a>
               </Link>
             </div>
-            <Button
-              onClick={onClickLogout}
-              text='로그아웃'
-            />
+            <div>
+              <Button
+                onClick={onClickLogout}
+                text='로그아웃'
+                height='38px'
+              />
+            </div>
           </div>
           <div className='flex items-center justify-start gap-x-6 border-b border-gray-300 text-sm mt-6 font-medium'>
             <Link href={'/profile/mypost'} className='pb-4'>
