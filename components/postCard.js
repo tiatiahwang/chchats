@@ -8,7 +8,14 @@ export default function PostCard({ post }) {
       className='dark:text-white border-b-[1px] dark:border-white py-4 space-y-2'
     >
       <div className='flex items-center space-x-2 text-xs pb-2'>
-        <div className='w-5 h-5 rounded-full bg-indigo-100' />
+        {post.user.avatar ? (
+          <img
+            src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${post.user.avatar}/avatar`}
+            className='h-5 w-5 rounded-full'
+          />
+        ) : (
+          <div className='h-5 w-5 rounded-full bg-indigo-100' />
+        )}
         <span>{post.user.name}</span>
         <span>·</span>
         <span>

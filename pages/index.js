@@ -13,7 +13,7 @@ export default function Home() {
   );
 
   return (
-    <Layout title='홈'>
+    <Layout title='홈' noPaddingTop={true}>
       <PostList
         categoryName='Q&A'
         onClick={() => router.push('/questions/new')}
