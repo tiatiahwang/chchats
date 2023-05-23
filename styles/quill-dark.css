@@ -1,0 +1,81 @@
+/* Customize the toolbar background color for dark mode */
+.dark .ql-toolbar {
+  background-color: #374151;
+  color: #fdfdff;
+}
+
+/* Customize the icons and buttons for dark mode */
+.dark .ql-toolbar .ql-picker-label,
+.dark .ql-boolbar .ql-picker-item,
+.dark .ql-toolbar .ql-picker-item.ql-selected,
+.dark .ql-toolbar .ql-picker-label:hover,
+.dark .ql-toolbar .ql-picker-item:hover,
+.dark .ql-toolbar .ql-picker-item:focus,
+.dark .ql-toolbar .ql-picker-label.ql-active,
+.dark .ql-toolbar .ql-picker-item.ql-active,
+.dark .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+.dark .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+.dark .ql-toolbar .ql-picker-item:focus .ql-stroke.ql-fill,
+.dark
+  .ql-toolbar
+  .ql-picker-label.ql-active
+  .ql-stroke.ql-fill,
+.dark
+  .ql-toolbar
+  .ql-picker-item.ql-active
+  .ql-stroke.ql-fill,
+.dark .ql-toolbar .ql-stroke.ql-fill,
+.dark .ql-toolbar .ql-picker-options,
+.dark
+  .ql-toolbar
+  .ql-snow
+  .ql-picker:not(.ql-color-picker):not(.ql-icon-picker)
+  svg,
+.dark .ql-toolbar button.ql-bold .ql-stroke,
+.dark .ql-toolbar button.ql-italic .ql-stroke,
+.dark .ql-toolbar button.ql-underline .ql-stroke,
+.dark .ql-toolbar button.ql-strike .ql-stroke,
+.dark .ql-toolbar button.ql-image .ql-stroke,
+.dark .ql-toolbar .ql-picker-label .ql-stroke,
+.dark .ql-toolbar .ql-fill {
+  /* fill: #fdfdff !important; */
+  color: #fdfdff !important;
+  background-color: #374151;
+  stroke: #fdfdff !important;
+}
+.dark
+  .ql-toolbar.ql-snow
+  .ql-picker.ql-expanded
+  .ql-picker-options {
+  color: #fdfdff !important;
+  background-color: #374151;
+}
+
+/* Customize the toolbar buttons' hover and active states */
+.dark .ql-toolbar .ql-picker:not(.ql-color-picker):hover,
+.dark .ql-toolbar .ql-picker:not(.ql-color-picker):focus,
+.dark
+  .ql-toolbar
+  .ql-picker:not(.ql-color-picker).ql-active {
+  color: #fdfdff !important;
+  background-color: #374151;
+}
+
+/* Customize the active state of color picker buttons */
+.dark
+  .ql-toolbar
+  .ql-color-picker
+  .ql-picker-item.ql-selected,
+.dark .ql-toolbar .ql-color-picker .ql-picker-item:hover,
+.dark .ql-toolbar .ql-color-picker .ql-picker-item:focus,
+.dark
+  .ql-toolbar
+  .ql-color-picker
+  .ql-picker-label.ql-active,
+.dark
+  .ql-toolbar
+  .ql-color-picker
+  .ql-picker-item.ql-active {
+  color: #fdfdff !important;
+  background-color: #374151;
+}

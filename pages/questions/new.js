@@ -1,9 +1,16 @@
 import Button from '@/components/button';
 import Layout from '@/components/layout';
 import useMutation from '@/libs/client/useMutation';
+import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -11,13 +18,14 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 });
 
 export default function Upload() {
+  const { theme } = useTheme();
   const router = useRouter();
   const quillRef = useRef();
   const inputRef = useRef();
   const [contents, setContents] = useState('');
-  const [uploadPost, { loading, data }] = useMutation('/api/posts');
+  const [uploadPost, { loading, data }] =
+    useMutation('/api/posts');
 
-  console.log(router);
   const imageHandler = useCallback(() => {
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
     const input = document.createElement('input');
@@ -60,17 +68,21 @@ export default function Upload() {
   const modules = useMemo(
     () => ({
       toolbar: {
-        // 툴바에 넣을 기능들을 순서대로 나열하면 된다.
+        // 툴바에 넣을 기능들을 순서대로 나열
         container: [
-          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-          [{ size: ['small', false, 'large', 'huge'] }, { color: [] }],
           [
-            { list: 'ordered' },
-            { list: 'bullet' },
-            { indent: '-1' },
-            { indent: '+1' },
-            { align: [] },
+            {
+              size: [
+                '12px',
+                '14px',
+                '16px',
+                '18px',
+                '20px',
+              ],
+            },
+            { color: [] },
           ],
+          ['bold', 'italic', 'underline', 'strike'],
           ['image'],
         ],
         handlers: {
@@ -105,36 +117,39 @@ export default function Upload() {
   }, [data]);
 
   return (
-    <Layout>
+    <Layout noPaddingTop={true}>
       <div className='h-screen px-4'>
+        <div>카테고리 선택</div>
+        <div>
+          <span>대분류</span>
+        </div>
+        <div>
+          <span>소분류</span>
+        </div>
         <form onSubmit={handleSubmit}>
-          <div className='flex items-center justify-start'>
-            <span>제목</span>
+          <div className='flex items-center justify-start space-x-2'>
+            <div>제목</div>
             <input
               ref={inputRef}
               type='text'
               placeholder='제목을 입력해주세요'
-              className='w-appearance-none px-3 py-2 placeholder-gray-400 focus:outline-none'
+              className='appearance-none rounded-md p-2 dark:text-white dark:bg-darkbg
+            placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'
             />
           </div>
-          <QuillNoSSRWrapper
-            ref={quillRef}
-            value={contents}
-            onChange={setContents}
-            modules={modules}
-            theme='snow'
-          />
+          <div className={theme === 'dark' ? 'dark' : ''}>
+            <QuillNoSSRWrapper
+              ref={quillRef}
+              value={contents}
+              onChange={setContents}
+              modules={modules}
+              theme='snow'
+            />
+          </div>
           <div className='pt-5'>
             <Button text={'등록'} />
           </div>
         </form>
-        <style jsx>{`
-          .ql-formats > button > svg {
-            fill: none; !important
-            stroke: #fff;  !important
-          }
-
-        `}</style>
       </div>
     </Layout>
   );

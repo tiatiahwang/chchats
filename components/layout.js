@@ -14,6 +14,15 @@ export default function Layout({ children, noPaddingTop }) {
   }, [user]);
 
   const [navbar, setNavbar] = useState(false);
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  const renderThemeChanger = () => {
+    if (!mounted) return null;
+    return <TogggleDarkMode />;
+  };
   return (
     <div>
       <nav className='w-full'>
@@ -80,7 +89,8 @@ export default function Layout({ children, noPaddingTop }) {
               </ul>
             </div>
             <div className='flex items-center space-x-5'>
-              <TogggleDarkMode />
+              {renderThemeChanger()}
+              {/* <TogggleDarkMode /> */}
               <Link href='/profile'>
                 {isLoggedIn && user?.avatar && (
                   <img
