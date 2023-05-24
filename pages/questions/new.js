@@ -1,6 +1,11 @@
 import Button from '@/components/button';
 import Layout from '@/components/layout';
 import useMutation from '@/libs/client/useMutation';
+import {
+  mainCategories,
+  cls,
+  questionsCategories,
+} from '@/libs/client/utils';
 import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -18,7 +23,6 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 });
 
 export default function Upload() {
-  const { theme } = useTheme();
   const router = useRouter();
   const quillRef = useRef();
   const inputRef = useRef();
@@ -99,36 +103,93 @@ export default function Upload() {
 
     const title = document.querySelector('input').value;
 
+    if (mainCategories === '' || subCategory === '') {
+      return alert('카테고리를 선택해주세요. 둘다');
+    }
+    if (title === '' || contents === '') {
+      return alert('제목과 내용 입력은 필수 입니다.');
+    }
+
     const post = {
       title,
       contents,
-      category: 'Q&A',
+      category: mainCategory,
+      subCategory,
     };
 
-    console.log(post);
     if (loading) return;
     uploadPost(post);
   };
 
   useEffect(() => {
     if (data?.ok) {
-      router.push(`/posts/${data.post.id}`);
+      router.push(`/${data.post.category}/${data.post.id}`);
     }
   }, [data]);
 
+  const [mainCategory, setMainCategory] = useState(
+    router.pathname.split('/')[1],
+  );
+  const [subCategory, setSubCategory] = useState('');
+
   return (
     <Layout noPaddingTop={true}>
-      <div className='h-screen px-4'>
-        <div>카테고리 선택</div>
-        <div>
-          <span>대분류</span>
-        </div>
-        <div>
-          <span>소분류</span>
+      <div className='h-screen px-4 space-y-4'>
+        <div className='text-xl'>카테고리 선택(필수)</div>
+        <div className='border-t-[1px] border-b-[1px] py-4 space-y-4'>
+          <div className='flex space-x-2 items-center'>
+            <div className='text-sm'>대분류</div>
+            <ul className='flex'>
+              {mainCategories.map((category) => (
+                <li
+                  onClick={() =>
+                    setMainCategory(category.ref)
+                  }
+                  key={category.id}
+                  className={cls(
+                    'p-2 rounded-md cursor-pointer',
+                    mainCategory === category.ref
+                      ? 'bg-gray-200 dark:bg-darkselected'
+                      : 'hover:text-indigo-500',
+                  )}
+                >
+                  {category.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className='flex space-x-2 items-center'>
+            <div className='text-sm'>소분류</div>
+            <ul className='flex'>
+              {mainCategory === 'questions' ? (
+                <ul className='flex'>
+                  {questionsCategories.map((category) => {
+                    if (category.id === 0) return;
+                    return (
+                      <li
+                        onClick={() =>
+                          setSubCategory(category.ref)
+                        }
+                        key={category.id}
+                        className={cls(
+                          'p-2 rounded-md cursor-pointer',
+                          subCategory === category.ref
+                            ? 'bg-gray-200 dark:bg-darkselected'
+                            : 'hover:text-indigo-500',
+                        )}
+                      >
+                        {category.name}
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : null}
+            </ul>
+          </div>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className='flex items-center justify-start space-x-2'>
-            <div>제목</div>
+          <div className='flex items-center justify-start space-x-2 pb-4'>
+            <label className='text-xl'>제목</label>
             <input
               ref={inputRef}
               type='text'
@@ -137,16 +198,14 @@ export default function Upload() {
             placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'
             />
           </div>
-          <div className={theme === 'dark' ? 'dark' : ''}>
-            <QuillNoSSRWrapper
-              ref={quillRef}
-              value={contents}
-              onChange={setContents}
-              modules={modules}
-              theme='snow'
-            />
-          </div>
-          <div className='pt-5'>
+          <QuillNoSSRWrapper
+            ref={quillRef}
+            value={contents}
+            onChange={setContents}
+            modules={modules}
+            theme='snow'
+          />
+          <div className='pt-8'>
             <Button text={'등록'} />
           </div>
         </form>

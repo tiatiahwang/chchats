@@ -29,7 +29,7 @@ async function handler(req, res) {
   }
   if (req.method === 'POST') {
     const {
-      body: { title, contents, category },
+      body: { title, contents, category, subCategory },
       session: { user },
     } = req;
     const post = await client.post.create({
@@ -37,6 +37,7 @@ async function handler(req, res) {
         title,
         contents,
         category,
+        subCategory,
         image: '',
         user: {
           connect: {

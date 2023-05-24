@@ -106,7 +106,7 @@ export default function Layout({ children, noPaddingTop }) {
           </div>
           {/* 모바일뷰에서 토글되는 창 */}
           {navbar ? (
-            <div className='md:hidden top-0 absolute z-10 dark:bg-darkbg w-full pb-4 shadow-md bg-white'>
+            <div className='md:hidden top-18 absolute z-10 dark:bg-darkbg w-full pb-4 shadow-md bg-white'>
               <div
                 className={`px-4 flex-1 justify-self-center pb-3 mt-2 ${
                   navbar ? '' : 'hidden'

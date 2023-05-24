@@ -2,6 +2,12 @@ export function cls(...classnames) {
   return classnames.join(' ');
 }
 
+export const mainCategories = [
+  { id: 0, name: 'Q&A', ref: 'questions' },
+  { id: 1, name: '정보', ref: 'information' },
+  { id: 2, name: '마켓', ref: 'market' },
+];
+
 export const questionsCategories = [
   { id: 0, name: '전체', url: '/questions', ref: '' },
   {

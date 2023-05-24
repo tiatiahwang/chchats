@@ -1,16 +1,10 @@
 import '@/styles/globals.css';
 import '@/styles/quill-dark.css';
 import 'react-quill/dist/quill.snow.css';
-import { ThemeProvider, useTheme } from 'next-themes';
+import { ThemeProvider } from 'next-themes';
 import { SWRConfig } from 'swr';
-import { useEffect } from 'react';
 
 export default function App({ Component, pageProps }) {
-  const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    console.log(resolvedTheme);
-  }, [resolvedTheme]);
   return (
     <SWRConfig
       value={{
