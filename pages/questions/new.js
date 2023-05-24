@@ -1,12 +1,12 @@
 import Button from '@/components/button';
 import Layout from '@/components/layout';
 import useMutation from '@/libs/client/useMutation';
+import useUser from '@/libs/client/useUser';
 import {
   mainCategories,
   cls,
   questionsCategories,
 } from '@/libs/client/utils';
-import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import {
@@ -17,12 +17,20 @@ import {
   useState,
 } from 'react';
 
-const QuillNoSSRWrapper = dynamic(import('react-quill'), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-});
+const FILE_NAME = new Date().toJSON().slice(0, 10);
 
+const QuillNoSSRWrapper = dynamic(
+  async () => {
+    const { default: RQ } = await import('react-quill');
+    // eslint-disable-next-line react/display-name
+    return ({ forwardedRef, ...props }) => (
+      <RQ ref={forwardedRef} {...props} />
+    );
+  },
+  { ssr: false },
+);
 export default function Upload() {
+  const { user } = useUser();
   const router = useRouter();
   const quillRef = useRef();
   const inputRef = useRef();
@@ -30,7 +38,7 @@ export default function Upload() {
   const [uploadPost, { loading, data }] =
     useMutation('/api/posts');
 
-  const imageHandler = useCallback(() => {
+  const imageHandler = useCallback(async () => {
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -40,33 +48,41 @@ export default function Upload() {
 
     // input이 클릭되면 파일 선택창이 화면에 나타난다.
     // 파일 선택창에서 이미지를 선택하면 실행될 콜백 함수 등록
-    // input.onchange = async () => {
-    //   const file = input.files[0];
-    //   // multer에 맞는 형식으로 데이터를 만들어 준다
-    //   // 이미지를 url로 바꾸기 위해 서버로 전달하는 폼데이터를 만드는 것이다.
-    //   const formData = new FormData();
-    //   formData.append('image', file); // formData는 키-밸류 구조
+    input.onchange = async () => {
+      const file =
+        input && input.files ? input.files[0] : null;
+      if (file === null) return;
+      // multer에 맞는 형식으로 데이터를 만들어 준다
+      // 이미지를 url로 바꾸기 위해 서버로 전달하는 폼데이터를 만드는 것이다.
+      const formData = new FormData();
+      formData.append('image', file); // formData는 키-밸류 구조
 
-    //   try {
-    //     // 폼데이터를 서버에 넘겨 multer로 이미지 URL 받아오기
-    //     const result = await axios.post(
-    //       `${process.env.REACT_APP_API_URL}/uploadimg`,
-    //       formData,
-    //     );
-    //     if (!result.data.url) {
-    //       alert('이미지 업로드에 실패하였습니다.');
-    //     }
-    //     // 이 URL을 img 태그의 src에 넣은 요소를 현재 에디터의 커서에 넣어주면 에디터 내에서 이미지가 나타난다
-    //     // src가 base64가 아닌 짧은 URL이기 때문에 데이터베이스에 에디터의 전체 글 내용을 저장할 수있게된다
-    //     // 이미지는 꼭 로컬 백엔드 uploads 폴더가 아닌 다른 곳에 저장해 URL로 사용하면된다.
+      try {
+        const { uploadURL } = await (
+          await fetch('/api/files')
+        ).json();
+        const form = new FormData();
+        form.append('file', file, FILE_NAME + user?.name);
+        const {
+          result: { variants },
+        } = await (
+          await fetch(uploadURL, {
+            method: 'POST',
+            body: form,
+          })
+        ).json();
 
-    //     const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
-    //     const range = editor.getSelection(); // 커서 위치에 이미지 삽입
-    //     editor.insertEmbed(range.index, 'image', result.data.url);
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // }
+        const quill = quillRef?.current?.getEditor();
+        const range = quill?.getSelection();
+        quill.editor.insertEmbed(
+          range.index,
+          'image',
+          variants[0],
+        );
+      } catch (e) {
+        console.log('이미지 업로드 에러!: ', e);
+      }
+    };
   }, [quillRef]);
 
   const modules = useMemo(
@@ -199,7 +215,7 @@ export default function Upload() {
             />
           </div>
           <QuillNoSSRWrapper
-            ref={quillRef}
+            forwardedRef={quillRef}
             value={contents}
             onChange={setContents}
             modules={modules}
