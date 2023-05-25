@@ -23,7 +23,7 @@ export default function PostCard({ post }) {
         </span>
       </div>
       <Link
-        href={`/${post.category}/${post.id}`}
+        href={`/${post.category}/${post.subCategory}/${post.id}`}
         className='space-y-2'
       >
         <div className='text-md font-bold hover:text-indigo-500 cursor-pointer'>

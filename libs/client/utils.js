@@ -41,7 +41,12 @@ export const questionsCategories = [
     ref: 'estate',
   },
   { id: 6, name: 'IT', url: '/questions/it', ref: 'it' },
-  { id: 7, name: '기타', url: '/quesions/etc', ref: 'etc' },
+  {
+    id: 7,
+    name: '기타',
+    url: '/questions/etc',
+    ref: 'etc',
+  },
 ];
 
 export const marketCategories = [

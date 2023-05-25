@@ -9,7 +9,7 @@ export default function Category({
   const router = useRouter();
   const currentCategory =
     selected === ''
-      ? router.pathname.split('/')[2]
+      ? router.asPath.split('/')[2]
       : selected;
   return (
     <ul className='dark:text-white flex space-x-2 text-sm'>
@@ -18,7 +18,7 @@ export default function Category({
           <li
             className={cls(
               'p-2 rounded-md cursor-pointer',
-              router.pathname.split('/').length === 2 &&
+              router.asPath.split('/').length === 2 &&
                 category.id === 0
                 ? 'bg-gray-200 dark:bg-darkselected'
                 : '',

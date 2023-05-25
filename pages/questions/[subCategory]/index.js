@@ -4,13 +4,13 @@ import { questionsCategories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
-export default function Health() {
+export default function Visa() {
   const router = useRouter();
   const { data } = useSWR(
     router.pathname
       ? `/api/posts?category=${
-          router.pathname.split('/')[1]
-        }&subCategory=${router.pathname.split('/')[2]}`
+          router.asPath.split('/')[1]
+        }&subCategory=${router.asPath.split('/')[2]}`
       : null,
   );
   const onClick = () => router.push('/questions/new');
