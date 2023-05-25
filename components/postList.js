@@ -3,21 +3,19 @@ import Category from './category';
 import PostCard from './postCard';
 
 export default function PostList({
-  categoryName,
-  description,
+  category,
   onClick,
   data,
   isHome = false,
-  categoryList,
 }) {
   return (
     <div className='p-4 space-y-6 text-black'>
       {/* 메인 카테고리 이름과 설명 부분 */}
       <div className='dark:text-white bg-gray-100 dark:bg-darkselected py-4 px-8 rounded-md'>
         <p className='font-semibold text-md'>
-          {categoryName}
+          {category?.name}
         </p>
-        <p className='text-xs'>{description}</p>
+        <p className='text-xs'>{category?.description}</p>
       </div>
       {/* 홈 화면일때 글 작성 버튼 비노출 */}
       {!isHome ? (
@@ -30,7 +28,7 @@ export default function PostList({
       {/* 홈 화면일때 카테고리 리스트 비노출 */}
       {!isHome ? (
         <Category
-          categories={categoryList}
+          categories={category?.subCategories}
           selected={data?.post?.subCategory}
         />
       ) : null}
@@ -40,6 +38,11 @@ export default function PostList({
           return <PostCard key={post.id} post={post} />;
         })}
       </div>
+      {data?.posts?.length === 0 ? (
+        <div className='text-md dark:text-white font-medium'>
+          아직 등록된 글이 없어요 🥲
+        </div>
+      ) : null}
     </div>
   );
 }

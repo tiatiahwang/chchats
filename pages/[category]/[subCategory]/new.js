@@ -6,6 +6,7 @@ import {
   mainCategories,
   cls,
   questionsCategories,
+  categories,
 } from '@/libs/client/utils';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -139,24 +140,36 @@ export default function Upload() {
 
   useEffect(() => {
     if (data?.ok) {
-      router.push(`/${data.post.category}/${data.post.id}`);
+      router.push(
+        `/${data.post.category}/${data.post.subCategory}/${data.post.id}`,
+      );
     }
   }, [data]);
 
   const [mainCategory, setMainCategory] = useState(
-    router.pathname.split('/')[1],
+    router.asPath.split('/')[1],
   );
   const [subCategory, setSubCategory] = useState('');
+
+  useEffect(() => {
+    if (!mainCategory) return;
+    const selectedMainCategory = categories.filter(
+      (category) => mainCategory === category.name,
+    );
+    setSubCategory(selectedMainCategory.subCategories);
+  }, [mainCategory]);
 
   return (
     <Layout noPaddingTop={true}>
       <div className='h-screen px-4 space-y-4'>
+        {/* 카테고리 선택 */}
         <div className='text-xl'>카테고리 선택(필수)</div>
         <div className='border-t-[1px] border-b-[1px] py-4 space-y-4'>
+          {/* 메인 카테고리 */}
           <div className='flex space-x-2 items-center'>
-            <div className='text-sm'>대분류</div>
+            <div className='text-sm'>메인 카테고리</div>
             <ul className='flex'>
-              {mainCategories.map((category) => (
+              {categories.map((category) => (
                 <li
                   onClick={() =>
                     setMainCategory(category.ref)
@@ -174,12 +187,13 @@ export default function Upload() {
               ))}
             </ul>
           </div>
+          {/* sub 카테고리 */}
           <div className='flex space-x-2 items-center'>
             <div className='text-sm'>소분류</div>
             <ul className='flex'>
-              {mainCategory === 'questions' ? (
+              {/* {subCategory !== null ? (
                 <ul className='flex'>
-                  {questionsCategories.map((category) => {
+                  {subCategory.map((category) => {
                     if (category.id === 0) return;
                     return (
                       <li
@@ -199,10 +213,11 @@ export default function Upload() {
                     );
                   })}
                 </ul>
-              ) : null}
+              ) : null} */}
             </ul>
           </div>
         </div>
+        {/* 에디터 */}
         <form onSubmit={handleSubmit}>
           <div className='flex items-center justify-start space-x-2 pb-4'>
             <label className='text-xl'>제목</label>

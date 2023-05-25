@@ -7,21 +7,39 @@ async function handler(req, res) {
     const {
       query: { category, subCategory },
     } = req;
-    const posts = await client.post.findMany({
-      where: {
-        category,
-        subCategory,
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            avatar: true,
+    let posts;
+    if (subCategory === undefined) {
+      posts = await client.post.findMany({
+        where: {
+          category,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              avatar: true,
+            },
           },
         },
-      },
-    });
+      });
+    } else {
+      posts = await client.post.findMany({
+        where: {
+          category,
+          subCategory,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              avatar: true,
+            },
+          },
+        },
+      });
+    }
     res.json({
       ok: true,
       posts,

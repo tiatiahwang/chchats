@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
-export default function Questions() {
+export default function PostDetail() {
   const router = useRouter();
   const [createdAt, setCreatedAt] = useState('');
   const { data } = useSWR(
