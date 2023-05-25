@@ -1,28 +1,23 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import TogggleDarkMode from './toggleDarkMode';
-import useSWR from 'swr';
 import { cls } from '@/libs/client/utils';
+import useUser from '@/libs/client/useUser';
 
 export default function Layout({ children, noPaddingTop }) {
-  const { user } = useSWR('/api/users/me');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    if (user && user.ok) {
-      setIsLoggedIn(true);
-    }
-  }, [user]);
-
+  const { user } = useUser();
   const [navbar, setNavbar] = useState(false);
-
   const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
     setMounted(true);
   }, []);
+
   const renderThemeChanger = () => {
     if (!mounted) return null;
     return <TogggleDarkMode />;
   };
+
   return (
     <div>
       <nav className='w-full'>
@@ -72,33 +67,31 @@ export default function Layout({ children, noPaddingTop }) {
               </Link>
               <ul className='hidden md:flex md:space-x-8 md:ml-10'>
                 <li>
-                  <Link href='/questions' legacyBehavior>
-                    <a>Q&A</a>
+                  <Link href='/questions'>
+                    <div>Q&A</div>
                   </Link>
                 </li>
                 <li>
-                  <Link href='/information' legacyBehavior>
-                    <a>정보</a>
+                  <Link href='/information'>
+                    <div>정보</div>
                   </Link>
                 </li>
                 <li>
-                  <Link href='/market' legacyBehavior>
-                    <a>마켓</a>
+                  <Link href='/market'>
+                    <div>마켓</div>
                   </Link>
                 </li>
               </ul>
             </div>
             <div className='flex items-center space-x-5'>
               {renderThemeChanger()}
-              {/* <TogggleDarkMode /> */}
               <Link href='/profile'>
-                {isLoggedIn && user?.avatar && (
+                {user && user?.avatar ? (
                   <img
                     src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
                     className='h-8 w-8 rounded-full'
                   />
-                )}
-                {!isLoggedIn && (
+                ) : (
                   <div className='h-8 w-8 rounded-full bg-indigo-100' />
                 )}
               </Link>

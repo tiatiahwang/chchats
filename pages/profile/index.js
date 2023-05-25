@@ -22,7 +22,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (logoutStatus && logoutStatus.ok) {
-      router.push('/');
+      setTimeout(() => router.push('/'), 1000);
     }
   }, [logoutStatus]);
   return (
