@@ -11,7 +11,6 @@ export default function Posts() {
       ? `/api/posts?category=${router.asPath.slice(1)}`
       : null,
   );
-  console.log(data);
   const onClick = () =>
     router.push(`/${router.asPath.slice(1)}/new`);
   return (

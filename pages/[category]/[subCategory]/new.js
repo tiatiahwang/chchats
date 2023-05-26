@@ -2,12 +2,7 @@ import Button from '@/components/button';
 import Layout from '@/components/layout';
 import useMutation from '@/libs/client/useMutation';
 import useUser from '@/libs/client/useUser';
-import {
-  mainCategories,
-  cls,
-  questionsCategories,
-  categories,
-} from '@/libs/client/utils';
+import { cls, categories } from '@/libs/client/utils';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import {
@@ -146,22 +141,29 @@ export default function Upload() {
     }
   }, [data]);
 
-  const [mainCategory, setMainCategory] = useState(
-    router.asPath.split('/')[1],
-  );
-  const [subCategory, setSubCategory] = useState('');
+  const [mainCategory, setMainCategory] = useState('');
+  const [subCategories, setSubCategories] = useState('');
+  const [selectedSub, setSelectedSub] = useState('');
 
   useEffect(() => {
-    if (!mainCategory) return;
-    const selectedMainCategory = categories.filter(
-      (category) => mainCategory === category.name,
+    if (!router.isReady) return;
+    setMainCategory(router.asPath.split('/')[1]);
+  }, [router]);
+
+  useEffect(() => {
+    if (mainCategory === '') return;
+    const sub = categories.find(
+      (category) => category.ref === mainCategory,
     );
-    setSubCategory(selectedMainCategory.subCategories);
+    setSubCategories(sub.subCategories);
+    if (router.asPath.split('/')[2]) {
+      setSelectedSub(router.asPath.split('/')[2]);
+    }
   }, [mainCategory]);
 
   return (
     <Layout noPaddingTop={true}>
-      <div className='h-screen px-4 space-y-4'>
+      <div className='h-screen p-4 space-y-4'>
         {/* 카테고리 선택 */}
         <div className='text-xl'>카테고리 선택(필수)</div>
         <div className='border-t-[1px] border-b-[1px] py-4 space-y-4'>
@@ -189,32 +191,30 @@ export default function Upload() {
           </div>
           {/* sub 카테고리 */}
           <div className='flex space-x-2 items-center'>
-            <div className='text-sm'>소분류</div>
-            <ul className='flex'>
-              {/* {subCategory !== null ? (
-                <ul className='flex'>
-                  {subCategory.map((category) => {
-                    if (category.id === 0) return;
-                    return (
-                      <li
-                        onClick={() =>
-                          setSubCategory(category.ref)
-                        }
-                        key={category.id}
-                        className={cls(
-                          'p-2 rounded-md cursor-pointer',
-                          subCategory === category.ref
-                            ? 'bg-gray-200 dark:bg-darkselected'
-                            : 'hover:text-indigo-500',
-                        )}
-                      >
-                        {category.name}
-                      </li>
-                    );
-                  })}
-                </ul>
-              ) : null} */}
-            </ul>
+            <div className='text-sm'>서브 카테고리</div>
+            {subCategories.length > 0 ? (
+              <ul className='flex'>
+                {subCategories.map((category) => {
+                  if (category.id === 0) return;
+                  return (
+                    <li
+                      onClick={() =>
+                        setSelectedSub(category.name)
+                      }
+                      key={category.id}
+                      className={cls(
+                        'p-2 rounded-md cursor-pointer',
+                        selectedSub === category.ref
+                          ? 'bg-gray-200 dark:bg-darkselected'
+                          : 'hover:text-indigo-500',
+                      )}
+                    >
+                      {category.name}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
           </div>
         </div>
         {/* 에디터 */}

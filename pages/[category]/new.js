@@ -34,6 +34,20 @@ export default function Upload() {
   const [uploadPost, { loading, data }] =
     useMutation('/api/posts');
 
+  useEffect(() => {
+    const check = () => {
+      if (quillRef.current) {
+        console.log(quillRef.current.editor.container);
+        const editor = quillRef.current.editor.container;
+        editor.style.height = '450px';
+        editor.style.overflow = 'auto';
+        return;
+      }
+      setTimeout(check, 200);
+    };
+    check();
+  }, [quillRef]);
+
   const imageHandler = useCallback(async () => {
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
     const input = document.createElement('input');
@@ -146,7 +160,7 @@ export default function Upload() {
   const [selectedSub, setSelectedSub] = useState('');
 
   useEffect(() => {
-    if (router.asPath.includes('[')) return;
+    if (!router.isReady) return;
     setMainCategory(router.asPath.split('/')[1]);
   }, [router]);
 
@@ -160,7 +174,7 @@ export default function Upload() {
 
   return (
     <Layout noPaddingTop={true}>
-      <div className='h-screen px-4 space-y-4'>
+      <div className='h-screen p-4 space-y-4'>
         {/* 카테고리 선택 */}
         <div className='text-xl'>카테고리 선택(필수)</div>
         <div className='border-t-[1px] border-b-[1px] py-4 space-y-4'>

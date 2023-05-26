@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }) {
     >
       <ThemeProvider attribute='class' enableSystem={true}>
         <div className='min-h-screen w-full text-black dark:bg-darkbg dark:text-white'>
-          <div className='mx-auto max-w-7xl'>
+          <div className='mx-auto max-w-7xl min-w-[400px]'>
             <Component {...pageProps} />
           </div>
         </div>

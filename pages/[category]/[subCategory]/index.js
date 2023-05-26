@@ -13,9 +13,12 @@ export default function SubPosts() {
         }&subCategory=${router.asPath.split('/')[2]}`
       : null,
   );
-  const onClick = () =>
-    router.push(`${router.asPath.split('/')[1]}/new`);
-  console.log(data);
+  const onClick = () => {
+    if (!router.isReady) return;
+    router.push({
+      pathname: `${router.asPath.slice(0)}/new`,
+    });
+  };
   return (
     <Layout noPaddingTop={true}>
       <PostList
