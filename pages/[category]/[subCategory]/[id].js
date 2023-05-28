@@ -1,4 +1,5 @@
 import Category from '@/components/category';
+import Comments from '@/components/comments';
 import Layout from '@/components/layout';
 import PostDetail from '@/components/postDetail';
 import {
@@ -6,11 +7,7 @@ import {
   questionsCategories,
 } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
-import {
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import { useLayoutEffect, useState } from 'react';
 import useSWR from 'swr';
 
 export default function DetailPage() {
@@ -31,7 +28,6 @@ export default function DetailPage() {
     setMainCategory(currentMainCategory[0]);
   }, [router]);
 
-  console.log(data);
   return (
     <Layout>
       <div className='p-4 space-y-6'>
@@ -48,6 +44,9 @@ export default function DetailPage() {
           selected={data?.post?.subCategory}
         />
         <PostDetail post={data?.post} />
+        {data?.post?.comments.length > 0 ? (
+          <Comments comments={data?.post?.comments} />
+        ) : null}
       </div>
     </Layout>
   );
