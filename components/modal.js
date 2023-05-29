@@ -20,7 +20,7 @@ export default function Modal({
         onClick={(e) => handleModal(e)}
         className='fixed inset-0 bg-opacity-25 backdrop-blur-sm bg-black flex items-center justify-center'
       >
-        <div className='w-1/2 bg-white dark:bg-darkhover text-center text-sm p-6 rounded-md space-y-6'>
+        <div className='w-[300px] bg-white dark:bg-darkhover text-center text-sm p-6 rounded-md space-y-6'>
           <div>
             로그인이 필요해요.
             <br />
