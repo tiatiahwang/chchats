@@ -10,6 +10,7 @@ async function handler(req, res) {
     let posts;
     if (subCategory === undefined) {
       posts = await client.post.findMany({
+        orderBy: { createdAt: 'desc' },
         where: {
           category,
         },
@@ -25,6 +26,7 @@ async function handler(req, res) {
       });
     } else {
       posts = await client.post.findMany({
+        orderBy: { createdAt: 'desc' },
         where: {
           category,
           subCategory,

@@ -7,6 +7,7 @@ async function handler(req, res) {
     session: { user },
   } = req;
   const comments = await client.comment.findMany({
+    orderBy: { createdAt: 'desc' },
     where: {
       userId: user.id,
     },

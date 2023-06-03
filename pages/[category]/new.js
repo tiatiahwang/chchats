@@ -129,7 +129,7 @@ export default function Upload() {
 
     const title = document.querySelector('input').value;
 
-    if (mainCategory === '' || subCategory === '') {
+    if (mainCategory === '' || selectedSub === '') {
       return alert('카테고리를 선택해주세요. 둘다');
     }
     if (title === '' || contents === '') {
@@ -140,7 +140,7 @@ export default function Upload() {
       title,
       contents,
       category: mainCategory,
-      subCategory,
+      subCategory: selectedSub,
     };
 
     if (loading) return;

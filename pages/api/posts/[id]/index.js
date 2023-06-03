@@ -7,6 +7,8 @@ async function handler(req, res) {
     query: { id },
   } = req;
 
+  console.log(id);
+
   const post = await client.post.findUnique({
     where: { id: +id },
     include: {

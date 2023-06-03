@@ -63,19 +63,19 @@ export const categories = [
       { id: 0, name: '전체', url: '/market', ref: '' },
       {
         id: 1,
-        name: '정보1',
+        name: 'info1',
         url: '/information/info1',
         ref: 'sell',
       },
       {
         id: 2,
-        name: '정보2',
+        name: 'info2',
         url: '/information/info2',
         ref: 'buy',
       },
       {
         id: 3,
-        name: '정보3',
+        name: 'info3',
         url: '/information/info3',
         ref: 'rent',
       },

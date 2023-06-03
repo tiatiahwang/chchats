@@ -65,7 +65,7 @@ export default function DetailPage() {
 
   return (
     <Layout>
-      <div className='p-4 space-y-6'>
+      <div className='p-4'>
         {isLoading ? (
           <Loader />
         ) : (

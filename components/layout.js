@@ -63,7 +63,9 @@ export default function Layout({ children, noPaddingTop }) {
             </div>
             <div className='md:flex md:items-center'>
               <Link href='/' className='cursor-pointer'>
-                <h2 className='text-xl'>LOGO</h2>
+                <h2 className='text-xl font-bold'>
+                  CHCHATS
+                </h2>
               </Link>
               <ul className='hidden md:flex md:space-x-8 md:ml-10'>
                 <li>
