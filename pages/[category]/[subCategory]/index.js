@@ -1,5 +1,5 @@
 import Layout from '@/components/layout';
-import PostList from '@/components/postList';
+import PostList from '@/components/post/postList';
 import { categories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';

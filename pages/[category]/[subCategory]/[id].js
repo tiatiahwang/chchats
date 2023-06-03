@@ -2,7 +2,7 @@ import Comments from '@/components/comments';
 import Layout from '@/components/layout';
 import Loader from '@/components/loader';
 import Modal from '@/components/modal';
-import PostDetail from '@/components/postDetail';
+import PostDetail from '@/components/post/postDetail';
 import useMutation from '@/libs/client/useMutation';
 import useUser from '@/libs/client/useUser';
 import { categories } from '@/libs/client/utils';

@@ -1,5 +1,5 @@
-import Button from './button';
-import Category from './category';
+import Button from '../button';
+import Category from '../category';
 import PostCard from './postCard';
 
 export default function PostList({

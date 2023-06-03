@@ -6,7 +6,7 @@ async function handler(req, res) {
   const {
     session: { user },
   } = req;
-  const posts = await client.post.findMany({
+  const comments = await client.comment.findMany({
     where: {
       userId: user.id,
     },
@@ -18,11 +18,18 @@ async function handler(req, res) {
           name: true,
         },
       },
+      post: {
+        select: {
+          title: true,
+          category: true,
+          subCategory: true,
+        },
+      },
     },
   });
   res.json({
     ok: true,
-    posts,
+    comments,
   });
 }
 

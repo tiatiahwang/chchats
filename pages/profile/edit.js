@@ -91,20 +91,21 @@ const Profile = () => {
   }, [data, router]);
   return (
     <Layout>
-      <div className='px-4'>
+      <div className='px-4 max-w-xl mx-auto'>
         <form
           onChange={onChange}
           onSubmit={handleSubmit(onValid)}
           className='space-y-4 px-4 py-10'
         >
-          <div className='flex items-center space-x-3'>
+          {/* 아바타 사진 변경 */}
+          <div className='flex items-center space-y-6 flex-col justify-center'>
             {avatarPreview ? (
               <img
                 src={avatarPreview}
-                className='h-14 w-14 rounded-full bg-indigo-200'
+                className='h-40 w-40 rounded-full bg-indigo-200'
               />
             ) : (
-              <img className='h-14 w-14 rounded-full bg-indigo-200' />
+              <img className='h-40 w-40 rounded-full bg-indigo-200' />
             )}
             <label
               htmlFor='picture'
