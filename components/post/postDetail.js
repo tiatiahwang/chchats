@@ -1,20 +1,10 @@
-import useMutation from '@/libs/client/useMutation';
 import useTimeFormat from '@/libs/client/useTimeFormat';
-import { useEffect } from 'react';
 
-export default function PostDetail({ post }) {
-  const [scrap, { loading, data }] = useMutation(
-    post?.id ? `/api/posts/${post?.id}/scrap` : null,
-  );
-  // 데이터 로딩되는 동안 뭔가 화면에 표시해주어야함
-  const onClickScrap = (id) => {
-    if (loading) return;
-    scrap(post?.title);
-  };
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+export default function PostDetail({
+  post,
+  isScrapped,
+  onClickScrap,
+}) {
   return (
     post && (
       <div className='space-y-8 py-8'>
@@ -42,12 +32,25 @@ export default function PostDetail({ post }) {
               </span>
             </div>
           </div>
-          {/* TODO:: 스크랩 아이콘 추가하기 */}
+          {/* 스크랩 */}
           <div
             className='cursor-pointer'
-            onClick={() => onClickScrap(post?.id)}
+            onClick={onClickScrap}
           >
-            스크랩
+            <svg
+              className='w-6 h-6'
+              fill={isScrapped ? 'white' : 'none'}
+              stroke='currentColor'
+              strokeWidth='1.5'
+              viewBox='0 0 24 24'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z'
+              ></path>
+            </svg>
           </div>
         </div>
         {/* 글 제목 */}

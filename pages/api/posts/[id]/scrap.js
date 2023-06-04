@@ -7,26 +7,36 @@ async function handler(req, res) {
     query: { id },
     session: { user },
   } = req;
-  const title = req.body;
-
-  const scrap = await client.scrap.create({
-    data: {
-      title,
-      user: {
-        connect: {
-          id: user?.id,
-        },
-      },
-      post: {
-        connect: {
-          id: +id,
-        },
-      },
+  const alreadyScrapped = await client.scrap.findFirst({
+    where: {
+      postId: +id,
+      userId: user?.id,
     },
   });
+  if (alreadyScrapped) {
+    await client.scrap.delete({
+      where: {
+        id: alreadyScrapped.id,
+      },
+    });
+  } else {
+    await client.scrap.create({
+      data: {
+        user: {
+          connect: {
+            id: user?.id,
+          },
+        },
+        post: {
+          connect: {
+            id: +id,
+          },
+        },
+      },
+    });
+  }
   res.json({
     ok: true,
-    scrap,
   });
 }
 

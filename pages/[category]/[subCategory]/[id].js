@@ -25,6 +25,23 @@ export default function DetailPage() {
       ? `/api/posts/${router.query.id}`
       : null,
   );
+  const [toggleScrap] = useMutation(
+    `/api/posts/${router.query.id}/scrap`,
+  );
+
+  const onClickScrap = () => {
+    if (!data) return;
+    if (!user) {
+      setShowModal(true);
+      return;
+    }
+    mutate(
+      (prev) =>
+        prev && { ...prev, isScrapped: !prev.isScrapped },
+      false,
+    );
+    toggleScrap({});
+  };
   const [addComment, { loading, data: newCommentData }] =
     useMutation(`/api/posts/${router.query.id}/comment`);
 
@@ -63,6 +80,9 @@ export default function DetailPage() {
     }
   }, [newCommentData, reset, mutate]);
 
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <Layout>
       <div className='p-4'>
@@ -82,7 +102,11 @@ export default function DetailPage() {
               </div>
             </Link>
             {/* 글 내용 상세 */}
-            <PostDetail post={data?.post} />
+            <PostDetail
+              post={data?.post}
+              isScrapped={data?.isScrapped}
+              onClickScrap={onClickScrap}
+            />
             {/* 댓글 작성 */}
             <button
               onClick={onClickAddComment}

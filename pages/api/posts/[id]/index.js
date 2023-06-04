@@ -5,6 +5,7 @@ import { withApiSession } from '@/libs/server/withSession';
 async function handler(req, res) {
   const {
     query: { id },
+    session: { user },
   } = req;
   const post = await client.post.findUnique({
     where: { id: +id },
@@ -32,9 +33,23 @@ async function handler(req, res) {
       },
     },
   });
+  const isScrapped = user
+    ? Boolean(
+        await client.scrap.findFirst({
+          where: {
+            postId: +id,
+            userId: user?.id,
+          },
+          select: {
+            id: true,
+          },
+        }),
+      )
+    : false;
   res.json({
     ok: true,
     post,
+    isScrapped,
   });
 }
 
