@@ -46,7 +46,7 @@ export default function PostDetail({
                   className='cursor-pointer'
                 >
                   <svg
-                    className='w-8 h-8 rounded-full p-1 hover:bg-indigo-500'
+                    className='w-8 h-8 rounded-full p-1 dark:hover:bg-indigo-500 dark:text-white hover:text-indigo-500'
                     fill='none'
                     stroke='currentColor'
                     strokeWidth='1.5'
@@ -65,7 +65,7 @@ export default function PostDetail({
                   onClick={onClickDelete}
                 >
                   <svg
-                    className='w-8 h-8 rounded-full p-1 hover:bg-indigo-500'
+                    className='w-8 h-8 rounded-full p-1 dark:hover:bg-indigo-500 dark:text-white hover:text-indigo-500'
                     fill='none'
                     stroke='currentColor'
                     strokeWidth='1.5'
@@ -86,8 +86,8 @@ export default function PostDetail({
               onClick={onClickScrap}
             >
               <svg
-                className='w-8 h-8 rounded-full p-1 hover:bg-indigo-500'
-                fill={isScrapped ? 'white' : 'none'}
+                className='w-8 h-8 rounded-full p-1 text-indigo-500 dark:hover:bg-white hover:bg-indigo-100'
+                fill={isScrapped ? '#6366F1' : 'none'}
                 stroke='currentColor'
                 strokeWidth='1.5'
                 viewBox='0 0 24 24'
