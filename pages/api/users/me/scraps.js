@@ -12,19 +12,19 @@ async function handler(req, res) {
       userId: user.id,
     },
     include: {
-      user: {
-        select: {
-          id: true,
-          avatar: true,
-          name: true,
-        },
-      },
       post: {
         select: {
           id: true,
           title: true,
           category: true,
           subCategory: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              avatar: true,
+            },
+          },
         },
       },
     },
