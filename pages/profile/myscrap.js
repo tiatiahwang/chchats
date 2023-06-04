@@ -1,14 +1,27 @@
+import PostCard from '@/components/post/postCard';
 import ProfileNav from '@/components/profile/profileNav';
-import useUser from '@/libs/client/useUser';
-import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import useSWR from 'swr';
 
 const MyScrap = () => {
-  const router = useRouter();
-  const { user } = useUser();
-  const { data } = useSWR('/api/users/me/posts');
-
-  return <ProfileNav />;
+  const { data } = useSWR('/api/users/me/scraps');
+  useEffect(() => {
+    console.log(data), [data];
+  });
+  return (
+    <>
+      <ProfileNav />
+      <div className='px-4'>
+        {data?.scraps?.map((scrap) => (
+          <PostCard
+            post={scrap.post}
+            author={scrap.user}
+            key={scrap.id}
+          />
+        ))}
+      </div>
+    </>
+  );
 };
 
 export default MyScrap;

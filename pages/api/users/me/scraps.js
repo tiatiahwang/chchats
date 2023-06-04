@@ -21,6 +21,7 @@ async function handler(req, res) {
       },
       post: {
         select: {
+          id: true,
           title: true,
           category: true,
           subCategory: true,
