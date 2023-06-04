@@ -31,13 +31,46 @@ export default function DetailPage() {
   const [toggleScrap] = useMutation(
     `/api/posts/${router.query.id}/scrap`,
   );
+  const [
+    deletePost,
+    { loading: deleteLoading, data: deleteStatus },
+  ] = useMutation(`/api/posts/${router.query.id}/delete`);
 
   // 로그인 안내 모달창
-  const [showModal, setShowModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] =
+    useState(false);
+  // 게시글 삭제 확인 모달창
+  const [showDeleteModal, setShowDeleteModal] =
+    useState(false);
   // 댓글 쓰기 부분 보였다 안보였다
   const [showCommentForm, setShowCommentForm] =
     useState(false);
 
+  const [mainCategory, setMainCategory] = useState('');
+
+  useLayoutEffect(() => {
+    if (!router.isReady) return;
+    const currentMainCategory = categories.filter(
+      (category) =>
+        category.ref === router.asPath.split('/')[1],
+    );
+    setMainCategory(currentMainCategory[0]);
+  }, [router]);
+
+  // 삭제 아이콘 클릭시
+  const onClickDelete = () => {
+    if (!data || deleteLoading) return;
+    setShowDeleteModal(true);
+  };
+
+  useEffect(() => {
+    if (deleteStatus && deleteStatus.ok) {
+      // TODO: previous page로 이동해야 할 것 같음
+      router.push('/');
+    }
+  }, [deleteStatus]);
+
+  // 스크랩 아이콘 클릭시
   const onClickScrap = () => {
     if (!data) return;
     if (!user) {
@@ -52,22 +85,7 @@ export default function DetailPage() {
     toggleScrap({});
   };
 
-  const [mainCategory, setMainCategory] = useState('');
-
-  useLayoutEffect(() => {
-    if (!router.isReady) return;
-    const currentMainCategory = categories.filter(
-      (category) =>
-        category.ref === router.asPath.split('/')[1],
-    );
-    setMainCategory(currentMainCategory[0]);
-  }, [router]);
-
-  const onValid = (validForm) => {
-    if (loading) return;
-    addComment(validForm);
-  };
-
+  // 댓글 쓰기 클릭시
   const onClickAddComment = () => {
     if (!user) {
       setShowModal(true);
@@ -76,6 +94,13 @@ export default function DetailPage() {
     setShowCommentForm(!showCommentForm);
   };
 
+  // 댓글 등록
+  const onValid = (validForm) => {
+    if (loading) return;
+    addComment(validForm);
+  };
+
+  // 댓글 등록 성공시, 작성한 댓글 화면에 보이게
   useEffect(() => {
     if (newCommentData && newCommentData.ok) {
       reset();
@@ -106,6 +131,7 @@ export default function DetailPage() {
               post={data?.post}
               isMyPost={data?.isMyPost}
               isScrapped={data?.isScrapped}
+              onClickDelete={onClickDelete}
               onClickScrap={onClickScrap}
             />
             {/* 댓글 작성 */}
@@ -153,12 +179,22 @@ export default function DetailPage() {
         )}
       </div>
       {/* 로그인 안내 모달창 */}
-      {showModal ? (
+      {showLoginModal ? (
         <Modal
-          showModal={showModal}
-          setShowModal={setShowModal}
+          showModal={showLoginModal}
+          setShowModal={setShowLoginModal}
           onConfirm={() => router.push('/login')}
           onCancle={() => setShowModal(false)}
+        />
+      ) : null}
+      {/* 게시글 삭제 확인 모달창 */}
+      {showDeleteModal ? (
+        <Modal
+          showModal={showDeleteModal}
+          setShowModal={setShowDeleteModal}
+          onConfirm={() => deletePost()}
+          onCancle={() => setShowDeleteModal(false)}
+          isDelete={true}
         />
       ) : null}
     </Layout>

@@ -5,6 +5,7 @@ export default function Modal({
   setShowModal,
   onConfirm,
   onCancle,
+  isDelete,
 }) {
   const modalRef = useRef();
   const handleModal = (e) => {
@@ -21,11 +22,15 @@ export default function Modal({
         className='fixed inset-0 bg-opacity-25 backdrop-blur-sm bg-black flex items-center justify-center'
       >
         <div className='w-[300px] bg-white dark:bg-darkhover text-center text-sm p-6 rounded-md space-y-6'>
-          <div>
-            로그인이 필요해요.
-            <br />
-            로그인 페이지로 이동하시겠어요?
-          </div>
+          {isDelete ? (
+            <div>정말 삭제하시겠어요?</div>
+          ) : (
+            <div>
+              로그인이 필요해요.
+              <br />
+              로그인 페이지로 이동하시겠어요?
+            </div>
+          )}
           <div className='space-x-6'>
             <button
               onClick={onConfirm}

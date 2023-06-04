@@ -6,10 +6,10 @@ export default function PostDetail({
   post,
   isMyPost,
   isScrapped,
+  onClickDelete,
   onClickScrap,
 }) {
   const router = useRouter();
-
   return (
     post && (
       <div className='space-y-8 py-8'>
@@ -60,7 +60,10 @@ export default function PostDetail({
                     ></path>
                   </svg>
                 </Link>
-                <div className='cursor-pointer'>
+                <div
+                  className='cursor-pointer'
+                  onClick={onClickDelete}
+                >
                   <svg
                     className='w-8 h-8 rounded-full p-1 hover:bg-indigo-500'
                     fill='none'
