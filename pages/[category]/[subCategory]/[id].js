@@ -86,7 +86,7 @@ export default function DetailPage() {
             {/* 댓글 작성 */}
             <button
               onClick={onClickAddComment}
-              className='hover:text-indigo-500 text-sm pb-6'
+              className='hover:text-indigo-500 hover:border-indigo-500 text-sm border-[1px] border-white mb-6 p-2 rounded-md'
             >
               {showCommentForm
                 ? '댓글창 닫기'

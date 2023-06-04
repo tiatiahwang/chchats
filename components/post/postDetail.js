@@ -4,7 +4,7 @@ export default function PostDetail({ post }) {
   // 데이터 로딩되는 동안 뭔가 화면에 표시해주어야함
   return (
     post && (
-      <div className='border-t-[1px] border-white space-y-8 py-8'>
+      <div className='space-y-8 py-8'>
         <div className='flex space-x-4 items-center'>
           <div>
             {post?.user?.avatar ? (
