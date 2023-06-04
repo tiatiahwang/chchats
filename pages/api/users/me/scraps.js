@@ -4,43 +4,39 @@ import { withApiSession } from '@/libs/server/withSession';
 
 async function handler(req, res) {
   const {
-    query: { id },
+    session: { user },
   } = req;
-  const post = await client.post.findUnique({
-    where: { id: +id },
+  const scraps = await client.scrap.findMany({
+    orderBy: { createdAt: 'desc' },
+    where: {
+      userId: user.id,
+    },
     include: {
       user: {
         select: {
           id: true,
-          name: true,
           avatar: true,
+          name: true,
         },
       },
-      comments: {
+      post: {
         select: {
-          id: true,
-          contents: true,
-          createdAt: true,
-          user: {
-            select: {
-              id: true,
-              name: true,
-              avatar: true,
-            },
-          },
+          title: true,
+          category: true,
+          subCategory: true,
         },
       },
     },
   });
   res.json({
     ok: true,
-    post,
+    scraps,
   });
 }
 
 export default withApiSession(
   withHandler({
-    methods: ['GET'],
+    method: 'GET',
     handler,
   }),
 );
