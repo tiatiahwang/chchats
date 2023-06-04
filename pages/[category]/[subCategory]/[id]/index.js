@@ -20,14 +20,23 @@ export default function DetailPage() {
   const { user } = useUser();
   const router = useRouter();
   const { register, handleSubmit, reset } = useForm();
+
   const { data, mutate, isLoading } = useSWR(
     router.query.id
       ? `/api/posts/${router.query.id}`
       : null,
   );
+  const [addComment, { loading, data: newCommentData }] =
+    useMutation(`/api/posts/${router.query.id}/comment`);
   const [toggleScrap] = useMutation(
     `/api/posts/${router.query.id}/scrap`,
   );
+
+  // 로그인 안내 모달창
+  const [showModal, setShowModal] = useState(false);
+  // 댓글 쓰기 부분 보였다 안보였다
+  const [showCommentForm, setShowCommentForm] =
+    useState(false);
 
   const onClickScrap = () => {
     if (!data) return;
@@ -42,8 +51,6 @@ export default function DetailPage() {
     );
     toggleScrap({});
   };
-  const [addComment, { loading, data: newCommentData }] =
-    useMutation(`/api/posts/${router.query.id}/comment`);
 
   const [mainCategory, setMainCategory] = useState('');
 
@@ -55,10 +62,6 @@ export default function DetailPage() {
     );
     setMainCategory(currentMainCategory[0]);
   }, [router]);
-
-  const [showModal, setShowModal] = useState(false);
-  const [showCommentForm, setShowCommentForm] =
-    useState(false);
 
   const onValid = (validForm) => {
     if (loading) return;
@@ -80,9 +83,6 @@ export default function DetailPage() {
     }
   }, [newCommentData, reset, mutate]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   return (
     <Layout>
       <div className='p-4'>
@@ -104,6 +104,7 @@ export default function DetailPage() {
             {/* 글 내용 상세 */}
             <PostDetail
               post={data?.post}
+              isMyPost={data?.isMyPost}
               isScrapped={data?.isScrapped}
               onClickScrap={onClickScrap}
             />

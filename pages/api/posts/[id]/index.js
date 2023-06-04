@@ -33,6 +33,9 @@ async function handler(req, res) {
       },
     },
   });
+  const isMyPost = user
+    ? Boolean(user?.id === post.user.id)
+    : false;
   const isScrapped = user
     ? Boolean(
         await client.scrap.findFirst({
@@ -49,6 +52,7 @@ async function handler(req, res) {
   res.json({
     ok: true,
     post,
+    isMyPost,
     isScrapped,
   });
 }
