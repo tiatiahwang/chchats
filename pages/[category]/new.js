@@ -1,127 +1,17 @@
-import Button from '@/components/button';
+import Editor from '@/components/editor';
 import Layout from '@/components/layout';
 import useMutation from '@/libs/client/useMutation';
-import useUser from '@/libs/client/useUser';
 import { cls, categories } from '@/libs/client/utils';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const FILE_NAME = new Date().toJSON().slice(0, 10);
-
-const QuillNoSSRWrapper = dynamic(
-  async () => {
-    const { default: RQ } = await import('react-quill');
-    // eslint-disable-next-line react/display-name
-    return ({ forwardedRef, ...props }) => (
-      <RQ ref={forwardedRef} {...props} />
-    );
-  },
-  { ssr: false },
-);
 export default function Upload() {
-  const { user } = useUser();
   const router = useRouter();
   const quillRef = useRef();
   const inputRef = useRef();
   const [contents, setContents] = useState('');
   const [uploadPost, { loading, data }] =
     useMutation('/api/posts');
-
-  useEffect(() => {
-    const check = () => {
-      if (quillRef.current) {
-        const editor = quillRef.current.editor.container;
-        editor.style.height = '450px';
-        editor.style.overflow = 'auto';
-        return;
-      }
-      setTimeout(check, 200);
-    };
-    check();
-  }, [quillRef]);
-
-  const imageHandler = useCallback(async () => {
-    // 1. 이미지를 저장할 input type=file DOM을 만든다.
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*'); // 이미지 파일만 선택가능하도록 제한
-    input.setAttribute('name', 'image');
-    input.click(); // 에디터의 이미지버튼을 클릭하면 이 input이 클릭된다.
-
-    // input이 클릭되면 파일 선택창이 화면에 나타난다.
-    // 파일 선택창에서 이미지를 선택하면 실행될 콜백 함수 등록
-    input.onchange = async () => {
-      const file =
-        input && input.files ? input.files[0] : null;
-      if (file === null) return;
-      // multer에 맞는 형식으로 데이터를 만들어 준다
-      // 이미지를 url로 바꾸기 위해 서버로 전달하는 폼데이터를 만드는 것이다.
-      const formData = new FormData();
-      formData.append('image', file); // formData는 키-밸류 구조
-
-      try {
-        const { uploadURL } = await (
-          await fetch('/api/files')
-        ).json();
-        const form = new FormData();
-        form.append('file', file, FILE_NAME + user?.name);
-        const {
-          result: { variants },
-        } = await (
-          await fetch(uploadURL, {
-            method: 'POST',
-            body: form,
-          })
-        ).json();
-
-        const quill = quillRef?.current?.getEditor();
-        const range = quill?.getSelection();
-        quill.editor.insertEmbed(
-          range.index,
-          'image',
-          variants[0],
-        );
-      } catch (e) {
-        console.log('이미지 업로드 에러!: ', e);
-      }
-    };
-  }, [quillRef]);
-
-  const modules = useMemo(
-    () => ({
-      toolbar: {
-        // 툴바에 넣을 기능들을 순서대로 나열
-        container: [
-          [
-            {
-              size: [
-                '12px',
-                '14px',
-                '16px',
-                '18px',
-                '20px',
-              ],
-            },
-            { color: [] },
-          ],
-          ['bold', 'italic', 'underline', 'strike'],
-          ['image'],
-        ],
-        handlers: {
-          // 위에서 만든 이미지 핸들러 사용하도록 설정
-          image: imageHandler,
-        },
-      },
-    }),
-    [imageHandler],
-  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -141,6 +31,7 @@ export default function Upload() {
       category: mainCategory,
       subCategory: selectedSub,
     };
+    console.log(post);
 
     if (loading) return;
     uploadPost(post);
@@ -209,12 +100,12 @@ export default function Upload() {
                   return (
                     <li
                       onClick={() =>
-                        setSelectedSub(category.name)
+                        setSelectedSub(category.ref)
                       }
                       key={category.id}
                       className={cls(
                         'p-2 rounded-md cursor-pointer',
-                        selectedSub === category.name
+                        selectedSub === category.ref
                           ? 'bg-gray-200 dark:bg-darkselected'
                           : 'hover:text-indigo-500',
                       )}
@@ -228,28 +119,14 @@ export default function Upload() {
           </div>
         </div>
         {/* 에디터 */}
-        <form onSubmit={handleSubmit}>
-          <div className='flex items-center justify-start space-x-2 pb-4'>
-            <label className='text-xl'>제목</label>
-            <input
-              ref={inputRef}
-              type='text'
-              placeholder='제목을 입력해주세요'
-              className='appearance-none rounded-md p-2 dark:text-white dark:bg-darkbg
-            placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'
-            />
-          </div>
-          <QuillNoSSRWrapper
-            forwardedRef={quillRef}
-            value={contents}
-            onChange={setContents}
-            modules={modules}
-            theme='snow'
-          />
-          <div className='pt-8'>
-            <Button text={'등록'} />
-          </div>
-        </form>
+        <Editor
+          inputRef={inputRef}
+          quillRef={quillRef}
+          contents={contents}
+          setContents={setContents}
+          handleSubmit={handleSubmit}
+          placeholder='제목을 입력해주세요'
+        />
       </div>
     </Layout>
   );
