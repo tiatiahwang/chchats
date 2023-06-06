@@ -37,7 +37,6 @@ export default function Upload() {
   useEffect(() => {
     const check = () => {
       if (quillRef.current) {
-        console.log(quillRef.current.editor.container);
         const editor = quillRef.current.editor.container;
         editor.style.height = '450px';
         editor.style.overflow = 'auto';
