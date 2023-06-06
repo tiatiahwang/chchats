@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
 export default function Home() {
-  const router = useRouter();
   const { data: QuestionsData } = useSWR(
     '/api/posts?category=questions',
   );

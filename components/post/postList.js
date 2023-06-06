@@ -34,9 +34,19 @@ export default function PostList({
       ) : null}
       {/* 글 */}
       <div className='border-t-[1px] border-gray-200 dark:border-white'>
-        {data?.posts?.map((post) => {
-          return <PostCard key={post.id} post={post} />;
-        })}
+        {isHome && data?.posts?.length >= 5 ? (
+          <>
+            {data?.posts?.slice(0, 5).map((post) => {
+              return <PostCard key={post.id} post={post} />;
+            })}
+          </>
+        ) : (
+          <>
+            {data?.posts?.map((post) => {
+              return <PostCard key={post.id} post={post} />;
+            })}
+          </>
+        )}
       </div>
       {data?.posts?.length === 0 ? (
         <div className='text-md dark:text-white font-medium'>
