@@ -21,8 +21,8 @@ export default function Layout({ children, noPaddingTop }) {
   return (
     <div>
       <nav className='w-full'>
-        <div className='justify-between mx-auto md:items-center md:flex md:px-8 relative dark:bg-darkbg'>
-          <div className='flex items-center justify-between py-3 px-4 md:px-5 md:w-full'>
+        <div className='justify-between mx-auto md:items-center md:flex relative dark:bg-darkbg'>
+          <div className='flex items-center justify-between py-3 md:w-full'>
             <div className='md:hidden'>
               <button
                 className='p-2 rounded-md outline-none focus:bg-gray-100 dark:focus:bg-gray-400'
@@ -135,6 +135,9 @@ export default function Layout({ children, noPaddingTop }) {
       <div className={cls('', noPaddingTop ? '' : 'pt-12')}>
         {children}
       </div>
+      <footer className='text-center text-sm p-4'>
+        COPYRIGHT @CHCATS 2023
+      </footer>
     </div>
   );
 }

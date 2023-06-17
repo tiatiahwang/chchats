@@ -18,7 +18,7 @@ export default function Home() {
   // PostList에 category 정보 보내는 방식 변경 추후 필요할 수도
   return (
     <Layout title='홈' noPaddingTop={true}>
-      <div className='min-w-[500px] md:w md:grid md:gap-6 md:grid-cols-2'>
+      <div className='md:grid md:gap-6 md:grid-cols-2'>
         <PostList
           category={categories[0]}
           data={QuestionsData}

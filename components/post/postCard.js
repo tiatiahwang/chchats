@@ -4,6 +4,7 @@ import Link from 'next/link';
 export default function PostCard({
   post,
   isScrapPage = false,
+  showContents = true,
 }) {
   return (
     <div
@@ -35,7 +36,7 @@ export default function PostCard({
         <div className='text-md font-bold hover:text-indigo-500 cursor-pointer'>
           {post.title}
         </div>
-        {post.contents && (
+        {showContents && post.contents && (
           <div className='text-xs hover:text-indigo-500 cursor-pointer'>
             {post.contents
               .replace(

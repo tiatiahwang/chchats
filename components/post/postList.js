@@ -9,13 +9,12 @@ export default function PostList({
   isHome = false,
 }) {
   return (
-    <div className='p-4 space-y-6 text-black'>
+    <div className='mb-4 md:mb-0 p-4 space-y-6 text-black bg-gray-100 dark:bg-darkselected rounded-md'>
       {/* 메인 카테고리 이름과 설명 부분 */}
-      <div className='dark:text-white bg-gray-100 dark:bg-darkselected py-4 px-8 rounded-md'>
-        <p className='font-semibold text-md'>
+      <div className='dark:text-white rounded-md'>
+        <p className='font-semibold text-2xl'>
           {category?.name}
         </p>
-        <p className='text-xs'>{category?.description}</p>
       </div>
       {/* 홈 화면일때 글 작성 버튼 비노출 */}
       {!isHome ? (
@@ -37,7 +36,13 @@ export default function PostList({
         {isHome && data?.posts?.length >= 5 ? (
           <>
             {data?.posts?.slice(0, 5).map((post) => {
-              return <PostCard key={post.id} post={post} />;
+              return (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  showContents={false}
+                />
+              );
             })}
           </>
         ) : (
