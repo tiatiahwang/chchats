@@ -6,7 +6,7 @@ export const categories = [
   {
     id: 0,
     name: '이야기방',
-    ref: '/board',
+    ref: 'board',
     subCategories: [
       { id: 0, name: '전체', url: '/board', ref: '' },
       {

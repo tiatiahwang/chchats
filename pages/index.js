@@ -6,7 +6,7 @@ import useSWR from 'swr';
 
 export default function Home() {
   const { data: QuestionsData } = useSWR(
-    '/api/posts?category=questions',
+    '/api/posts?category=board',
   );
   const { data: InfoData } = useSWR(
     '/api/posts?category=information',

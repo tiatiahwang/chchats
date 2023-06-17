@@ -135,9 +135,6 @@ export default function Layout({ children, noPaddingTop }) {
       <div className={cls('', noPaddingTop ? '' : 'pt-12')}>
         {children}
       </div>
-      <footer className='text-center text-sm p-4'>
-        COPYRIGHT @CHCATS 2023
-      </footer>
     </div>
   );
 }
