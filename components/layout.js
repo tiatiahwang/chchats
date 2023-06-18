@@ -69,18 +69,18 @@ export default function Layout({ children, noPaddingTop }) {
               </Link>
               <ul className='hidden md:flex md:space-x-8 md:ml-10'>
                 <li>
-                  <Link href='/questions'>
-                    <div>Q&A</div>
+                  <Link href='/board'>
+                    <div>이야기방</div>
                   </Link>
                 </li>
                 <li>
                   <Link href='/information'>
-                    <div>정보</div>
+                    <div>정보공유</div>
                   </Link>
                 </li>
                 <li>
                   <Link href='/market'>
-                    <div>마켓</div>
+                    <div>사고팔고</div>
                   </Link>
                 </li>
               </ul>

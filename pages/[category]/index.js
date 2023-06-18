@@ -14,7 +14,7 @@ export default function Posts() {
   const onClick = () =>
     router.push(`/${router.asPath.slice(1)}/new`);
   return (
-    <Layout noPaddingTop={true}>
+    <Layout>
       <PostList
         category={
           categories.filter(

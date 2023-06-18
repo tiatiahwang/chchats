@@ -5,25 +5,44 @@ import { withApiSession } from '@/libs/server/withSession';
 async function handler(req, res) {
   if (req.method === 'GET') {
     const {
-      query: { category, subCategory },
+      query: { category, subCategory, isHome },
     } = req;
     let posts;
     if (subCategory === undefined) {
-      posts = await client.post.findMany({
-        orderBy: { createdAt: 'desc' },
-        where: {
-          category,
-        },
-        include: {
-          user: {
-            select: {
-              id: true,
-              name: true,
-              avatar: true,
+      if (isHome === 'true') {
+        posts = await client.post.findMany({
+          orderBy: { createdAt: 'desc' },
+          where: {
+            category,
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                avatar: true,
+              },
             },
           },
-        },
-      });
+          take: 5,
+        });
+      } else {
+        posts = await client.post.findMany({
+          orderBy: { createdAt: 'desc' },
+          where: {
+            category,
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                avatar: true,
+              },
+            },
+          },
+        });
+      }
     } else {
       posts = await client.post.findMany({
         orderBy: { createdAt: 'desc' },
@@ -58,7 +77,6 @@ async function handler(req, res) {
         contents,
         category,
         subCategory,
-        image: '',
         user: {
           connect: {
             id: user?.id,

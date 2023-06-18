@@ -29,7 +29,6 @@ model Post {
   userId      Int
   category    String
   subCategory String
-  image       String?
   title       String
   contents    String   @db.LongText
   comments    Comment[]
