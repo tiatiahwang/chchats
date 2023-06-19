@@ -16,10 +16,8 @@ export default function Posts() {
         )}&page=${page}`
       : null,
   );
-  console.log(data);
   const onClick = () =>
     router.push(`/${router.asPath.slice(1)}/new`);
-
   return (
     <Layout>
       <PostList
