@@ -5,9 +5,11 @@ import { withApiSession } from '@/libs/server/withSession';
 async function handler(req, res) {
   if (req.method === 'GET') {
     const {
-      query: { category, subCategory, isHome },
+      query: { category, subCategory, isHome, page },
     } = req;
     let posts;
+    let count;
+    // subCategory가 '전체'인 경우
     if (subCategory === undefined) {
       if (isHome === 'true') {
         posts = await client.post.findMany({
@@ -41,6 +43,13 @@ async function handler(req, res) {
               },
             },
           },
+          skip: (page - 1) * 10,
+          take: 10,
+        });
+        count = await client.post.count({
+          where: {
+            category,
+          },
         });
       }
     } else {
@@ -64,6 +73,7 @@ async function handler(req, res) {
     res.json({
       ok: true,
       posts,
+      totalPages: Math.ceil(count / 10),
     });
   }
   if (req.method === 'POST') {

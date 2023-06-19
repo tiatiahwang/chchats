@@ -1,16 +1,21 @@
 import { cls } from '@/libs/client/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-export default function Category({
-  categories,
-  selected = '',
-}) {
+export default function Category({ categories }) {
   const router = useRouter();
-  const currentCategory =
-    selected === ''
-      ? router.asPath.split('/')[2]
-      : selected;
+
+  const [currentCategory, setCurrentCategory] = useState();
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    setCurrentCategory(
+      router.query.subCategory === undefined
+        ? 'all'
+        : router.query.subCategory,
+    );
+  }, [router]);
   return (
     <ul className='dark:text-white flex space-x-2 text-sm'>
       {categories?.map((category) => (
@@ -18,12 +23,11 @@ export default function Category({
           <li
             className={cls(
               'p-2 rounded-md cursor-pointer',
-              router.asPath.split('/').length === 2 &&
-                category.id === 0
-                ? 'bg-gray-200 dark:bg-darkselected'
+              currentCategory === 'all' && category.id == 0
+                ? 'bg-gray-300 dark:bg-darkhover dark:bg-opacity-30'
                 : '',
               currentCategory === category.ref
-                ? 'bg-gray-200 dark:bg-darkselected'
+                ? 'bg-gray-300 dark:bg-darkhover dark:bg-opacity-30'
                 : 'hover:text-indigo-500',
             )}
           >
