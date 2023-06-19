@@ -1,6 +1,12 @@
 import dynamic from 'next/dynamic';
-import { useCallback, useEffect, useMemo } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import Button from './button';
+import Loader from './loader';
 
 const FILE_NAME = new Date().toJSON().slice(0, 10);
 
@@ -23,6 +29,7 @@ export default function Editor({
   handleSubmit,
   placeholder,
 }) {
+  const [isUploading, setIsUploading] = useState(false);
   // editor 높이 설정
   useEffect(() => {
     const check = () => {
@@ -53,6 +60,7 @@ export default function Editor({
       formData.append('image', file); // formData는 키-밸류 구조
 
       try {
+        setIsUploading(true);
         const { uploadURL } = await (
           await fetch('/api/files')
         ).json();
@@ -70,14 +78,17 @@ export default function Editor({
             body: form,
           })
         ).json();
-        console.log(variants);
         const quill = quillRef?.current?.getEditor();
         const range = quill?.getSelection();
+        const reformedVariants = variants[0].split(
+          '/avatar' || '/public',
+        )[0];
         quill.editor.insertEmbed(
           range.index,
           'image',
-          variants.length > 1 ? variants[1] : variants[0],
+          `${reformedVariants}/public`,
         );
+        setIsUploading(false);
       } catch (e) {
         console.log('이미지 업로드 에러!: ', e);
       }
@@ -116,6 +127,12 @@ export default function Editor({
 
   return (
     <form onSubmit={handleSubmit}>
+      {isUploading ? (
+        <div className='fixed inset-0 bg-opacity-50 backdrop-blur-sm bg-black flex items-center justify-center text-2xl text-center font-bold z-50'>
+          이미지 업로드 중입니다. <br />
+          잠시만 기다려 주세요.
+        </div>
+      ) : null}
       <div className='flex items-center justify-start space-x-2 pb-4'>
         <label className='text-xl'>제목</label>
         <input
