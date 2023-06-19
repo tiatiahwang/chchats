@@ -8,10 +8,11 @@ export default function PostList({
   onClick,
   data,
   isHome = false,
+  isSearch = false,
 }) {
   return (
     <div className='mb-4 md:mb-0 p-4 space-y-4 text-black bg-gray-100 dark:bg-darkselected rounded-md'>
-      {/* 메인 카테고리 이름과 설명 부분 */}
+      {/* 메인 카테고리 이름 */}
       <div className='dark:text-white rounded-md'>
         <Link
           href={`/${category?.ref}`}
@@ -21,7 +22,7 @@ export default function PostList({
         </Link>
       </div>
       {/* 홈 화면일때 글 작성 버튼 비노출 */}
-      {!isHome ? (
+      {!isHome && !isSearch ? (
         <Button
           text='글작성하기'
           large={false}
@@ -29,7 +30,7 @@ export default function PostList({
         />
       ) : null}
       {/* 홈 화면일때 카테고리 리스트 비노출 */}
-      {!isHome ? (
+      {!isHome && !isSearch ? (
         <Category
           categories={category?.subCategories}
           selected={data?.post?.subCategory}

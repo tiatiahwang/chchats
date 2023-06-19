@@ -16,7 +16,7 @@ export default function Upload() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const title = document.querySelector('input').value;
+    const title = inputRef.current.value;
 
     if (mainCategory === '' || selectedSub === '') {
       return alert('카테고리를 선택해주세요. 둘다');

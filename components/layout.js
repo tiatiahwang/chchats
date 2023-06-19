@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import TogggleDarkMode from './toggleDarkMode';
 import { cls } from '@/libs/client/utils';
 import useUser from '@/libs/client/useUser';
+import { SearchInput } from './searchInput';
 
 export default function Layout({ children, noPaddingTop }) {
   const { user } = useUser();
@@ -23,6 +24,7 @@ export default function Layout({ children, noPaddingTop }) {
       <nav className='w-full'>
         <div className='justify-between mx-auto md:items-center md:flex relative dark:bg-darkbg'>
           <div className='flex items-center justify-between py-3 md:w-full'>
+            {/* 모바일뷰 설정 - 좌측 아이콘 */}
             <div className='md:hidden'>
               <button
                 className='p-2 rounded-md outline-none focus:bg-gray-100 dark:focus:bg-gray-400'
@@ -62,7 +64,7 @@ export default function Layout({ children, noPaddingTop }) {
               </button>
             </div>
             <div className='md:flex md:items-center'>
-              <Link href='/' className='cursor-pointer'>
+              <Link href='/'>
                 <h2 className='text-xl font-bold'>
                   CHCHATS
                 </h2>
@@ -85,7 +87,8 @@ export default function Layout({ children, noPaddingTop }) {
                 </li>
               </ul>
             </div>
-            <div className='flex items-center space-x-5'>
+            <div className='flex justify-between items-center space-x-5'>
+              <SearchInput />
               {renderThemeChanger()}
               <Link href='/profile'>
                 {user && user?.avatar ? (
