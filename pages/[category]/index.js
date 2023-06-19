@@ -1,4 +1,5 @@
 import Layout from '@/components/layout';
+import Loader from '@/components/loader';
 import Pagination from '@/components/post/pagination';
 import PostList from '@/components/post/postList';
 import { categories } from '@/libs/client/utils';
@@ -9,7 +10,7 @@ import useSWR from 'swr';
 export default function Posts() {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const { data } = useSWR(
+  const { data, isLoading } = useSWR(
     router.asPath
       ? `/api/posts?category=${router.asPath.slice(
           1,
@@ -29,11 +30,9 @@ export default function Posts() {
         }
         onClick={onClick}
         data={data}
-      />
-      <Pagination
+        isLoading={isLoading}
         page={page}
         setPage={setPage}
-        totalPages={data?.totalPages}
       />
     </Layout>
   );

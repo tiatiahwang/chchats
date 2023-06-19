@@ -9,7 +9,7 @@ async function handler(req, res) {
     } = req;
     let posts;
     let count;
-    const limit = 3;
+    const limit = 10;
     // subCategory가 '전체'인 경우
     if (subCategory === undefined) {
       if (isHome === 'true') {
@@ -68,6 +68,14 @@ async function handler(req, res) {
               avatar: true,
             },
           },
+        },
+        skip: (page - 1) * limit,
+        take: limit,
+      });
+      count = await client.post.count({
+        where: {
+          category,
+          subCategory,
         },
       });
     }

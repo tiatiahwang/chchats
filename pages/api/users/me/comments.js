@@ -5,7 +5,9 @@ import { withApiSession } from '@/libs/server/withSession';
 async function handler(req, res) {
   const {
     session: { user },
+    query: { page },
   } = req;
+  const limit = 10;
   const comments = await client.comment.findMany({
     orderBy: { createdAt: 'desc' },
     where: {
@@ -27,10 +29,18 @@ async function handler(req, res) {
         },
       },
     },
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+  const count = await client.comment.count({
+    where: {
+      userId: user.id,
+    },
   });
   res.json({
     ok: true,
     comments,
+    totalPages: Math.ceil(count / limit),
   });
 }
 

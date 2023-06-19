@@ -2,15 +2,19 @@ import Layout from '@/components/layout';
 import PostList from '@/components/post/postList';
 import { categories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import useSWR from 'swr';
 
 export default function SubPosts() {
   const router = useRouter();
-  const { data } = useSWR(
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = useSWR(
     router.asPath
       ? `/api/posts?category=${
           router.asPath.split('/')[1]
-        }&subCategory=${router.asPath.split('/')[2]}`
+        }&subCategory=${
+          router.asPath.split('/')[2]
+        }&page=${page}`
       : null,
   );
   const onClick = () => {
@@ -20,7 +24,7 @@ export default function SubPosts() {
     });
   };
   return (
-    <Layout noPaddingTop={true}>
+    <Layout>
       <PostList
         category={
           categories.filter(
@@ -30,6 +34,9 @@ export default function SubPosts() {
         }
         onClick={onClick}
         data={data}
+        isLoading={isLoading}
+        page={page}
+        setPage={setPage}
       />
     </Layout>
   );

@@ -1,26 +1,37 @@
-import Comments from '@/components/comments';
-import ProfileNav from '@/components/profile/profileNav';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import useSWR from 'swr';
+import Comments from '@/components/comments';
+import Loader from '@/components/loader';
+import ProfileNav from '@/components/profile/profileNav';
+import Pagination from '@/components/post/pagination';
 
 const MyCommnet = () => {
-  const router = useRouter();
-  const { data } = useSWR('/api/users/me/comments');
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = useSWR(
+    `/api/users/me/comments?page=${page}`,
+  );
 
   return (
     <>
       <ProfileNav />
       <div className='px-4'>
-        {data?.comments ? (
-          <Comments
-            comments={data.comments}
-            isProfile={true}
-          />
-        ) : null}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            {data?.comments ? (
+              <Comments
+                comments={data.comments}
+                isProfile={true}
+              />
+            ) : null}
+            <Pagination
+              page={page}
+              setPage={setPage}
+              totalPages={data?.totalPages}
+            />
+          </>
+        )}
       </div>
     </>
   );

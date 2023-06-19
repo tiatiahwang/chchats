@@ -11,7 +11,7 @@ import useSWR from 'swr';
 const ProfileNav = () => {
   const router = useRouter();
   const { user } = useUser();
-  const { data } = useSWR('/api/users/me/posts');
+
   const [logout, { loading, data: logoutStatus }] =
     useMutation('/api/users/logout');
 

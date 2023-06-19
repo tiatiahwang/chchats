@@ -5,7 +5,9 @@ import { withApiSession } from '@/libs/server/withSession';
 async function handler(req, res) {
   const {
     session: { user },
+    query: { page },
   } = req;
+  const limit = 10;
   const posts = await client.post.findMany({
     where: {
       userId: user.id,
@@ -19,10 +21,18 @@ async function handler(req, res) {
         },
       },
     },
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+  const count = await client.post.count({
+    where: {
+      userId: user.id,
+    },
   });
   res.json({
     ok: true,
     posts,
+    totalPages: Math.ceil(count / limit),
   });
 }
 
