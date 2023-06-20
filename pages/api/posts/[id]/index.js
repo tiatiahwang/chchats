@@ -31,6 +31,11 @@ async function handler(req, res) {
           },
         },
       },
+      _count: {
+        select: {
+          comments: true,
+        },
+      },
     },
   });
   const isMyPost = user

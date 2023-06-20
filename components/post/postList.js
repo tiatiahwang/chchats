@@ -51,7 +51,6 @@ export default function PostList({
                     key={post.id}
                     post={post}
                     showContents={isHome ? false : true}
-                    isHome={isHome}
                     isLast={
                       data?.posts?.length - 1 === index
                         ? true

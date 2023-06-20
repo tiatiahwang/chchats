@@ -48,6 +48,11 @@ async function handler(req, res) {
                 avatar: true,
               },
             },
+            _count: {
+              select: {
+                comments: true,
+              },
+            },
           },
           skip: (page - 1) * limit,
           take: limit,
@@ -71,6 +76,11 @@ async function handler(req, res) {
               id: true,
               name: true,
               avatar: true,
+            },
+          },
+          _count: {
+            select: {
+              comments: true,
             },
           },
         },
