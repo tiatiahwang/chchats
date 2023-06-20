@@ -34,7 +34,7 @@ export function SearchInput() {
           placeholder='검색'
           {...register('keyword', {
             required: true,
-            minLength: 2,
+            minLength: 1,
           })}
         />
       </form>

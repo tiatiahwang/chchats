@@ -4,11 +4,12 @@ import { withApiSession } from '@/libs/server/withSession';
 
 async function handler(req, res) {
   const {
-    query: { keyword },
+    query: { keyword, page },
   } = req;
   if (!keyword) {
     return res.json({ ok: false });
   }
+  const limit = 10;
   const decoded = decodeURI(keyword);
   const posts = await client.post.findMany({
     orderBy: { createdAt: 'desc' },
@@ -25,9 +26,27 @@ async function handler(req, res) {
           avatar: true,
         },
       },
+      _count: {
+        select: {
+          comments: true,
+        },
+      },
+    },
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+  const count = await client.post.count({
+    where: {
+      title: {
+        contains: decoded,
+      },
     },
   });
-  res.json({ ok: true, posts });
+  res.json({
+    ok: true,
+    posts,
+    totalPages: Math.ceil(count / limit),
+  });
 }
 
 export default withApiSession(

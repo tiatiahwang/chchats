@@ -14,18 +14,26 @@ export default function PostList({
   isLoading,
   page,
   setPage,
+  keyword = '',
 }) {
   return (
     <>
       <div className='mb-4 md:mb-0 p-4 space-y-4 text-black bg-gray-100 dark:bg-darkselected rounded-md'>
         {/* 메인 카테고리 이름 */}
         <div className='dark:text-white rounded-md'>
-          <Link
-            href={`/${category?.ref}`}
-            className='font-semibold text-2xl hover:text-indigo-500'
-          >
-            {category?.name}
-          </Link>
+          {!isSearch ? (
+            <Link
+              href={`/${category?.ref}`}
+              className='font-semibold text-2xl hover:text-indigo-500'
+            >
+              {category?.name}
+            </Link>
+          ) : (
+            <div className='text-xl'>
+              "<span className='font-bold'>{keyword}</span>"{' '}
+              검색결과
+            </div>
+          )}
         </div>
         {/* 홈 화면일때 글 작성 버튼 비노출 */}
         {!isHome && !isSearch ? (
