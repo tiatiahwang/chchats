@@ -7,7 +7,6 @@ import Pagination from '@/components/post/pagination';
 
 const Profile = () => {
   const [page, setPage] = useState(1);
-  console.log(page);
   const { data, isLoading } = useSWR(
     page !== null
       ? `/api/users/me/posts?page=${page}`
@@ -22,8 +21,16 @@ const Profile = () => {
           <Loader />
         ) : (
           <>
-            {data?.posts?.map((post) => (
-              <PostCard post={post} key={post.id} />
+            {data?.posts?.map((post, index) => (
+              <PostCard
+                post={post}
+                key={post.id}
+                isLast={
+                  data?.posts?.length - 1 === index
+                    ? true
+                    : false
+                }
+              />
             ))}
             <Pagination
               page={page}

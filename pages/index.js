@@ -15,7 +15,7 @@ export default function Home() {
   const { data: marketData } = useSWR(
     '/api/posts?category=market&isHome=true',
   );
-
+  console.log(boardData);
   // PostList에 category 정보 보내는 방식 변경 추후 필요할 수도
   return (
     <Layout title='홈' noPaddingTop={true}>

@@ -1,16 +1,25 @@
 import useTimeFormat from '@/libs/client/useTimeFormat';
+import { cls } from '@/libs/client/utils';
 import Link from 'next/link';
 
 export default function PostCard({
   post,
   isScrapPage = false,
   showContents = true,
+  isHome = false,
+  isLast,
 }) {
   return (
     <div
       key={post.id}
-      className='dark:text-white border-b-[1px] dark:border-white py-4 space-y-2'
+      className={cls(
+        'dark:text-white space-y-2',
+        isLast
+          ? 'pt-4'
+          : 'border-b-[1px] dark:border-white py-4',
+      )}
     >
+      {/* 유저 아바타/이름 및 글 작성 시간 */}
       <div className='flex items-center space-x-2 text-xs pb-2'>
         {post?.user?.avatar ? (
           <img
@@ -29,6 +38,7 @@ export default function PostCard({
           {isScrapPage && '스크랩 했어요!'}
         </span>
       </div>
+      {/* 글 제목 및 내용*/}
       <Link
         href={`/${post?.category}/${post?.subCategory}/${post?.id}`}
         className='space-y-2'

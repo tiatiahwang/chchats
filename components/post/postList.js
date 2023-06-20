@@ -45,12 +45,18 @@ export default function PostList({
           <>
             {/* 글 */}
             <div className='border-t-[1px] border-gray-200 dark:border-white'>
-              {data?.posts?.map((post) => {
+              {data?.posts?.map((post, index) => {
                 return (
                   <PostCard
                     key={post.id}
                     post={post}
                     showContents={isHome ? false : true}
+                    isHome={isHome}
+                    isLast={
+                      data?.posts?.length - 1 === index
+                        ? true
+                        : false
+                    }
                   />
                 );
               })}

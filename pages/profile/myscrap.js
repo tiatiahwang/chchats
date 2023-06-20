@@ -18,11 +18,16 @@ const MyScrap = () => {
           <Loader />
         ) : (
           <>
-            {data?.scraps?.map((scrap) => (
+            {data?.scraps?.map((scrap, index) => (
               <PostCard
                 post={scrap.post}
                 key={scrap.id}
                 isScrapPage={true}
+                isLast={
+                  data?.scraps?.length - 1 === index
+                    ? true
+                    : false
+                }
               />
             ))}
             <Pagination

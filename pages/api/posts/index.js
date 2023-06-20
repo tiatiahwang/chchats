@@ -26,6 +26,11 @@ async function handler(req, res) {
                 avatar: true,
               },
             },
+            _count: {
+              select: {
+                comments: true,
+              },
+            },
           },
           take: 5,
         });
