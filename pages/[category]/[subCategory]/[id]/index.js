@@ -35,16 +35,30 @@ export default function DetailPage() {
     deletePost,
     { loading: deleteLoading, data: deleteStatus },
   ] = useMutation(`/api/posts/${router.query.id}/delete`);
+  const [
+    deleteComment,
+    {
+      loading: deleteCommentLoading,
+      data: deleteCommentData,
+    },
+  ] = useMutation(
+    `/api/posts/${router.query.id}/delete-comment`,
+  );
 
   // 로그인 안내 모달창
   const [showLoginModal, setShowLoginModal] =
     useState(false);
   // 게시글 삭제 확인 모달창
-  const [showDeleteModal, setShowDeleteModal] =
+  const [showDeletePostModal, setShowDeletePostModal] =
     useState(false);
   // 댓글 쓰기 부분 보였다 안보였다
   const [showCommentForm, setShowCommentForm] =
     useState(false);
+  // 댓글 삭제 확인 모달창
+  const [
+    showDeleteCommentModal,
+    setShowDeleteCommentModal,
+  ] = useState(false);
 
   const [mainCategory, setMainCategory] = useState('');
 
@@ -97,7 +111,11 @@ export default function DetailPage() {
   // 댓글 등록
   const onValid = (validForm) => {
     if (loading) return;
-    addComment(validForm);
+    const replaced = validForm.contents.replaceAll(
+      '\n',
+      '<br/>',
+    );
+    addComment({ contents: replaced });
   };
 
   // 댓글 등록 성공시, 작성한 댓글 화면에 보이게
@@ -107,6 +125,22 @@ export default function DetailPage() {
       mutate();
     }
   }, [newCommentData, reset, mutate]);
+
+  const [commentId, setCommentId] = useState();
+  // 댓글 삭제
+  const onClickDeleteComment = (id) => {
+    if (deleteCommentLoading) return;
+    setCommentId(id);
+    setShowDeleteCommentModal(true);
+  };
+
+  // 댓글 삭제 성공시
+  useEffect(() => {
+    if (deleteCommentData && deleteCommentData.ok) {
+      console.log('잉');
+      mutate();
+    }
+  }, [deleteCommentData, mutate]);
 
   return (
     <Layout>
@@ -120,9 +154,6 @@ export default function DetailPage() {
               <div className='dark:text-white bg-gray-200 dark:bg-darkselected py-4 px-8 rounded-md'>
                 <p className='font-semibold text-md'>
                   {mainCategory.name}
-                </p>
-                <p className='text-xs'>
-                  {mainCategory.description}
                 </p>
               </div>
             </Link>
@@ -160,7 +191,7 @@ export default function DetailPage() {
                 </div>
                 <textarea
                   {...register('contents')}
-                  className='resize-none rounded-md flex-1 focus:outline-none dark:bg-darkbg border-[1px] dark:border-white p-2'
+                  className='whitespace-pre-line resize-none rounded-md flex-1 focus:outline-none dark:bg-darkbg border-[1px] dark:border-white p-2'
                   placeholder={
                     !user ? '로그인을 해주세요' : null
                   }
@@ -173,7 +204,10 @@ export default function DetailPage() {
             ) : null}
             {/* 댓글 리스트 */}
             {data?.post?.comments.length > 0 ? (
-              <Comments comments={data?.post?.comments} />
+              <Comments
+                comments={data?.post?.comments}
+                onClickDeleteComment={onClickDeleteComment}
+              />
             ) : null}
           </>
         )}
@@ -188,12 +222,22 @@ export default function DetailPage() {
         />
       ) : null}
       {/* 게시글 삭제 확인 모달창 */}
-      {showDeleteModal ? (
+      {showDeletePostModal ? (
         <Modal
-          showModal={showDeleteModal}
-          setShowModal={setShowDeleteModal}
+          showModal={showDeletePostModal}
+          setShowModal={setShowDeletePostModal}
           onConfirm={() => deletePost()}
           onCancle={() => setShowDeleteModal(false)}
+          isDelete={true}
+        />
+      ) : null}
+      {/* 댓글 삭제 확인 모달창 */}
+      {showDeleteCommentModal ? (
+        <Modal
+          showModal={showDeleteCommentModal}
+          setShowModal={setShowDeleteCommentModal}
+          onConfirm={() => deleteComment(commentId)}
+          onCancle={() => setShowDeleteCommentModal(false)}
           isDelete={true}
         />
       ) : null}

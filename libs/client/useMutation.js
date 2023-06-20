@@ -16,9 +16,15 @@ export default function useMutation(url) {
       body: JSON.stringify(data),
     })
       .then((response) => response.json().catch(() => {}))
-      .then((data) => setState((prev) => ({ ...prev, data })))
-      .catch((error) => setState((prev) => ({ ...prev, error })))
-      .finally(() => setState((prev) => ({ ...prev, loading: false })));
+      .then((data) =>
+        setState((prev) => ({ ...prev, data })),
+      )
+      .catch((error) =>
+        setState((prev) => ({ ...prev, error })),
+      )
+      .finally(() =>
+        setState((prev) => ({ ...prev, loading: false })),
+      );
   }
   return [mutation, { ...state }];
 }
