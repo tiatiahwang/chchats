@@ -2,6 +2,63 @@ export function cls(...classnames) {
   return classnames.join(' ');
 }
 
+export function pages(info) {
+  const { currentPage, printPage, totalPages } = info;
+
+  if (currentPage > totalPages || currentPage < 1) {
+    return {
+      pageNumList: [],
+    };
+  }
+
+  const pages = Array.from(
+    { length: totalPages },
+    (_, i) => i + 1,
+  );
+
+  const sideButton =
+    printPage % 2 === 0
+      ? printPage / 2
+      : (printPage - 1) / 2;
+
+  const leftSide = (rest = 0) => {
+    return {
+      array: pages
+        .slice(0, currentPage - 1)
+        .reverse()
+        .slice(0, sideButton + rest)
+        .reverse(),
+      rest: function () {
+        return sideButton - this.array.length;
+      },
+    };
+  };
+
+  const rightSide = (rest = 0) => {
+    return {
+      array: pages
+        .slice(currentPage)
+        .reverse()
+        .slice(0, sideButton + rest)
+        .reverse(),
+      rest: function () {
+        return sideButton - this.array.length;
+      },
+    };
+  };
+
+  const leftButton = leftSide(rightSide().rest()).array;
+  const rightButton = rightSide(leftSide().rest()).array;
+
+  return {
+    pageNumList: [
+      ...leftButton,
+      currentPage,
+      ...rightButton,
+    ],
+  };
+}
+
 export const categories = [
   {
     id: 0,

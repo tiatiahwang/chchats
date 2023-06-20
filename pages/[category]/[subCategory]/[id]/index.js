@@ -137,10 +137,9 @@ export default function DetailPage() {
   // 댓글 삭제 성공시
   useEffect(() => {
     if (deleteCommentData && deleteCommentData.ok) {
-      console.log('잉');
-      mutate();
+      router.reload();
     }
-  }, [deleteCommentData, mutate]);
+  }, [deleteCommentData]);
 
   return (
     <Layout>
