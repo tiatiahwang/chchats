@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import PostCard from '@/components/post/postCard';
 import ProfileNav from '@/components/profile/profileNav';
 import Pagination from '@/components/post/pagination';
+import Loader from '@/components/loader';
 
 const MyPost = () => {
   const [page, setPage] = useState(1);

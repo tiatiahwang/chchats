@@ -15,6 +15,7 @@ export default function useUser() {
       router.replace('/login');
     }
   }, [data, router]);
+
   return {
     user: data?.profile,
     isLoading: !data && !error,
