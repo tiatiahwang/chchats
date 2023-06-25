@@ -226,7 +226,7 @@ export default function DetailPage() {
           showModal={showDeletePostModal}
           setShowModal={setShowDeletePostModal}
           onConfirm={() => deletePost()}
-          onCancle={() => setShowDeleteModal(false)}
+          onCancle={() => setShowDeletePostModal(false)}
           isDelete={true}
         />
       ) : null}
