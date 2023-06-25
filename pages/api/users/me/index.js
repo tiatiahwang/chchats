@@ -39,6 +39,48 @@ async function handler(req, res) {
         },
       });
     }
+    if (currentUser.email !== email) {
+      const checkEmail = await client.user.findUnique({
+        where: {
+          email,
+        },
+      });
+      if (checkEmail) {
+        return res.status(409).json({
+          ok: false,
+          message: '다른 이메일을 입력해 주세요.',
+        });
+      }
+      await client.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          email,
+        },
+      });
+    }
+    if (currentUser.name !== name) {
+      const checkUsername = await client.user.findUnique({
+        where: {
+          name,
+        },
+      });
+      if (checkUsername) {
+        return res.status(409).json({
+          ok: false,
+          message: '다른 이름을 입력해 주세요.',
+        });
+      }
+      await client.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          name,
+        },
+      });
+    }
     res.json({ ok: true });
   }
 }

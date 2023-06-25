@@ -50,8 +50,9 @@ const Profile = () => {
     }
   };
 
-  const onValid = async ({ email, name, avatarId }) => {
+  const onValid = async ({ email, name }) => {
     if (loading) return;
+    console.log(email, name);
     if (email === '' && name === '') {
       return setError('formErrors', {
         message: '이메일과 이름은 필수 입력 사항입니다.',
@@ -82,8 +83,11 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    if (data && !data.ok && data.error) {
-      setError('formErrors', { message: data.error });
+    console.log(data);
+    if (data && !data.ok) {
+      setError('formErrors', {
+        message: data.message,
+      });
     }
     if (data && data.ok) {
       router.push('/profile');
@@ -138,7 +142,7 @@ const Profile = () => {
             kind='username'
           />
           {errors.formErrors ? (
-            <span className='my-2 block text-center text-sm font-medium text-red-500'>
+            <span className='my-2 block text-center text-sm font-medium text-indigo-500'>
               {errors.formErrors.message}
             </span>
           ) : null}
