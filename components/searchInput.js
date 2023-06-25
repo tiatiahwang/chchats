@@ -10,7 +10,7 @@ export function SearchInput() {
     router.push(`/search?keyword=${keyword}`);
   };
   return (
-    <div className='hidden md:flex text-sm dark:bg-darkselected bg-gray-100 py-2 px-4 rounded-full'>
+    <div className='hidden md:flex text-sm dark:bg-darkselected bg-gray-100 py-2 px-4 rounded-full mr-14'>
       <span className='flex select-none items-center justify-center'>
         <svg
           className='h-4 w-4'

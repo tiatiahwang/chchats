@@ -87,10 +87,12 @@ export default function Layout({ children, noPaddingTop }) {
                 </li>
               </ul>
             </div>
-            <div className='flex justify-between items-center'>
+            <div className='flex justify-between items-center relative'>
               <SearchInput />
-              {renderThemeChanger()}
-              <Link href='/profile' className='pl-2'>
+              <div className='absolute right-10 top-[7px] md:right-12'>
+                {renderThemeChanger()}
+              </div>
+              <Link href='/profile' className=''>
                 {user?.avatar ? (
                   <img
                     src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
