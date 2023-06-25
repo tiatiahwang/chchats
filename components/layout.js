@@ -87,10 +87,12 @@ export default function Layout({ children, noPaddingTop }) {
                 </li>
               </ul>
             </div>
-            <div className='flex justify-between items-center'>
+            <div className='flex justify-between items-center relative'>
               <SearchInput />
-              {renderThemeChanger()}
-              <Link href='/profile' className='pl-2'>
+              <div className='absolute right-10 top-[7px] md:right-12'>
+                {renderThemeChanger()}
+              </div>
+              <Link href='/profile' className=''>
                 {user?.avatar ? (
                   <img
                     src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
@@ -112,8 +114,8 @@ export default function Layout({ children, noPaddingTop }) {
               >
                 <ul className='items-center justify-center space-y-8'>
                   <li>
-                    <Link href='/questions' legacyBehavior>
-                      <a>Q&A</a>
+                    <Link href='/board' legacyBehavior>
+                      <a>이야기방</a>
                     </Link>
                   </li>
                   <li>
@@ -121,12 +123,12 @@ export default function Layout({ children, noPaddingTop }) {
                       href='/information'
                       legacyBehavior
                     >
-                      <a>정보</a>
+                      <a>정보공유</a>
                     </Link>
                   </li>
                   <li>
                     <Link href='/market' legacyBehavior>
-                      <a>마켓</a>
+                      <a>사고팔고</a>
                     </Link>
                   </li>
                 </ul>

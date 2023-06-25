@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build"
+    "lint": "next lint"
   },
   "dependencies": {
     "@prisma/client": "^4.13.0",
@@ -20,7 +19,8 @@
     "react-hook-form": "^7.43.9",
     "react-loader-spinner": "^5.3.4",
     "react-quill": "^2.0.0",
-    "swr": "^2.1.5"
+    "swr": "^2.1.5",
+    "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
     "@types/react": "18.2.0",
