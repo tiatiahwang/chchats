@@ -74,7 +74,7 @@ export default function DetailPage() {
   // 삭제 아이콘 클릭시
   const onClickDelete = () => {
     if (!data || deleteLoading) return;
-    setShowDeleteModal(true);
+    setShowDeletePostModal(true);
   };
 
   useEffect(() => {
@@ -226,7 +226,7 @@ export default function DetailPage() {
           showModal={showDeletePostModal}
           setShowModal={setShowDeletePostModal}
           onConfirm={() => deletePost()}
-          onCancle={() => setShowDeleteModal(false)}
+          onCancle={() => setShowDeletePostModal(false)}
           isDelete={true}
         />
       ) : null}
