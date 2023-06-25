@@ -64,28 +64,37 @@ export default function Layout({ children, noPaddingTop }) {
               </button>
             </div>
             <div className='md:flex md:items-center'>
-              <Link href='/'>
-                <h2 className='text-xl font-bold'>
-                  CHCHATS
-                </h2>
-              </Link>
-              <ul className='hidden md:flex md:space-x-8 md:ml-10'>
-                <li>
-                  <Link href='/board'>
-                    <div>이야기방</div>
-                  </Link>
-                </li>
-                <li>
-                  <Link href='/information'>
-                    <div>정보공유</div>
-                  </Link>
-                </li>
-                <li>
-                  <Link href='/market'>
-                    <div>사고팔고</div>
-                  </Link>
-                </li>
-              </ul>
+              <div className='text-xl font-bold w-[100px]'>
+                <Link href='/' className=''>
+                  <img
+                    className='w-full dark:hidden'
+                    src='/logo_light.png'
+                  />
+                  <img
+                    className='w-full hidden dark:block'
+                    src='/logo_dark.png'
+                  />
+                </Link>
+              </div>
+              <div>
+                <ul className='hidden md:flex md:space-x-8 md:ml-10'>
+                  <li>
+                    <Link href='/board'>
+                      <div>이야기방</div>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href='/information'>
+                      <div>정보공유</div>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href='/market'>
+                      <div>사고팔고</div>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div className='flex justify-between items-center relative'>
               <SearchInput />
