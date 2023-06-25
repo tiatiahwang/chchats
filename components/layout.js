@@ -112,8 +112,8 @@ export default function Layout({ children, noPaddingTop }) {
               >
                 <ul className='items-center justify-center space-y-8'>
                   <li>
-                    <Link href='/questions' legacyBehavior>
-                      <a>Q&A</a>
+                    <Link href='/board' legacyBehavior>
+                      <a>이야기방</a>
                     </Link>
                   </li>
                   <li>
@@ -121,12 +121,12 @@ export default function Layout({ children, noPaddingTop }) {
                       href='/information'
                       legacyBehavior
                     >
-                      <a>정보</a>
+                      <a>정보공유</a>
                     </Link>
                   </li>
                   <li>
                     <Link href='/market' legacyBehavior>
-                      <a>마켓</a>
+                      <a>사고팔고</a>
                     </Link>
                   </li>
                 </ul>
