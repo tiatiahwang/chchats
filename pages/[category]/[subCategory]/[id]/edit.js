@@ -53,10 +53,8 @@ export default function EditPost() {
       document.querySelector('input').value;
     const title =
       inputValue !== '' ? inputValue : data.post.title;
-
-    console.log(quillRef.current);
     const check = document.querySelector('div.ql-editor');
-    console.log(check.innerHTML);
+
     if (mainCategory === '' || selectedSub === '') {
       return alert('카테고리를 선택해주세요. 둘다');
     }
@@ -70,8 +68,6 @@ export default function EditPost() {
       category: mainCategory,
       subCategory: selectedSub,
     };
-
-    console.log(post);
 
     if (loading) return;
     editPost(post);

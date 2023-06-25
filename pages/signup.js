@@ -23,7 +23,6 @@ export default function Signup() {
 
   const onValid = (validForm) => {
     if (loading) return;
-    console.log(validForm);
     signup(validForm);
   };
 

@@ -31,8 +31,6 @@ export default function Upload() {
       category: mainCategory,
       subCategory: selectedSub,
     };
-    console.log(post);
-
     if (loading) return;
     uploadPost(post);
   };
