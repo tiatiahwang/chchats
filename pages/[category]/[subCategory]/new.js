@@ -23,13 +23,19 @@ export default function Upload() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const title = document.querySelector('input').value;
+    const title = inputRef.current.value;
 
-    if (mainCategory === '' || selectedSub === '') {
-      return alert('카테고리를 선택해주세요. 둘다');
+    if (mainCategory === '') {
+      return alert('메인 카테고리를 선택해주세요.');
     }
-    if (title === '' || contents === '') {
-      return alert('제목과 내용 입력은 필수 입니다.');
+    if (selectedSub === '') {
+      return alert('서브 카테고리를 선택해주세요.');
+    }
+    if (title === '') {
+      return alert('제목을 입력해 주세요.');
+    }
+    if (contents === '') {
+      return alert('내용을 입력해 주세요.');
     }
 
     const post = {

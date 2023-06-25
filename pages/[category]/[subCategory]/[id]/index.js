@@ -74,7 +74,7 @@ export default function DetailPage() {
   // 삭제 아이콘 클릭시
   const onClickDelete = () => {
     if (!data || deleteLoading) return;
-    setShowDeleteModal(true);
+    setShowDeletePostModal(true);
   };
 
   useEffect(() => {
