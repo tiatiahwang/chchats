@@ -39,8 +39,6 @@ export default function Upload() {
       subCategory: selectedSub,
     };
 
-    console.log(post);
-
     if (loading) return;
     uploadPost(post);
   };

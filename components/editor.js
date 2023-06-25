@@ -84,7 +84,7 @@ export default function Editor({
           '/avatar' || '/public',
         )[0];
         quill.editor.insertEmbed(
-          range.index,
+          range.index ?? 1,
           'image',
           `${reformedVariants}/public`,
         );

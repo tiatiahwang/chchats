@@ -16,7 +16,6 @@ const Search = () => {
         )}&page=${page}`
       : null,
   );
-  console.log(data);
   return (
     <Layout>
       {isLoading ? (
