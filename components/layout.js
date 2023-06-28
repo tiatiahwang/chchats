@@ -101,7 +101,7 @@ export default function Layout({ children, noPaddingTop }) {
               <div className='absolute right-10 top-[7px] md:right-12'>
                 {renderThemeChanger()}
               </div>
-              <Link href='/profile' className=''>
+              <Link href={user ? '/profile' : '/login'}>
                 {user?.avatar ? (
                   <img
                     src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
