@@ -80,9 +80,12 @@ export default function Editor({
         ).json();
         const quill = quillRef?.current?.getEditor();
         const range = quill?.getSelection();
-        const reformedVariants = variants[0].split(
-          '/avatar' || '/public',
-        )[0];
+        const reformedVariants = variants[0].includes(
+          'public',
+        )
+          ? variants[0].split('/public')[0]
+          : variants[0].split('/avatar')[0];
+        console.log('url', reformedVariants);
         quill.editor.insertEmbed(
           range.index ?? 1,
           'image',

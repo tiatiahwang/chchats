@@ -24,7 +24,18 @@ export default function Upload() {
     e.preventDefault();
 
     const title = inputRef.current.value;
+    const innerHTML = document.querySelector(
+      '.ql-editor.ql-blank',
+    ).innerHTML;
 
+    let onlyImage;
+    // 글 내용이 아무 것도 없고 이미지만 첨부된 경우
+    if (contents === '' && innerHTML.includes('img')) {
+      onlyImage = innerHTML;
+    }
+    // 문제점
+    // 이미지 1개 등록 후 삭제 하면, 컨텐츠 내용에 <br>이 입력이 되어 있기 때문에
+    // 내용이 입력된 것으로 인식이 되서 내용이 없는 상태인데도 글 등록이 되고 있음
     if (mainCategory === '') {
       return alert('메인 카테고리를 선택해주세요.');
     }
@@ -34,13 +45,13 @@ export default function Upload() {
     if (title === '') {
       return alert('제목을 입력해 주세요.');
     }
-    if (contents === '') {
+    if (contents === '' && !innerHTML.includes('img')) {
       return alert('내용을 입력해 주세요.');
     }
 
     const post = {
       title,
-      contents,
+      contents: contents === '' ? onlyImage : contents,
       category: mainCategory,
       subCategory: selectedSub,
     };
