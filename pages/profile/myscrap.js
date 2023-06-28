@@ -10,6 +10,7 @@ const MyScrap = () => {
   const { data, isLoading } = useSWR(
     `/api/users/me/scraps?page=${page}`,
   );
+  console.log(data);
   return (
     <>
       <ProfileNav />
@@ -18,18 +19,26 @@ const MyScrap = () => {
           <Loader />
         ) : (
           <>
-            {data?.scraps?.map((scrap, index) => (
-              <PostCard
-                post={scrap.post}
-                key={scrap.id}
-                isScrapPage={true}
-                isLast={
-                  data?.scraps?.length - 1 === index
-                    ? true
-                    : false
-                }
-              />
-            ))}
+            {data?.scraps.length === 0 ? (
+              <div className='py-4'>
+                아직 스크랩하신 글이 없어요 🥲
+              </div>
+            ) : (
+              <>
+                {data?.scraps?.map((scrap, index) => (
+                  <PostCard
+                    post={scrap.post}
+                    key={scrap.id}
+                    isScrapPage={true}
+                    isLast={
+                      data?.scraps?.length - 1 === index
+                        ? true
+                        : false
+                    }
+                  />
+                ))}
+              </>
+            )}
             <Pagination
               page={page}
               setPage={setPage}

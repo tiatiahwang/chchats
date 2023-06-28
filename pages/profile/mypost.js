@@ -19,17 +19,25 @@ const MyPost = () => {
           <Loader />
         ) : (
           <>
-            {data?.posts?.map((post, index) => (
-              <PostCard
-                post={post}
-                key={post.id}
-                isLast={
-                  data?.posts?.length - 1 === index
-                    ? true
-                    : false
-                }
-              />
-            ))}
+            {data?.posts.length === 0 ? (
+              <div className='py-4'>
+                아직 남기신 글이 없어요 🥲
+              </div>
+            ) : (
+              <>
+                {data?.posts?.map((post, index) => (
+                  <PostCard
+                    post={post}
+                    key={post.id}
+                    isLast={
+                      data?.posts?.length - 1 === index
+                        ? true
+                        : false
+                    }
+                  />
+                ))}
+              </>
+            )}
             <Pagination
               page={page}
               setPage={setPage}

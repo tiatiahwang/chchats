@@ -41,7 +41,10 @@ async function handler(req, res) {
   res.json({
     ok: true,
     scraps,
-    totalPages: Math.ceil(count / limit),
+    totalPages:
+      Math.ceil(count / limit) === 0
+        ? 1
+        : Math.ceil(count / limit),
   });
 }
 
