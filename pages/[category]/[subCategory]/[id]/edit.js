@@ -110,10 +110,12 @@ export default function EditPost() {
             </ul>
           </div>
           {/* sub 카테고리 */}
-          <div className='flex space-x-2 items-center'>
-            <div className='text-sm'>서브 카테고리</div>
+          <div className='flex space-x-2 items-center w-full'>
+            <div className='text-sm inline whitespace-nowrap'>
+              서브 카테고리
+            </div>
             {subCategories.length > 0 ? (
-              <ul className='flex'>
+              <ul className='flex overflow-x-scroll scrollbar-hide'>
                 {subCategories.map((category) => {
                   if (category.id === 0) return;
                   return (
@@ -123,7 +125,7 @@ export default function EditPost() {
                       }
                       key={category.id}
                       className={cls(
-                        'p-2 rounded-md cursor-pointer',
+                        'p-2 rounded-md cursor-pointer inline whitespace-nowrap',
                         selectedSub === category.ref
                           ? 'bg-gray-200 dark:bg-darkselected'
                           : 'hover:text-indigo-500',
