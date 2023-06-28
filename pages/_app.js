@@ -16,8 +16,8 @@ export default function App({ Component, pageProps }) {
         <div className='min-h-screen w-full text-black dark:bg-darkbg dark:text-white'>
           <div className='mx-auto max-w-6xl min-w-[400px] px-4'>
             <Component {...pageProps} />
-            <footer className='text-center text-sm p-4'>
-              COPYRIGHT @CHCATS 2023
+            <footer className='text-center text-[10px] p-4'>
+              COPYRIGHT @CHCHATS 2023
             </footer>
           </div>
         </div>
