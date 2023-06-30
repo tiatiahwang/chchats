@@ -16,11 +16,12 @@ export default function Comments({
           아직 남기신 댓글이 없어요 🥲
         </div>
       ) : null}
+      {/* TODO: 마지막 댓글 border-b는 없애야함 */}
       {comments?.map((comment) => (
         <div
           key={comment.id}
           className={cls(
-            'dark:text-white border-t-[1px] dark:border-white',
+            'dark:text-white border-b-[1px] dark:border-white',
             isProfile ? 'py-4' : 'py-6',
           )}
         >
@@ -47,7 +48,7 @@ export default function Comments({
                   {comment.user.avatar ? (
                     <img
                       src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${comment.user.avatar}/avatar`}
-                      className='h-8 w-8 rounded-full'
+                      className='h-6 w-6 rounded-full'
                     />
                   ) : (
                     <div className='h-8 w-8 rounded-full bg-indigo-100' />

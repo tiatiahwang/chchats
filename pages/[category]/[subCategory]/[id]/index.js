@@ -5,7 +5,7 @@ import Modal from '@/components/modal';
 import PostDetail from '@/components/post/postDetail';
 import useMutation from '@/libs/client/useMutation';
 import useUser from '@/libs/client/useUser';
-import { categories } from '@/libs/client/utils';
+import { categories, cls } from '@/libs/client/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -44,15 +44,15 @@ export default function DetailPage() {
   ] = useMutation(
     `/api/posts/${router.query.id}/delete-comment`,
   );
+  const [like, { loading: likeLoading }] = useMutation(
+    `/api/posts/${router.query.id}/like`,
+  );
 
   // 로그인 안내 모달창
   const [showLoginModal, setShowLoginModal] =
     useState(false);
   // 게시글 삭제 확인 모달창
   const [showDeletePostModal, setShowDeletePostModal] =
-    useState(false);
-  // 댓글 쓰기 부분 보였다 안보였다
-  const [showCommentForm, setShowCommentForm] =
     useState(false);
   // 댓글 삭제 확인 모달창
   const [
@@ -99,14 +99,35 @@ export default function DetailPage() {
     toggleScrap({});
   };
 
-  // 댓글 쓰기 클릭시
-  const onClickAddComment = () => {
+  // 글 추천 클릭시
+  const onClickLike = () => {
     if (!user) {
-      setShowModal(true);
+      setShowLoginModal(true);
       return;
     }
-    setShowCommentForm(!showCommentForm);
+    mutate(
+      {
+        ...data,
+        post: {
+          ...data.post,
+          _count: {
+            ...data?.post._count,
+            likes: data?.isLiked
+              ? data?.post._count.likes - 1
+              : data?.post._count.likes + 1,
+          },
+          isLiked: !data.isLiked,
+        },
+      },
+      false,
+    );
+    if (!likeLoading) {
+      like({});
+    }
   };
+
+  // 댓글 쓰기 클릭시 - 비로그인시
+  const onClickAddComment = () => setShowLoginModal(true);
 
   // 댓글 등록
   const onValid = (validForm) => {
@@ -140,7 +161,7 @@ export default function DetailPage() {
       router.reload();
     }
   }, [deleteCommentData]);
-
+  console.log(data);
   return (
     <Layout>
       <div className='p-4'>
@@ -164,43 +185,71 @@ export default function DetailPage() {
               onClickDelete={onClickDelete}
               onClickScrap={onClickScrap}
             />
-            {/* 댓글 작성 */}
-            <button
-              onClick={onClickAddComment}
-              className='hover:text-indigo-500 hover:border-indigo-500 text-sm border-[1px] border-white mb-6 p-2 rounded-md'
+            {/* 글 추천 */}
+            <div
+              className={cls(
+                'flex items-center justify-center space-x-2 p-4',
+                data?.isLiked
+                  ? 'font-bold text-indigo-500'
+                  : '',
+              )}
+              onClick={onClickLike}
             >
-              {showCommentForm
-                ? '댓글창 닫기'
-                : '댓글 쓰기'}
-            </button>
-            {showCommentForm ? (
+              <svg
+                className='h-5 w-5'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.5'
+                viewBox='0 0 24 24'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z'
+                ></path>
+              </svg>
+              <span className='text-sm'>
+                추천 {data?.post?._count.likes}
+              </span>
+            </div>
+            {/* 댓글 작성 - 비로그인 시 버튼 노출 (로그인 모달로 로그인 유도) / 로그인시 댓글 창 노출 */}
+            {!user ? (
+              <div className='border-t-[1px] dark:border-white dark:text-white pt-4 flex items-center'>
+                <button
+                  onClick={onClickAddComment}
+                  className='hover:text-indigo-500 hover:border-indigo-500 text-sm border-[1px] p-2 dark:border-white rounded-md'
+                >
+                  댓글 쓰기
+                </button>
+              </div>
+            ) : (
               <form
-                className='flex mb-4 gap-4'
+                className='flex flex-col py-4 gap-4 border-y-[1px] dark:border-white dark:text-white'
                 onSubmit={handleSubmit(onValid)}
               >
-                <div className='shrink-0'>
-                  {user?.avatar ? (
-                    <img
-                      src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
-                      className='h-8 w-8 rounded-full'
-                    />
-                  ) : (
-                    <div className='h-8 w-8 rounded-full bg-indigo-100' />
-                  )}
+                <div className='flex space-x-4'>
+                  <div>
+                    {user?.avatar ? (
+                      <img
+                        src={`https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`}
+                        className='h-8 w-8 rounded-full'
+                      />
+                    ) : (
+                      <div className='h-8 w-8 rounded-full bg-indigo-100' />
+                    )}
+                  </div>
+                  <textarea
+                    {...register('contents')}
+                    className='placeholder:text-sm whitespace-pre-line resize-none rounded-md flex-1 focus:outline-none dark:bg-darkbg border-[1px] dark:border-white p-2'
+                    placeholder='좋은 영향을 주고 받는 댓글을 남겨주세요 :)'
+                  />
                 </div>
-                <textarea
-                  {...register('contents')}
-                  className='whitespace-pre-line resize-none rounded-md flex-1 focus:outline-none dark:bg-darkbg border-[1px] dark:border-white p-2'
-                  placeholder={
-                    !user ? '로그인을 해주세요' : null
-                  }
-                  disabled={!user ? true : false}
-                />
-                <button className='text-sm cursor-pointer hover:text-indigo-500'>
+                <button className='flex items-center justify-end text-sm cursor-pointer hover:text-indigo-500'>
                   댓글 작성
                 </button>
               </form>
-            ) : null}
+            )}
             {/* 댓글 리스트 */}
             {data?.post?.comments.length > 0 ? (
               <Comments
@@ -217,7 +266,7 @@ export default function DetailPage() {
           showModal={showLoginModal}
           setShowModal={setShowLoginModal}
           onConfirm={() => router.push('/login')}
-          onCancle={() => setShowModal(false)}
+          onCancle={() => setShowLoginModal(false)}
         />
       ) : null}
       {/* 게시글 삭제 확인 모달창 */}

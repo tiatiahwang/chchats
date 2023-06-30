@@ -29,6 +29,7 @@ async function handler(req, res) {
             _count: {
               select: {
                 comments: true,
+                likes: true,
               },
             },
           },
@@ -51,6 +52,7 @@ async function handler(req, res) {
             _count: {
               select: {
                 comments: true,
+                likes: true,
               },
             },
           },
@@ -81,6 +83,7 @@ async function handler(req, res) {
           _count: {
             select: {
               comments: true,
+              likes: true,
             },
           },
         },
