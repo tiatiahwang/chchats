@@ -34,6 +34,7 @@ async function handler(req, res) {
       _count: {
         select: {
           comments: true,
+          likes: true,
         },
       },
     },
@@ -54,11 +55,25 @@ async function handler(req, res) {
         }),
       )
     : false;
+  const isLiked = user
+    ? Boolean(
+        await client.like.findFirst({
+          where: {
+            postId: +id,
+            userId: user?.id,
+          },
+          select: {
+            id: true,
+          },
+        }),
+      )
+    : false;
   res.json({
     ok: true,
     post,
     isMyPost,
     isScrapped,
+    isLiked,
   });
 }
 
