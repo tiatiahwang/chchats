@@ -20,7 +20,7 @@ async function handler(req, res) {
       },
     });
   } else {
-    const check = await client.like.create({
+    await client.like.create({
       data: {
         user: {
           connect: {

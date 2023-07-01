@@ -44,9 +44,8 @@ export default function DetailPage() {
   ] = useMutation(
     `/api/posts/${router.query.id}/delete-comment`,
   );
-  const [like, { loading: likeLoading }] = useMutation(
-    `/api/posts/${router.query.id}/like`,
-  );
+  const [toggleLike, { loading: toggleLikeLoading }] =
+    useMutation(`/api/posts/${router.query.id}/like`);
 
   // 로그인 안내 모달창
   const [showLoginModal, setShowLoginModal] =
@@ -111,18 +110,18 @@ export default function DetailPage() {
         post: {
           ...data.post,
           _count: {
-            ...data?.post._count,
-            likes: data?.isLiked
+            ...data.post._count,
+            likes: data.isLiked
               ? data?.post._count.likes - 1
               : data?.post._count.likes + 1,
           },
-          isLiked: !data.isLiked,
         },
+        isLiked: !data.isLiked,
       },
       false,
     );
-    if (!likeLoading) {
-      like({});
+    if (!toggleLikeLoading) {
+      toggleLike({});
     }
   };
 
