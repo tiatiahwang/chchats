@@ -8,7 +8,6 @@ export default function PostCard({
   showContents = true,
   isLast,
 }) {
-  console.log(post);
   return (
     <>
       <div

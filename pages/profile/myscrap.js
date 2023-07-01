@@ -10,7 +10,6 @@ const MyScrap = () => {
   const { data, isLoading } = useSWR(
     `/api/users/me/scraps?page=${page}`,
   );
-  console.log(data);
   return (
     <>
       <ProfileNav />

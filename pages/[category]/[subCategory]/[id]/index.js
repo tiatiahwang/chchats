@@ -161,7 +161,7 @@ export default function DetailPage() {
       router.reload();
     }
   }, [deleteCommentData]);
-  console.log(data);
+
   return (
     <Layout>
       <div className='p-4'>

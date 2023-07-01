@@ -52,7 +52,7 @@ const Profile = () => {
 
   const onValid = async ({ email, name }) => {
     if (loading) return;
-    console.log(email, name);
+
     if (email === '' && name === '') {
       return setError('formErrors', {
         message: '이메일과 이름은 필수 입력 사항입니다.',
@@ -83,7 +83,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    console.log(data);
     if (data && !data.ok) {
       setError('formErrors', {
         message: data.message,
