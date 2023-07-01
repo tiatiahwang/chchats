@@ -135,6 +135,9 @@ export default function DetailPage() {
       '\n',
       '<br/>',
     );
+    if (replaced === '') {
+      alert('댓글 내용을 작성해주세요.');
+    }
     addComment({ contents: replaced });
   };
 
