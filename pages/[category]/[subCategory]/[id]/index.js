@@ -187,7 +187,7 @@ export default function DetailPage() {
             {/* 글 추천 */}
             <div
               className={cls(
-                'flex items-center justify-center space-x-2 p-4',
+                'flex items-center justify-center space-x-2 p-4 cursor-pointer',
                 data?.isLiked
                   ? 'font-bold text-indigo-500'
                   : '',
@@ -244,9 +244,11 @@ export default function DetailPage() {
                     placeholder='좋은 영향을 주고 받는 댓글을 남겨주세요 :)'
                   />
                 </div>
-                <button className='flex items-center justify-end text-sm cursor-pointer hover:text-indigo-500'>
-                  댓글 작성
-                </button>
+                <div className='fit-content flex items-center justify-end'>
+                  <button className='p-2 rounded-md bg-indigo-500 text-white text-sm'>
+                    댓글 작성
+                  </button>
+                </div>
               </form>
             )}
             {/* 댓글 리스트 */}
