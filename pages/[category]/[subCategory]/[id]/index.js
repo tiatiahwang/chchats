@@ -44,9 +44,8 @@ export default function DetailPage() {
   ] = useMutation(
     `/api/posts/${router.query.id}/delete-comment`,
   );
-  const [like, { loading: likeLoading }] = useMutation(
-    `/api/posts/${router.query.id}/like`,
-  );
+  const [toggleLike, { loading: toggleLikeLoading }] =
+    useMutation(`/api/posts/${router.query.id}/like`);
 
   // 로그인 안내 모달창
   const [showLoginModal, setShowLoginModal] =
@@ -111,18 +110,18 @@ export default function DetailPage() {
         post: {
           ...data.post,
           _count: {
-            ...data?.post._count,
-            likes: data?.isLiked
+            ...data.post._count,
+            likes: data.isLiked
               ? data?.post._count.likes - 1
               : data?.post._count.likes + 1,
           },
-          isLiked: !data.isLiked,
         },
+        isLiked: !data.isLiked,
       },
       false,
     );
-    if (!likeLoading) {
-      like({});
+    if (!toggleLikeLoading) {
+      toggleLike({});
     }
   };
 
@@ -136,6 +135,9 @@ export default function DetailPage() {
       '\n',
       '<br/>',
     );
+    if (replaced === '') {
+      alert('댓글 내용을 작성해주세요.');
+    }
     addComment({ contents: replaced });
   };
 
@@ -161,7 +163,7 @@ export default function DetailPage() {
       router.reload();
     }
   }, [deleteCommentData]);
-  console.log(data);
+
   return (
     <Layout>
       <div className='p-4'>
@@ -188,7 +190,7 @@ export default function DetailPage() {
             {/* 글 추천 */}
             <div
               className={cls(
-                'flex items-center justify-center space-x-2 p-4',
+                'flex items-center justify-center space-x-2 p-4 cursor-pointer',
                 data?.isLiked
                   ? 'font-bold text-indigo-500'
                   : '',
@@ -245,9 +247,11 @@ export default function DetailPage() {
                     placeholder='좋은 영향을 주고 받는 댓글을 남겨주세요 :)'
                   />
                 </div>
-                <button className='flex items-center justify-end text-sm cursor-pointer hover:text-indigo-500'>
-                  댓글 작성
-                </button>
+                <div className='fit-content flex items-center justify-end'>
+                  <button className='p-2 rounded-md bg-indigo-500 text-white text-sm'>
+                    댓글 작성
+                  </button>
+                </div>
               </form>
             )}
             {/* 댓글 리스트 */}

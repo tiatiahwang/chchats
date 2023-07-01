@@ -85,7 +85,6 @@ export default function Editor({
         )
           ? variants[0].split('/public')[0]
           : variants[0].split('/avatar')[0];
-        console.log('url', reformedVariants);
         quill.editor.insertEmbed(
           range.index ?? 1,
           'image',

@@ -61,10 +61,6 @@ export default function Upload() {
     }
   }, [data]);
 
-  useEffect(() => {
-    console.log('컨텐츠', contents);
-  }, [contents]);
-
   const [mainCategory, setMainCategory] = useState('');
   const [subCategories, setSubCategories] = useState('');
   const [selectedSub, setSelectedSub] = useState('');
