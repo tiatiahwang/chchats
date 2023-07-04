@@ -26,7 +26,7 @@ export default function Login() {
 
   const onValid = (validForm) => {
     if (loading) return;
-    //login(validForm);
+    login(validForm);
   };
 
   const onRegisterClick = () => {
