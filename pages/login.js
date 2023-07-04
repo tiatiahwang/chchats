@@ -13,10 +13,8 @@ export default function Login() {
   );
   const {
     register,
-    watch,
-    reset,
     handleSubmit,
-    clearErrors,
+    formState: { errors },
   } = useForm();
   const [show, setShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
@@ -28,7 +26,7 @@ export default function Login() {
 
   const onValid = (validForm) => {
     if (loading) return;
-    login(validForm);
+    //login(validForm);
   };
 
   const onRegisterClick = () => {
@@ -42,6 +40,8 @@ export default function Login() {
       router.push('/');
     }
   }, [data]);
+
+  useEffect(() => console.log(errors), [errors]);
 
   return (
     <Layout noPaddingTop={true}>
@@ -64,17 +64,28 @@ export default function Login() {
               type='email'
               required
             />
-            <Input
-              register={register('password', {
-                required: true,
-              })}
-              name='비밀번호'
-              label='비밀번호'
-              kind='password'
-              type={show ? 'text' : 'password'}
-              onClick={togglePassword}
-            />
-            <div className='pt-5'>
+            <div>
+              <Input
+                register={register('password', {
+                  required: true,
+                  minLength: {
+                    value: 6,
+                    message: '최소 6자 이상 입력해주세요.',
+                  },
+                })}
+                name='비밀번호'
+                label='비밀번호'
+                kind='password'
+                type={show ? 'text' : 'password'}
+                onClick={togglePassword}
+              />
+              {errors?.password?.message && (
+                <span className='flex justify-center pt-2 text-sm'>
+                  {errors?.password?.message}
+                </span>
+              )}
+            </div>
+            <div className='pt-4'>
               <Button text={'로그인하기'} large={true} />
             </div>
           </form>
