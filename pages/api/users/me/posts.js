@@ -20,6 +20,12 @@ async function handler(req, res) {
           name: true,
         },
       },
+      _count: {
+        select: {
+          comments: true,
+          likes: true,
+        },
+      },
     },
     skip: (page - 1) * limit,
     take: limit,
