@@ -41,8 +41,6 @@ export default function Login() {
     }
   }, [data]);
 
-  useEffect(() => console.log(errors), [errors]);
-
   return (
     <Layout noPaddingTop={true}>
       <div className='w-full h-[calc(100vh-5rem)] flex flex-col justify-center items-center'>

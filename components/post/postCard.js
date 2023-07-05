@@ -7,6 +7,7 @@ export default function PostCard({
   isScrapPage = false,
   showContents = true,
   isLast,
+  scrapCreatedAt = '',
 }) {
   return (
     <div
@@ -34,7 +35,11 @@ export default function PostCard({
           <span>{post?.user?.name}</span>
           <span>·</span>
           <span>
-            {useTimeFormat(new Date(post?.createdAt))}{' '}
+            {isScrapPage
+              ? useTimeFormat(new Date(scrapCreatedAt))
+              : useTimeFormat(
+                  new Date(post?.createdAt),
+                )}{' '}
             {isScrapPage && '스크랩 했어요!'}
           </span>
         </div>
