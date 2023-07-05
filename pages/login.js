@@ -68,10 +68,6 @@ export default function Login() {
               <Input
                 register={register('password', {
                   required: true,
-                  minLength: {
-                    value: 6,
-                    message: '최소 6자 이상 입력해주세요.',
-                  },
                 })}
                 name='비밀번호'
                 label='비밀번호'

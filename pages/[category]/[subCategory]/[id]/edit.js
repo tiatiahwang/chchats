@@ -62,6 +62,15 @@ export default function EditPost() {
       return alert('제목과 내용 입력은 필수 입니다.');
     }
 
+    if (
+      mainCategory === data.post.category &&
+      selectedSub === data.post.subCategory &&
+      title === data.post.title &&
+      contents === data.post.contents
+    ) {
+      alert('수정한 사항이 없으세요.');
+    }
+
     const post = {
       title,
       contents: check.innerHTML,
