@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }) {
     >
       <ThemeProvider attribute='class' enableSystem={true}>
         <div className='min-h-screen w-full text-black dark:bg-darkbg dark:text-white'>
-          <div className='mx-auto max-w-6xl min-w-[400px] px-4'>
+          <div className='mx-auto max-w-6xl w-full px-4'>
             <Component {...pageProps} />
             <footer className='text-center text-[10px] p-4'>
               COPYRIGHT @CHCHATS 2023

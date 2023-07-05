@@ -40,7 +40,7 @@ export default function Signup() {
   return (
     <Layout noPaddingTop={true}>
       <div className='w-full h-[calc(100vh-5rem)] flex flex-col justify-center items-center'>
-        <div className='w-[400px] border p-16'>
+        <div className='w-[350px] border py-16 px-10'>
           <h3 className='text-center text-3xl font-bold mb-10 text-indigo-500'>
             가입하기
           </h3>
