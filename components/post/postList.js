@@ -76,8 +76,8 @@ export default function PostList({
             ) : null}
           </>
         )}
-        {/* 페이지네이션 */}
       </div>
+      {/* 페이지네이션 */}
       {!isHome ? (
         <Pagination
           page={page}

@@ -252,7 +252,7 @@ export default function DetailPage() {
                   />
                 </div>
                 <div className='fit-content flex items-center justify-end'>
-                  <button className='p-2 rounded-md bg-indigo-500 text-white text-sm'>
+                  <button className='p-2 rounded-md bg-indigo-500 text-white text-sm hover:bg-indigo-600'>
                     댓글 작성
                   </button>
                 </div>

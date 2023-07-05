@@ -9,8 +9,11 @@ import Layout from '@/components/layout';
 export default function Signup() {
   const router = useRouter();
   const [show, setShow] = useState(false);
-  const { register, watch, reset, handleSubmit } =
-    useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [signup, { loading, data, error }] = useMutation(
     '/api/users/signup',
   );
@@ -37,7 +40,7 @@ export default function Signup() {
   return (
     <Layout noPaddingTop={true}>
       <div className='w-full h-[calc(100vh-5rem)] flex flex-col justify-center items-center'>
-        <div className='w-[400px] border p-16'>
+        <div className='w-[350px] border py-16 px-10'>
           <h3 className='text-center text-3xl font-bold mb-10 text-indigo-500'>
             가입하기
           </h3>
@@ -64,16 +67,27 @@ export default function Signup() {
               label='(필수) 이름'
               type='text'
             />
-            <Input
-              register={register('password', {
-                required: true,
-              })}
-              name='비밀번호'
-              label='(필수) 비밀번호'
-              kind='password'
-              type={show ? 'text' : 'password'}
-              onClick={togglePassword}
-            />
+            <div>
+              <Input
+                register={register('password', {
+                  required: true,
+                  minLength: {
+                    value: 6,
+                    message: '최소 6자 이상 입력해주세요.',
+                  },
+                })}
+                name='비밀번호'
+                label='(필수) 비밀번호'
+                kind='password'
+                type={show ? 'text' : 'password'}
+                onClick={togglePassword}
+              />
+              {errors?.password?.message && (
+                <span className='flex justify-center pt-2 text-sm'>
+                  {errors?.password?.message}
+                </span>
+              )}
+            </div>
             <div className='pt-5'>
               <Button
                 text={loading ? '로딩중' : '가입하기'}

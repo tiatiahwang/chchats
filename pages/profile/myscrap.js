@@ -29,6 +29,7 @@ const MyScrap = () => {
                     post={scrap.post}
                     key={scrap.id}
                     isScrapPage={true}
+                    scrapCreatedAt={scrap.createdAt}
                     isLast={
                       data?.scraps?.length - 1 === index
                         ? true
