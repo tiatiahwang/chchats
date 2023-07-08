@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
 import Button from '@/components/button';
 import Input from '@/components/input';
-import useMutation from '@/libs/client/useMutation';
-import { useForm } from 'react-hook-form';
 import Layout from '@/components/layout';
+import useMutation from '@/libs/client/useMutation';
 
 export default function Signup() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function Signup() {
     formState: { errors },
   } = useForm();
   const [signup, { loading, data, error }] = useMutation(
-    '/api/users/signup',
+    '/api/users/signup'
   );
   const [errorMessage, setErrorMessage] = useState();
 

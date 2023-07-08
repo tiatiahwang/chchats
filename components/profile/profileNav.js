@@ -1,12 +1,12 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
 import Button from '@/components/button';
 import Layout from '@/components/layout';
 import useMutation from '@/libs/client/useMutation';
 import useUser from '@/libs/client/useUser';
 import { cls } from '@/libs/client/utils';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import useSWR from 'swr';
 
 const ProfileNav = () => {
   const router = useRouter();
@@ -67,7 +67,7 @@ const ProfileNav = () => {
                   router.pathname.includes('mypost') ||
                     router.pathname.split('/').length === 2
                     ? 'border-b-[3px] border-indigo-500 text-indigo-500'
-                    : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300',
+                    : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300'
                 )}
               >
                 내가 쓴 글
@@ -82,7 +82,7 @@ const ProfileNav = () => {
                   'pb-4 px-2',
                   router.pathname.includes('mycomment')
                     ? 'border-b-[3px] border-indigo-500 text-indigo-500'
-                    : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300',
+                    : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300'
                 )}
               >
                 나의 댓글
@@ -94,7 +94,7 @@ const ProfileNav = () => {
                   'pb-4 px-2',
                   router.pathname.includes('myscrap')
                     ? 'border-b-[3px] border-indigo-500 text-indigo-500'
-                    : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300',
+                    : 'hover:border-b-[3px] hover:border-indigo-300 hover:text-indigo-300'
                 )}
               >
                 스크랩

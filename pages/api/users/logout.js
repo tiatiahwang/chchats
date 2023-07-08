@@ -1,4 +1,3 @@
-import client from '@/libs/server/client';
 import withHandler from '@/libs/server/withHandler';
 import { withApiSession } from '@/libs/server/withSession';
 
@@ -20,5 +19,5 @@ export default withApiSession(
   withHandler({
     method: 'POST',
     handler,
-  }),
+  })
 );

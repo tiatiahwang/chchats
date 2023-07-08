@@ -1,9 +1,10 @@
 import Link from 'next/link';
+
 import Button from '../button';
 import Category from '../category';
-import PostCard from './postCard';
-import Pagination from './pagination';
 import Loader from '../loader';
+import Pagination from './pagination';
+import PostCard from './postCard';
 
 export default function PostList({
   category,

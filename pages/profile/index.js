@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import useSWR from 'swr';
+
 import Loader from '@/components/loader';
+import Pagination from '@/components/post/pagination';
 import PostCard from '@/components/post/postCard';
 import ProfileNav from '@/components/profile/profileNav';
-import Pagination from '@/components/post/pagination';
 
 const Profile = () => {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useSWR(
     page !== null
       ? `/api/users/me/posts?page=${page}`
-      : null,
+      : null
   );
 
   return (

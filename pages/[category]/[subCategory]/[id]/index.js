@@ -1,3 +1,13 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import {
+  useEffect,
+  useLayoutEffect,
+  useState
+} from 'react';
+import { useForm } from 'react-hook-form';
+import useSWR from 'swr';
+
 import Comments from '@/components/comments';
 import Layout from '@/components/layout';
 import Loader from '@/components/loader';
@@ -6,15 +16,6 @@ import PostDetail from '@/components/post/postDetail';
 import useMutation from '@/libs/client/useMutation';
 import useUser from '@/libs/client/useUser';
 import { categories, cls } from '@/libs/client/utils';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import {
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react';
-import { useForm } from 'react-hook-form';
-import useSWR from 'swr';
 
 export default function DetailPage() {
   const { user } = useUser();
@@ -24,12 +25,12 @@ export default function DetailPage() {
   const { data, mutate, isLoading } = useSWR(
     router.query.id
       ? `/api/posts/${router.query.id}`
-      : null,
+      : null
   );
   const [addComment, { loading, data: newCommentData }] =
     useMutation(`/api/posts/${router.query.id}/comment`);
   const [toggleScrap] = useMutation(
-    `/api/posts/${router.query.id}/scrap`,
+    `/api/posts/${router.query.id}/scrap`
   );
   const [
     deletePost,
@@ -42,7 +43,7 @@ export default function DetailPage() {
       data: deleteCommentData,
     },
   ] = useMutation(
-    `/api/posts/${router.query.id}/delete-comment`,
+    `/api/posts/${router.query.id}/delete-comment`
   );
   const [toggleLike, { loading: toggleLikeLoading }] =
     useMutation(`/api/posts/${router.query.id}/like`);
@@ -65,7 +66,7 @@ export default function DetailPage() {
     if (!router.isReady) return;
     const currentMainCategory = categories.filter(
       (category) =>
-        category.ref === router.asPath.split('/')[1],
+        category.ref === router.asPath.split('/')[1]
     );
     setMainCategory(currentMainCategory[0]);
   }, [router]);
@@ -93,7 +94,7 @@ export default function DetailPage() {
     mutate(
       (prev) =>
         prev && { ...prev, isScrapped: !prev.isScrapped },
-      false,
+      false
     );
     toggleScrap({});
   };
@@ -118,7 +119,7 @@ export default function DetailPage() {
         },
         isLiked: !data.isLiked,
       },
-      false,
+      false
     );
     if (!toggleLikeLoading) {
       toggleLike({});
@@ -133,7 +134,7 @@ export default function DetailPage() {
     if (loading) return;
     const replaced = validForm.contents.replaceAll(
       '\n',
-      '<br/>',
+      '<br/>'
     );
     if (replaced === '') {
       alert('댓글 내용을 작성해주세요.');
@@ -193,7 +194,7 @@ export default function DetailPage() {
                 'p-4 flex items-center justify-center',
                 data?.isLiked
                   ? 'font-bold text-indigo-500'
-                  : '',
+                  : ''
               )}
             >
               <div
@@ -212,7 +213,7 @@ export default function DetailPage() {
                     strokeLinecap='round'
                     strokeLinejoin='round'
                     d='M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z'
-                  ></path>
+                  />
                 </svg>
                 <span className='text-sm'>
                   추천 {data?.post?._count.likes}

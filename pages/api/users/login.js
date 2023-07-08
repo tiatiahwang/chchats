@@ -21,7 +21,7 @@ async function handler(req, res) {
 
   const isMatch = await bcrypt.compare(
     password,
-    found.password,
+    found.password
   );
 
   if (!isMatch) {
@@ -43,5 +43,5 @@ export default withApiSession(
   withHandler({
     method: 'POST',
     handler,
-  }),
+  })
 );

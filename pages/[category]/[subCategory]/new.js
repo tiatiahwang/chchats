@@ -1,16 +1,14 @@
+import { useRouter } from 'next/router';
+import {
+  useEffect,
+  useRef,
+  useState
+} from 'react';
+
 import Editor from '@/components/editor';
 import Layout from '@/components/layout';
 import useMutation from '@/libs/client/useMutation';
-import useUser from '@/libs/client/useUser';
-import { cls, categories } from '@/libs/client/utils';
-import { useRouter } from 'next/router';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { categories, cls } from '@/libs/client/utils';
 
 export default function Upload() {
   const router = useRouter();
@@ -25,7 +23,7 @@ export default function Upload() {
 
     const title = inputRef.current.value;
     const innerHTML = document.querySelector(
-      '.ql-editor.ql-blank',
+      '.ql-editor.ql-blank'
     ).innerHTML;
 
     let onlyImage;
@@ -63,7 +61,7 @@ export default function Upload() {
   useEffect(() => {
     if (data?.ok) {
       router.push(
-        `/${data.post.category}/${data.post.subCategory}/${data.post.id}`,
+        `/${data.post.category}/${data.post.subCategory}/${data.post.id}`
       );
     }
   }, [data]);
@@ -80,7 +78,7 @@ export default function Upload() {
   useEffect(() => {
     if (mainCategory === '') return;
     const sub = categories.find(
-      (category) => category.ref === mainCategory,
+      (category) => category.ref === mainCategory
     );
     setSubCategories(sub.subCategories);
     if (router.asPath.split('/')[2]) {
@@ -108,7 +106,7 @@ export default function Upload() {
                     'p-2 rounded-md cursor-pointer',
                     mainCategory === category.ref
                       ? 'bg-gray-200 dark:bg-darkselected'
-                      : 'hover:text-indigo-500',
+                      : 'hover:text-indigo-500'
                   )}
                 >
                   {category.name}
@@ -133,7 +131,7 @@ export default function Upload() {
                         'p-2 rounded-md cursor-pointer',
                         selectedSub === category.ref
                           ? 'bg-gray-200 dark:bg-darkselected'
-                          : 'hover:text-indigo-500',
+                          : 'hover:text-indigo-500'
                       )}
                     >
                       {category.name}

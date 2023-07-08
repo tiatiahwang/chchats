@@ -1,11 +1,10 @@
-import Layout from '@/components/layout';
-import Loader from '@/components/loader';
-import Pagination from '@/components/post/pagination';
-import PostList from '@/components/post/postList';
-import { categories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useSWR from 'swr';
+
+import Layout from '@/components/layout';
+import PostList from '@/components/post/postList';
+import { categories } from '@/libs/client/utils';
 
 export default function Posts() {
   const router = useRouter();
@@ -13,9 +12,9 @@ export default function Posts() {
   const { data, isLoading } = useSWR(
     router.asPath
       ? `/api/posts?category=${router.asPath.slice(
-          1,
-        )}&page=${page}`
-      : null,
+        1
+      )}&page=${page}`
+      : null
   );
   const onClick = () =>
     router.push(`/${router.asPath.slice(1)}/new`);
@@ -25,7 +24,7 @@ export default function Posts() {
         category={
           categories.filter(
             (category) =>
-              category.ref === router.asPath.slice(1),
+              category.ref === router.asPath.slice(1)
           )[0]
         }
         onClick={onClick}

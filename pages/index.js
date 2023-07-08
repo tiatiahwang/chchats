@@ -1,19 +1,20 @@
+import useSWR from 'swr';
+
 import Layout from '@/components/layout';
 import PostList from '@/components/post/postList';
 import { categories } from '@/libs/client/utils';
-import useSWR from 'swr';
 
 export default function Home() {
   // HOME 화면에서는 최신 글 5개만 가져올 수 있도록 query에 해당 정보 같이 전송
   const { data: boardData } = useSWR(
-    '/api/posts?category=board&isHome=true',
+    '/api/posts?category=board&isHome=true'
   );
 
   const { data: infoData } = useSWR(
-    '/api/posts?category=information&isHome=true',
+    '/api/posts?category=information&isHome=true'
   );
   const { data: marketData } = useSWR(
-    '/api/posts?category=market&isHome=true',
+    '/api/posts?category=market&isHome=true'
   );
   // PostList에 category 정보 보내는 방식 변경 추후 필요할 수도
   return (

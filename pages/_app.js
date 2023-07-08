@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import '@/styles/quill-dark.css';
 import 'react-quill/dist/quill.snow.css';
+
 import { ThemeProvider } from 'next-themes';
 import { SWRConfig } from 'swr';
 

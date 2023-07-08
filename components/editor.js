@@ -3,10 +3,10 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useState,
+  useState
 } from 'react';
+
 import Button from './button';
-import Loader from './loader';
 
 const FILE_NAME = new Date().toJSON().slice(0, 10);
 
@@ -18,7 +18,7 @@ const QuillNoSSRWrapper = dynamic(
       <RQ ref={forwardedRef} {...props} />
     );
   },
-  { ssr: false },
+  { ssr: false }
 );
 
 export default function Editor({
@@ -68,7 +68,7 @@ export default function Editor({
         form.append(
           'file',
           file,
-          FILE_NAME + Math.random() * 100,
+          FILE_NAME + Math.random() * 100
         );
         const {
           result: { variants },
@@ -81,14 +81,14 @@ export default function Editor({
         const quill = quillRef?.current?.getEditor();
         const range = quill?.getSelection();
         const reformedVariants = variants[0].includes(
-          'public',
+          'public'
         )
           ? variants[0].split('/public')[0]
           : variants[0].split('/avatar')[0];
         quill.editor.insertEmbed(
           range.index ?? 1,
           'image',
-          `${reformedVariants}/public`,
+          `${reformedVariants}/public`
         );
         setIsUploading(false);
       } catch (e) {
@@ -124,7 +124,7 @@ export default function Editor({
         },
       },
     }),
-    [imageHandler],
+    [imageHandler]
   );
 
   return (

@@ -1,9 +1,10 @@
-import Layout from '@/components/layout';
-import PostList from '@/components/post/postList';
-import { categories } from '@/libs/client/utils';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useSWR from 'swr';
+
+import Layout from '@/components/layout';
+import PostList from '@/components/post/postList';
+import { categories } from '@/libs/client/utils';
 
 export default function SubPosts() {
   const router = useRouter();
@@ -11,11 +12,11 @@ export default function SubPosts() {
   const { data, isLoading } = useSWR(
     router.asPath
       ? `/api/posts?category=${
-          router.asPath.split('/')[1]
-        }&subCategory=${
-          router.asPath.split('/')[2]
-        }&page=${page}`
-      : null,
+        router.asPath.split('/')[1]
+      }&subCategory=${
+        router.asPath.split('/')[2]
+      }&page=${page}`
+      : null
   );
   const onClick = () => {
     if (!router.isReady) return;
@@ -29,7 +30,7 @@ export default function SubPosts() {
         category={
           categories.filter(
             (category) =>
-              category.ref === router.asPath.split('/')[1],
+              category.ref === router.asPath.split('/')[1]
           )[0]
         }
         onClick={onClick}

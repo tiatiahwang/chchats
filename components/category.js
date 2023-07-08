@@ -1,7 +1,8 @@
-import { cls } from '@/libs/client/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+
+import { cls } from '@/libs/client/utils';
 
 export default function Category({ categories }) {
   const router = useRouter();
@@ -13,7 +14,7 @@ export default function Category({ categories }) {
     setCurrentCategory(
       router.query.subCategory === undefined
         ? 'all'
-        : router.query.subCategory,
+        : router.query.subCategory
     );
   }, [router]);
   return (
@@ -30,7 +31,7 @@ export default function Category({ categories }) {
                   : '',
                 currentCategory === category.ref
                   ? 'bg-gray-300 dark:bg-darkhover dark:bg-opacity-30'
-                  : 'hover:text-indigo-500',
+                  : 'hover:text-indigo-500'
               )}
             >
               {category.name}

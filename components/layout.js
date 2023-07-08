@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import TogggleDarkMode from './toggleDarkMode';
-import { cls } from '@/libs/client/utils';
+
 import useUser from '@/libs/client/useUser';
+import { cls } from '@/libs/client/utils';
+
 import { SearchInput } from './searchInput';
+import TogggleDarkMode from './toggleDarkMode';
 
 export default function Layout({ children, noPaddingTop }) {
   const { user } = useUser();
@@ -43,7 +45,7 @@ export default function Layout({ children, noPaddingTop }) {
                       strokeLinejoin='round'
                       strokeWidth='2'
                       d='M6 18L18 6M6 6l12 12'
-                    ></path>
+                    />
                   </svg>
                 ) : (
                   <svg
@@ -58,7 +60,7 @@ export default function Layout({ children, noPaddingTop }) {
                       strokeLinejoin='round'
                       strokeWidth='2'
                       d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5'
-                    ></path>
+                    />
                   </svg>
                 )}
               </button>

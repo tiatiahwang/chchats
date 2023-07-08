@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import useSWR from 'swr';
+
 import Comments from '@/components/comments';
 import Loader from '@/components/loader';
-import ProfileNav from '@/components/profile/profileNav';
 import Pagination from '@/components/post/pagination';
+import ProfileNav from '@/components/profile/profileNav';
 
 const MyCommnet = () => {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useSWR(
-    `/api/users/me/comments?page=${page}`,
+    `/api/users/me/comments?page=${page}`
   );
 
   return (

@@ -1,14 +1,15 @@
+import { useState } from 'react';
 import useSWR from 'swr';
+
 import Loader from '@/components/loader';
+import Pagination from '@/components/post/pagination';
 import PostCard from '@/components/post/postCard';
 import ProfileNav from '@/components/profile/profileNav';
-import { useState } from 'react';
-import Pagination from '@/components/post/pagination';
 
 const MyScrap = () => {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useSWR(
-    `/api/users/me/scraps?page=${page}`,
+    `/api/users/me/scraps?page=${page}`
   );
   return (
     <>

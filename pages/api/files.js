@@ -10,7 +10,7 @@ async function handler(req, res) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${process.env.CLOUDFLARE_TOKEN}`,
       },
-    },
+    }
   );
   const result = await response.json();
   res.json({
@@ -23,5 +23,5 @@ export default withApiSession(
   withHandler({
     methods: ['GET'],
     handler,
-  }),
+  })
 );

@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import useSWR from 'swr';
+
+import Loader from '@/components/loader';
+import Pagination from '@/components/post/pagination';
 import PostCard from '@/components/post/postCard';
 import ProfileNav from '@/components/profile/profileNav';
-import Pagination from '@/components/post/pagination';
-import Loader from '@/components/loader';
 
 const MyPost = () => {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useSWR(
-    `/api/users/me/posts?page=${page}`,
+    `/api/users/me/posts?page=${page}`
   );
 
   return (

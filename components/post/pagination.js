@@ -17,7 +17,7 @@ export default function Pagination({
           className={cls(
             page === 1
               ? 'text-gray-400 opacity-60'
-              : 'hover:text-indigo-500',
+              : 'hover:text-indigo-500'
           )}
           onClick={() => {
             if (page <= 1) return;
@@ -37,14 +37,14 @@ export default function Pagination({
               strokeLinecap='round'
               strokeLinejoin='round'
               d='M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5'
-            ></path>
+            />
           </svg>
         </button>
         <button
           className={cls(
             page === 1
               ? 'text-gray-400 opacity-60'
-              : 'hover:text-indigo-500',
+              : 'hover:text-indigo-500'
           )}
           onClick={() => {
             if (page <= 1) return;
@@ -64,7 +64,7 @@ export default function Pagination({
               strokeLinecap='round'
               strokeLinejoin='round'
               d='M15.75 19.5L8.25 12l7.5-7.5'
-            ></path>
+            />
           </svg>
         </button>
       </div>
@@ -74,7 +74,7 @@ export default function Pagination({
             key={index}
             className={cls(
               'text-md cursor-pointer hover:text-indigo-500',
-              pageNum === page ? 'font-bold' : '',
+              pageNum === page ? 'font-bold' : ''
             )}
             onClick={() => setPage(pageNum)}
           >
@@ -87,7 +87,7 @@ export default function Pagination({
           className={cls(
             page === totalPages
               ? 'text-gray-400 opacity-60'
-              : 'hover:text-indigo-500',
+              : 'hover:text-indigo-500'
           )}
           onClick={() => {
             if (page === totalPages) return;
@@ -107,14 +107,14 @@ export default function Pagination({
               strokeLinecap='round'
               strokeLinejoin='round'
               d='M8.25 4.5l7.5 7.5-7.5 7.5'
-            ></path>
+            />
           </svg>
         </button>
         <button
           className={cls(
             page === totalPages
               ? 'text-gray-400 opacity-60'
-              : 'hover:text-indigo-500',
+              : 'hover:text-indigo-500'
           )}
           onClick={() => {
             if (page === totalPages) return;
@@ -135,7 +135,7 @@ export default function Pagination({
               strokeLinecap='round'
               strokeLinejoin='round'
               d='M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5'
-            ></path>
+            />
           </svg>
         </button>
       </div>

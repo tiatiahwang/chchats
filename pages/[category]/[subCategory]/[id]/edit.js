@@ -1,11 +1,12 @@
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import useSWR from 'swr';
+
 import Editor from '@/components/editor';
 import Layout from '@/components/layout';
 import useMutation from '@/libs/client/useMutation';
 import useUser from '@/libs/client/useUser';
 import { categories, cls } from '@/libs/client/utils';
-import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
-import useSWR from 'swr';
 
 export default function EditPost() {
   const { user } = useUser();
@@ -20,14 +21,14 @@ export default function EditPost() {
   const { data } = useSWR(
     router.isReady
       ? `/api/posts/${router.asPath.split('/')[3]}`
-      : null,
+      : null
   );
 
   const [editPost, { loading, data: editPostData }] =
     useMutation(
       router.isReady
         ? `/api/posts/${router.asPath.split('/')[3]}/edit`
-        : null,
+        : null
     );
 
   useEffect(() => {
@@ -41,7 +42,7 @@ export default function EditPost() {
   useEffect(() => {
     if (mainCategory === '') return;
     const sub = categories.find(
-      (category) => category.ref === mainCategory,
+      (category) => category.ref === mainCategory
     );
     setSubCategories(sub.subCategories);
   }, [mainCategory]);
@@ -85,7 +86,7 @@ export default function EditPost() {
   useEffect(() => {
     if (editPostData && editPostData?.ok) {
       router.push(
-        `/${data.post.category}/${data.post.subCategory}/${data.post.id}`,
+        `/${data.post.category}/${data.post.subCategory}/${data.post.id}`
       );
     }
   }, [editPostData]);
@@ -110,7 +111,7 @@ export default function EditPost() {
                     'p-2 rounded-md cursor-pointer',
                     mainCategory === category.ref
                       ? 'bg-gray-200 dark:bg-darkselected'
-                      : 'hover:text-indigo-500',
+                      : 'hover:text-indigo-500'
                   )}
                 >
                   {category.name}
@@ -137,7 +138,7 @@ export default function EditPost() {
                         'p-2 rounded-md cursor-pointer inline whitespace-nowrap',
                         selectedSub === category.ref
                           ? 'bg-gray-200 dark:bg-darkselected'
-                          : 'hover:text-indigo-500',
+                          : 'hover:text-indigo-500'
                       )}
                     >
                       {category.name}

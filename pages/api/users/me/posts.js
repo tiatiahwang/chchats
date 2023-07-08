@@ -49,5 +49,5 @@ export default withApiSession(
   withHandler({
     method: 'GET',
     handler,
-  }),
+  })
 );

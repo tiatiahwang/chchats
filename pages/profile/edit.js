@@ -1,13 +1,12 @@
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
 import Button from '@/components/button';
 import Input from '@/components/input';
 import Layout from '@/components/layout';
 import useMutation from '@/libs/client/useMutation';
 import useUser from '@/libs/client/useUser';
-import { cls } from '@/libs/client/utils';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 const FILE_NAME = new Date().toJSON().slice(0, 10);
 
@@ -33,7 +32,7 @@ const Profile = () => {
     if (user?.name) setValue('name', user.name);
     if (user?.avatar)
       setAvatarPreview(
-        `https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`,
+        `https://imagedelivery.net/AjL7FiUUKL0mNbF_IibCSA/${user?.avatar}/avatar`
       );
   }, [user, setValue, setAvatarPreview]);
 
@@ -66,7 +65,7 @@ const Profile = () => {
       form.append(
         'file',
         avatar[0],
-        FILE_NAME + user?.name,
+        FILE_NAME + user?.name
       );
       const {
         result: { id },

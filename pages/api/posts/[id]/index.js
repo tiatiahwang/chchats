@@ -44,29 +44,29 @@ async function handler(req, res) {
     : false;
   const isScrapped = user
     ? Boolean(
-        await client.scrap.findFirst({
-          where: {
-            postId: +id,
-            userId: user?.id,
-          },
-          select: {
-            id: true,
-          },
-        }),
-      )
+      await client.scrap.findFirst({
+        where: {
+          postId: +id,
+          userId: user?.id,
+        },
+        select: {
+          id: true,
+        },
+      })
+    )
     : false;
   const isLiked = user
     ? Boolean(
-        await client.like.findFirst({
-          where: {
-            postId: +id,
-            userId: user?.id,
-          },
-          select: {
-            id: true,
-          },
-        }),
-      )
+      await client.like.findFirst({
+        where: {
+          postId: +id,
+          userId: user?.id,
+        },
+        select: {
+          id: true,
+        },
+      })
+    )
     : false;
   res.json({
     ok: true,
@@ -81,5 +81,5 @@ export default withApiSession(
   withHandler({
     methods: ['GET'],
     handler,
-  }),
+  })
 );

@@ -18,5 +18,5 @@ export default withApiSession(
   withHandler({
     methods: ['DELETE'],
     handler,
-  }),
+  })
 );

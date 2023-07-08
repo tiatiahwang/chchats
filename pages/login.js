@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
 import Button from '@/components/button';
 import Input from '@/components/input';
-import useMutation from '@/libs/client/useMutation';
-import { useForm } from 'react-hook-form';
 import Layout from '@/components/layout';
+import useMutation from '@/libs/client/useMutation';
 
 export default function Login() {
   const router = useRouter();
   const [login, { loading, data, error }] = useMutation(
-    '/api/users/login',
+    '/api/users/login'
   );
   const {
     register,
